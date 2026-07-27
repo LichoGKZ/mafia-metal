@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Cinzel, Bebas_Neue, Inter, Victor_Mono } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/Cart/CartDrawer";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -109,7 +111,10 @@ export default function RootLayout({
         className="antialiased"
         style={{ background: "#1a1916", color: "#b0aa98" }}
       >
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

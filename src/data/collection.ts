@@ -3,6 +3,9 @@ export interface JewelryItem {
   name: string;
   subtitle: string;
   price: string;
+  /** Numeric price in ARS, used for cart totals and the Mercado Pago preference.
+   *  TODO: reemplazar por los precios reales en pesos argentinos. */
+  priceARS: number;
   material: string;
   description: string;
   chapter: string;
@@ -27,6 +30,7 @@ export const collectionItems: JewelryItem[] = [
     name: "OMERTÀ RING",
     subtitle: "The Code of Silence",
     price: "$2,400",
+    priceARS: 3120000, // placeholder: $2400 USD x 1300 (actualizar con precio real en ARS)
     material: "18K Gold",
     description:
       "Forged from 18K Italian gold. Engraved with the ancient oath of silence. Worn by those who understand that power needs no words.",
@@ -39,6 +43,7 @@ export const collectionItems: JewelryItem[] = [
     name: "IL CAPO CHAIN",
     subtitle: "The Boss Never Waits",
     price: "$3,800",
+    priceARS: 4940000, // placeholder: $3800 USD x 1300 (actualizar con precio real en ARS)
     material: "925 Silver",
     description:
       "Heavy-gauge sterling silver. Each link hand-hammered in our forge. The weight reminds you who you are.",
@@ -50,6 +55,7 @@ export const collectionItems: JewelryItem[] = [
     name: "VENDETTA CROSS",
     subtitle: "Debts Are Always Paid",
     price: "$1,900",
+    priceARS: 2470000, // placeholder: $1900 USD x 1300 (actualizar con precio real en ARS)
     material: "Black Gold",
     description:
       "Black rhodium over 14K gold. For those who keep their promises — no matter the cost.",
@@ -62,6 +68,7 @@ export const collectionItems: JewelryItem[] = [
     name: "COSA NOSTRA SIGNET",
     subtitle: "Our Thing",
     price: "$5,200",
+    priceARS: 6760000, // placeholder: $5200 USD x 1300 (actualizar con precio real en ARS)
     material: "22K Gold",
     description:
       "The signet ring is the mark of authority. 22K gold, custom-engraved crest. One ring, one family.",
@@ -73,6 +80,7 @@ export const collectionItems: JewelryItem[] = [
     name: "BROOKLYN BRACELET",
     subtitle: "Old School Steel",
     price: "$1,600",
+    priceARS: 2080000, // placeholder: $1600 USD x 1300 (actualizar con precio real en ARS)
     material: "Surgical Steel",
     description:
       "Brushed surgical steel with gold accents. Born in the Bronx. Built to last forever.",
@@ -84,6 +92,7 @@ export const collectionItems: JewelryItem[] = [
     name: "CONSIGLIERE",
     subtitle: "The Advisor",
     price: "$2,100",
+    priceARS: 2730000, // placeholder: $2100 USD x 1300 (actualizar con precio real en ARS)
     material: "Mixed Metals",
     description:
       "Gold and silver fused in our forge. The Consigliere serves two worlds — so does this pendant.",

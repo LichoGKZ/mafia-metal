@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { collectionItems, JewelryItem } from "@/data/collection";
+import { useCart } from "@/context/CartContext";
 
 const JewelryViewer = dynamic(
   () => import("@/components/Scene3D/JewelryViewer"),
@@ -233,6 +234,15 @@ function ItemModal({
   item: JewelryItem;
   onClose: () => void;
 }) {
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const handleAddToOrder = () => {
+    addItem(item, 1);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  };
+
   return (
     <motion.div
       className="fixed inset-0 z-[9000] flex items-center justify-center p-4 md:p-8"
@@ -343,6 +353,7 @@ function ItemModal({
 
             <div className="space-y-3">
               <button
+                onClick={handleAddToOrder}
                 className="w-full py-3 font-victor text-xs tracking-[0.35em] transition-colors metal-shine"
                 style={{
                   background: "#d4af37",
@@ -350,9 +361,17 @@ function ItemModal({
                 }}
                 data-cursor-hover
               >
-                ADD TO ORDER
+                {added ? "added ✓" : "ADD TO ORDER"}
               </button>
               <button
+                onClick={() => {
+                  onClose();
+                  setTimeout(() => {
+                    document
+                      .getElementById("contact")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }, 300);
+                }}
                 className="w-full py-3 font-victor text-xs tracking-[0.35em] transition-all"
                 style={{
                   border: "1px solid rgba(212,175,55,0.25)",

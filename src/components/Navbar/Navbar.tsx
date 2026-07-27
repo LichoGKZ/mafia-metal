@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
+import { useCart } from "@/context/CartContext";
 
 const navItems = [
   { number: "01", label: "HOME", href: "#home" },
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const { itemCount, openCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -61,18 +63,41 @@ export default function Navbar() {
           MAFIA<span className="text-silver mx-1">·</span>METAL
         </button>
 
-        {/* CASE FILE button */}
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="relative flex items-center gap-3 font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
-          aria-label="Open navigation"
-        >
-          <span className="text-gold opacity-60 group-hover:opacity-100 transition-opacity">
-            ▶
-          </span>
-          CASE FILE
-          <div className="absolute -bottom-1 left-0 right-0 h-px bg-gold scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-        </button>
+        <div className="flex items-center gap-6">
+          {/* Cart button */}
+          <button
+            onClick={openCart}
+            className="relative flex items-center gap-2 font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
+            aria-label="Open cart"
+            data-cursor-hover
+          >
+            <span className="text-gold opacity-70 group-hover:opacity-100 transition-opacity">
+              ◆
+            </span>
+            <span className="hidden sm:inline">DOSSIER</span>
+            {itemCount > 0 && (
+              <span
+                className="flex items-center justify-center w-4 h-4 rounded-full font-victor text-[9px]"
+                style={{ background: "#d4af37", color: "#0a0908" }}
+              >
+                {itemCount}
+              </span>
+            )}
+          </button>
+
+          {/* CASE FILE button */}
+          <button
+            onClick={() => setOpen((o) => !o)}
+            className="relative flex items-center gap-3 font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
+            aria-label="Open navigation"
+          >
+            <span className="text-gold opacity-60 group-hover:opacity-100 transition-opacity">
+              ▶
+            </span>
+            CASE FILE
+            <div className="absolute -bottom-1 left-0 right-0 h-px bg-gold scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+          </button>
+        </div>
       </motion.nav>
 
       {/* Full-screen overlay menu */}

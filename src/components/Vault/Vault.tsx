@@ -1,44 +1,34 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { vaultItems } from "@/data/collection";
 
-// Per-item ambient background themes that reflect their description/aura
+// Per-item ambient background themes (One Love / Only Trust / Tag Mafia)
 const itemAmbients: Record<number, { gradient: string; glow: string; noise: string }> = {
   0: {
-    // Ring — "code of silence", gold, oath, power
     gradient: "radial-gradient(ellipse at 40% 60%, rgba(212,175,55,0.18) 0%, rgba(139,90,20,0.10) 40%, transparent 70%), radial-gradient(ellipse at 70% 30%, rgba(180,120,0,0.08) 0%, transparent 60%)",
     glow: "rgba(212,175,55,0.25)",
     noise: "rgba(212,175,55,0.04)",
   },
   1: {
-    // Chain — typically silver/steel, linked, cold elegance
     gradient: "radial-gradient(ellipse at 50% 50%, rgba(192,192,210,0.14) 0%, rgba(80,80,120,0.08) 45%, transparent 70%), radial-gradient(ellipse at 25% 70%, rgba(150,150,200,0.07) 0%, transparent 60%)",
     glow: "rgba(180,180,220,0.20)",
     noise: "rgba(200,200,255,0.03)",
   },
   2: {
-    // Cross — crimson/sacred, spiritual weight
-    gradient: "radial-gradient(ellipse at 50% 45%, rgba(160,20,30,0.20) 0%, rgba(90,10,15,0.10) 45%, transparent 70%), radial-gradient(ellipse at 70% 65%, rgba(200,30,40,0.07) 0%, transparent 55%)",
-    glow: "rgba(180,20,30,0.22)",
-    noise: "rgba(200,0,20,0.04)",
+    gradient: "radial-gradient(ellipse at 50% 45%, rgba(180,145,30,0.18) 0%, rgba(80,60,5,0.10) 45%, transparent 70%), radial-gradient(ellipse at 70% 65%, rgba(200,160,30,0.07) 0%, transparent 55%)",
+    glow: "rgba(200,160,30,0.22)",
+    noise: "rgba(200,160,0,0.04)",
   },
 };
-
-const JewelryViewer = dynamic(
-  () => import("@/components/Scene3D/JewelryViewer"),
-  { ssr: false }
-);
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-const modelTypes = ["ring", "chain", "cross"] as const;
 
 export default function Vault() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -209,8 +199,8 @@ export default function Vault() {
                 }}
               />
 
-              {/* The actual 3D canvas sits above ambient, below overlays */}
-              <div className="relative z-[1] bg-transparent">
+              {/* Foto del producto activo */}
+              <div className="relative z-[1] h-[420px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeIndex}
@@ -218,16 +208,26 @@ export default function Vault() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
+                    className="absolute inset-0"
                   >
-                    <JewelryViewer
-                      modelType={modelTypes[activeIndex]}
-                      color={activeItem.modelColor}
-                      height={420}
-                      particles={true}
-                      shadows={true}
-                      zoom={true}
-                      environmentPreset="studio"
-                    />
+                    {activeItem.image ? (
+                      <Image
+                        src={activeItem.image}
+                        alt={activeItem.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ background: "linear-gradient(135deg, #1e1d1a, #141310)" }}
+                      >
+                        <p className="font-bebas text-silver/20 tracking-[0.3em] text-sm">
+                          FOTO PRÓXIMAMENTE
+                        </p>
+                      </div>
+                    )}
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -235,12 +235,12 @@ export default function Vault() {
               {/* Overlay label */}
               <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end z-10">
                 <div>
-                  <p className="chapter-label text-[10px]">INTERACTIVE MODEL</p>
+                  <p className="chapter-label text-[10px]">PIEZA REAL</p>
                   <motion.p
                     className="font-inter text-xs mt-1 transition-colors duration-500"
                     animate={{ color: isViewerHovered ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}
                   >
-                    Drag to rotate · Scroll to zoom
+                    Mafia Metal
                   </motion.p>
                 </div>
                 <div className="text-right">

@@ -1,6 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
@@ -8,53 +8,49 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { collectionItems, JewelryItem } from "@/data/collection";
 import { useCart } from "@/context/CartContext";
 
-const JewelryViewer = dynamic(
-  () => import("@/components/Scene3D/JewelryViewer"),
-  { ssr: false }
-);
-
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const colorMap = {
-  gold: "#D4AF37",
-  silver: "#C0C0C0",
-  mixed: "#8B4513",
-};
-
-const modelTypeMap: Record<
-  string,
-  "ring" | "chain" | "cross" | "signet" | "bracelet" | "pendant"
-> = {
-  "omerta-ring": "ring",
-  "il-capo-chain": "chain",
-  "vendetta-cross": "cross",
-  "cosa-nostra-signet": "signet",
-  "brooklyn-bracelet": "bracelet",
-  "consigliere-pendant": "pendant",
-};
-
 const itemAmbients: Record<string, { gradient: string }> = {
-  "omerta-ring": {
+  "one-love": {
     gradient: "radial-gradient(ellipse at 35% 50%, rgba(212,175,55,0.10) 0%, rgba(139,90,20,0.06) 45%, transparent 70%)",
   },
-  "il-capo-chain": {
-    gradient: "radial-gradient(ellipse at 35% 50%, rgba(200,160,40,0.09) 0%, rgba(120,80,10,0.05) 40%, transparent 70%)",
+  "only-trust": {
+    gradient: "radial-gradient(ellipse at 35% 50%, rgba(200,200,220,0.10) 0%, rgba(120,120,140,0.06) 40%, transparent 70%)",
   },
-  "vendetta-cross": {
-    gradient: "radial-gradient(ellipse at 35% 50%, rgba(160,20,30,0.12) 0%, rgba(90,10,15,0.07) 45%, transparent 70%)",
-  },
-  "cosa-nostra-signet": {
+  "tag-mafia": {
     gradient: "radial-gradient(ellipse at 35% 50%, rgba(180,145,30,0.09) 0%, rgba(80,60,5,0.06) 42%, transparent 68%)",
   },
-  "brooklyn-bracelet": {
-    gradient: "radial-gradient(ellipse at 65% 50%, rgba(190,190,215,0.09) 0%, rgba(80,80,130,0.05) 45%, transparent 70%)",
-  },
-  "consigliere-pendant": {
-    gradient: "radial-gradient(ellipse at 35% 50%, rgba(160,100,40,0.10) 0%, rgba(100,60,20,0.06) 42%, transparent 68%)",
-  },
 };
+
+/* ── Foto del producto (o placeholder si todavía no la subieron) ── */
+function ProductImage({ item, className }: { item: JewelryItem; className?: string }) {
+  if (!item.image) {
+    return (
+      <div
+        className={`w-full h-full flex items-center justify-center ${className ?? ""}`}
+        style={{ background: "linear-gradient(135deg, #1e1d1a, #141310)" }}
+      >
+        <p
+          className="font-victor text-[10px] tracking-[0.3em] text-center px-4"
+          style={{ color: "rgba(176,170,152,0.3)" }}
+        >
+          FOTO PRÓXIMAMENTE
+        </p>
+      </div>
+    );
+  }
+  return (
+    <Image
+      src={item.image}
+      alt={item.name}
+      fill
+      className={`object-cover ${className ?? ""}`}
+      sizes="(max-width: 768px) 100vw, 50vw"
+    />
+  );
+}
 
 /* ── Single product row (alternates left/right like reference) ── */
 function ProductRow({
@@ -114,20 +110,11 @@ function ProductRow({
         style={{ background: itemAmbients[item.id]?.gradient ?? "none" }}
       />
 
-      {/* ── 3D Model side ── */}
+      {/* ── Foto del producto ── */}
       <div className="w-full md:w-1/2 relative z-[1]">
         <div className="relative overflow-hidden">
-          {/* 3D viewer — always visible */}
           <div className="h-64 md:h-80 relative">
-            <JewelryViewer
-              modelType={modelTypeMap[item.id]}
-              color={colorMap[item.color]}
-              height="100%"
-              particles={false}
-              shadows={false}
-              zoom={false}
-              environmentPreset="studio"
-            />
+            <ProductImage item={item} />
           </div>
           {/* Badge */}
           {item.badge && (
@@ -284,23 +271,16 @@ function ItemModal({
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* 3D viewer */}
+          {/* Foto del producto */}
           <div
             className="relative border-b md:border-b-0 md:border-r"
             style={{
               borderColor: "rgba(212,175,55,0.08)",
               background: "linear-gradient(135deg, #1e1d1a, #141310)",
+              minHeight: 360,
             }}
           >
-            <JewelryViewer
-              modelType={modelTypeMap[item.id]}
-              color={colorMap[item.color]}
-              height={360}
-              particles
-              shadows
-              zoom
-              environmentPreset="studio"
-            />
+            <ProductImage item={item} />
           </div>
 
           {/* Details */}

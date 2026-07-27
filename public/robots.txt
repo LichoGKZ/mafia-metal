@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mafiametal.com/sitemap.xml

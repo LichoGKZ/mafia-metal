@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { useCart } from "@/context/CartContext";
 
 const navItems = [
-  { number: "01", label: "HOME", href: "#home" },
-  { number: "02", label: "THE VAULT", href: "#vault" },
-  { number: "03", label: "THE FORGE", href: "#forge" },
-  { number: "04", label: "COLLECTION", href: "#collection" },
-  { number: "05", label: "CONTACT", href: "#contact" },
+  { number: "01", label: "INICIO", href: "#home" },
+  { number: "02", label: "LA BÓVEDA", href: "#vault" },
+  { number: "03", label: "EL TALLER", href: "#forge" },
+  { number: "04", label: "COLECCIÓN", href: "#collection" },
+  { number: "05", label: "GALERÍA", href: "#gallery" },
+  { number: "06", label: "CONTACTO", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -58,8 +60,15 @@ export default function Navbar() {
         {/* Logo */}
         <button
           onClick={() => handleNavClick("#home")}
-          className="font-cinzel font-black text-sm tracking-[0.35em] text-gold hover:text-gold-light transition-colors"
+          className="flex items-center gap-2.5 font-cinzel font-black text-sm tracking-[0.35em] text-gold hover:text-gold-light transition-colors"
         >
+          <Image
+            src="/images/brand/logo-mafia-gold.svg"
+            alt=""
+            width={22}
+            height={22}
+            className="opacity-90"
+          />
           MAFIA<span className="text-silver mx-1">·</span>METAL
         </button>
 
@@ -74,7 +83,7 @@ export default function Navbar() {
             <span className="text-gold opacity-70 group-hover:opacity-100 transition-opacity">
               ◆
             </span>
-            <span className="hidden sm:inline">DOSSIER</span>
+            <span className="hidden sm:inline">PEDIDO</span>
             {itemCount > 0 && (
               <span
                 className="flex items-center justify-center w-4 h-4 rounded-full font-victor text-[9px]"
@@ -94,7 +103,7 @@ export default function Navbar() {
             <span className="text-gold opacity-60 group-hover:opacity-100 transition-opacity">
               ▶
             </span>
-            CASE FILE
+            MENÚ
             <div className="absolute -bottom-1 left-0 right-0 h-px bg-gold scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
           </button>
         </div>
@@ -131,14 +140,21 @@ export default function Navbar() {
 
             {/* Close button */}
             <div className="relative z-10 flex justify-between items-center px-6 md:px-12 py-5">
-              <span className="font-cinzel font-black text-sm tracking-[0.35em] text-gold">
+              <span className="flex items-center gap-2.5 font-cinzel font-black text-sm tracking-[0.35em] text-gold">
+                <Image
+                  src="/images/brand/logo-mafia-gold.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="opacity-90"
+                />
                 MAFIA<span className="text-silver mx-1">·</span>METAL
               </span>
               <button
                 onClick={() => setOpen(false)}
                 className="font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors flex items-center gap-3"
               >
-                CLOSE
+                CERRAR
                 <span className="text-crimson">✕</span>
               </button>
             </div>
@@ -147,15 +163,15 @@ export default function Navbar() {
             <div className="relative z-10 flex-1 flex flex-col md:flex-row">
               {/* Left: nav links */}
               <div className="flex-1 flex flex-col justify-center px-8 md:px-20 py-8 border-r border-white/5">
-                {/* Classified header */}
+                {/* Encabezado */}
                 <div className="mb-10">
                   <div className="flex items-center gap-4 mb-2">
                     <div className="h-px flex-1 bg-gold/20" />
-                    <span className="classified-stamp text-xs">CLASSIFIED</span>
+                    <span className="classified-stamp text-xs">MAFIA METAL</span>
                     <div className="h-px flex-1 bg-gold/20" />
                   </div>
                   <p className="font-bebas text-xs tracking-[0.4em] text-silver/40 mt-4">
-                    MAFIA METAL INTERNAL DOSSIER — FILE NO. 001
+                    JOYERÍA HECHA A MANO — MAR DEL PLATA
                   </p>
                 </div>
 

@@ -60,7 +60,7 @@ export default function Hero() {
           className="chapter-label tracking-[0.5em] text-[11px]"
           style={{ color: "rgba(212,175,55,0.7)" }}
         >
-          NEW IN
+          NUEVO
         </span>
 
         {/* CTA pill */}
@@ -79,7 +79,7 @@ export default function Hero() {
           data-cursor-hover
         >
           <span className="relative z-10 group-hover:text-gold transition-colors duration-200">
-            check it out!
+            ¡Ver Ahora!
           </span>
         </button>
       </motion.div>
@@ -108,7 +108,7 @@ export default function Hero() {
           className="font-victor text-[9px] tracking-[0.4em] uppercase"
           style={{ color: "rgba(176,170,152,0.3)" }}
         >
-          scroll
+          desplazate
         </span>
       </div>
     </section>

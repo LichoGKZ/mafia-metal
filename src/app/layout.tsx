@@ -36,28 +36,28 @@ const victorMono = Victor_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://mafiametal.com"),
   title: {
-    default: "MAFIA METAL — Mar del plata.",
+    default: "MAFIA METAL — Joyería artesanal en Mar del Plata",
     template: "%s | MAFIA METAL",
   },
   description:
-    "MAFIA METAL crafts luxury jewelry forged from the finest metals. Exclusive collections inspired by the golden age of power, prestige, and dark elegance.",
+    "MAFIA METAL crea joyería en plata y oro hecha a mano en Mar del Plata. Piezas de colección y a medida, con foco en el detalle y la calidad de cada terminación.",
   keywords: [
-    "luxury jewelry",
+    "joyería",
     "mafia metal",
-    "gold jewelry",
-    "silver jewelry",
-    "exclusive collections",
-    "handcrafted jewelry",
-    "dark luxury",
-    "premium metals",
+    "joyería en plata",
+    "joyería en oro",
+    "colecciones exclusivas",
+    "joyería artesanal",
+    "Mar del Plata",
+    "metales premium",
   ],
   authors: [{ name: "MAFIA METAL" }],
   creator: "MAFIA METAL",
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "es_AR",
     url: "https://mafiametal.com",
-    title: "MAFIA METAL — Mar del plata.",
+    title: "MAFIA METAL — Joyería artesanal en Mar del Plata",
     description:
       "Colecciones & drops.",
     siteName: "MAFIA METAL",
@@ -66,13 +66,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "MAFIA METAL — Luxury Jewelry",
+        alt: "MAFIA METAL — Joyería artesanal",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MAFIA METAL — Mar del plata.",
+    title: "MAFIA METAL — Joyería artesanal en Mar del Plata",
     description:
       "Colecciones & drops.",
     images: ["/og-image.jpg"],
@@ -104,7 +104,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${cinzel.variable} ${bebasNeue.variable} ${inter.variable} ${victorMono.variable}`}
     >
       <body

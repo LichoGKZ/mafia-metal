@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -62,8 +63,15 @@ export default function Loader() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
+            <Image
+              src="/images/brand/logo-mafia-gold.svg"
+              alt=""
+              width={56}
+              height={56}
+              className="mx-auto mb-6 opacity-90"
+            />
             <div className="chapter-label mb-4 tracking-[0.6em]">
-              EST. MMXXIV
+              MAR DEL PLATA
             </div>
             <h1 className="font-cinzel text-4xl md:text-6xl font-black text-gold-gradient tracking-widest">
               MAFIA
@@ -81,7 +89,7 @@ export default function Loader() {
             transition={{ delay: 0.5 }}
           >
             <div className="flex justify-between mb-2">
-              <span className="chapter-label text-xs">LOADING DOSSIER</span>
+              <span className="chapter-label text-xs">CARGANDO</span>
               <span className="font-bebas text-gold text-lg">{progress}%</span>
             </div>
             <div className="h-px bg-void w-full relative overflow-hidden">
@@ -101,7 +109,7 @@ export default function Loader() {
             transition={{ delay: 0.8 }}
           >
             <span className="font-bebas text-xs tracking-[0.5em] text-silver">
-              CLASSIFIED — DO NOT DISTRIBUTE
+              HECHO A MANO EN ARGENTINA
             </span>
           </motion.div>
         </div>

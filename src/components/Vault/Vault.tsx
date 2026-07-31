@@ -76,7 +76,7 @@ export default function Vault() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-obsidian overflow-hidden py-20 md:py-32"
+      className="relative min-h-screen street-tint overflow-hidden py-20 md:py-32"
     >
       {/* Background texture */}
       <div className="absolute inset-0 opacity-[0.02] noise-texture" />
@@ -87,16 +87,12 @@ export default function Vault() {
       {/* Chapter header */}
       <div ref={titleRef} className="text-center mb-16 px-6 opacity-0">
         <span className="chapter-label tracking-[0.6em]">
-          CHAPTER II — THE VAULT
+          LA BÓVEDA
         </span>
         <h2 className="font-cinzel font-black text-[clamp(2.5rem,7vw,6rem)] text-gold-gradient mt-4 leading-none">
-          THE VAULT
+          LA BÓVEDA
         </h2>
         <div className="gold-divider max-w-md mx-auto mt-6" />
-        <p className="font-inter text-silver/40 text-sm mt-4 tracking-widest max-w-md mx-auto">
-          Pieces reserved for those who know where to look.
-          Not advertised. Not displayed. Simply known.
-        </p>
       </div>
 
       {/* Vault door animation */}
@@ -116,7 +112,7 @@ export default function Vault() {
               transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
             >
               <div className="text-right">
-                <p className="chapter-label text-[10px] mb-2">SECURITY LEVEL</p>
+                <p className="chapter-label text-[10px] mb-2">NIVEL</p>
                 <div className="flex gap-1 justify-end">
                   {[...Array(5)].map((_, i) => (
                     <div key={i} className="w-2 h-2 rounded-full bg-gold" />
@@ -132,9 +128,9 @@ export default function Vault() {
               transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
             >
               <div>
-                <p className="chapter-label text-[10px] mb-2">CLEARANCE</p>
+                <p className="chapter-label text-[10px] mb-2">ACCESO</p>
                 <p className="font-bebas text-crimson text-sm tracking-widest">
-                  RESTRICTED
+                  RESTRINGIDO
                 </p>
               </div>
             </motion.div>
@@ -302,9 +298,9 @@ export default function Vault() {
                 <div className="grid grid-cols-2 gap-4 mb-10">
                   {[
                     { label: "MATERIAL", value: activeItem.material },
-                    { label: "WEIGHT", value: activeItem.weight },
-                    { label: "PURITY", value: activeItem.purity },
-                    { label: "EDITION", value: activeItem.edition },
+                    { label: "PESO", value: activeItem.weight },
+                    { label: "PUREZA", value: activeItem.purity },
+                    { label: "EDICIÓN", value: activeItem.edition },
                   ].map(({ label, value }) => (
                     <div
                       key={label}
@@ -320,9 +316,9 @@ export default function Vault() {
 
                 {/* Classified stamp */}
                 <div className="flex items-center gap-4 mb-10">
-                  <div className="classified-stamp text-xs">VAULT PIECE</div>
+                  <div className="classified-stamp text-xs">PIEZA DE BÓVEDA</div>
                   <p className="font-inter text-silver/30 text-xs">
-                    Available by private appointment only
+                    Pieza disponible en 7 dias
                   </p>
                 </div>
 
@@ -331,7 +327,7 @@ export default function Vault() {
                   className="w-full py-4 font-bebas tracking-[0.4em] text-sm text-obsidian bg-gold hover:bg-gold-light transition-colors metal-shine"
                   data-cursor-hover
                 >
-                  REQUEST PRIVATE VIEWING
+                  SOLICITAR PIEZA ESPECIAL
                 </button>
               </motion.div>
             </AnimatePresence>

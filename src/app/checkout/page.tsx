@@ -107,7 +107,7 @@ export default function CheckoutPage() {
             className="font-victor font-bold text-lg tracking-[0.3em] uppercase"
             style={{ color: "#d4af37" }}
           >
-            checkout
+            pagar
           </h1>
           <Link
             href="/#collection"
@@ -158,7 +158,7 @@ export default function CheckoutPage() {
                       className="font-victor text-[10px] tracking-[0.2em] ml-2"
                       style={{ color: "rgba(139,0,0,0.7)" }}
                     >
-                      remove
+                      quitar
                     </button>
                   </div>
                 </li>

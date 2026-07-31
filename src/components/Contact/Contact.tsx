@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { customPhotos } from "@/data/collection";
+import AutoFilmstrip from "@/components/ui/AutoFilmstrip";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -120,7 +122,7 @@ function SelectField({
           style={{ color: "#b0aa98", background: "transparent" }}
         >
           <option value="" style={{ background: "#1a1916" }}>
-            select interest
+            elegí un interés
           </option>
           {options.map((opt) => (
             <option
@@ -238,12 +240,12 @@ export default function Contact() {
   };
 
   const interestOptions = [
-    { value: "rings", label: "Rings & Signets" },
-    { value: "chains", label: "Chains & Necklaces" },
-    { value: "bracelets", label: "Bracelets" },
-    { value: "custom", label: "Custom Commission" },
-    { value: "vault", label: "Vault Collection" },
-    { value: "wholesale", label: "Wholesale Inquiry" },
+    { value: "rings", label: "Anillos y sellos" },
+    { value: "chains", label: "Cadenas y collares" },
+    { value: "bracelets", label: "Pulseras" },
+    { value: "custom", label: "Pieza a medida" },
+    { value: "vault", label: "Colección Bóveda" },
+    { value: "wholesale", label: "Consulta mayorista" },
   ];
 
   return (
@@ -251,7 +253,7 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto px-6">
         {/* ── Header ── */}
         <div ref={headingRef} className="mb-16 opacity-0">
-          <p className="chapter-label tracking-[0.5em] mb-3">contact</p>
+          <p className="chapter-label tracking-[0.5em] mb-3">contacto</p>
           <div
             className="h-px mb-6"
             style={{ background: "rgba(176,170,152,0.08)" }}
@@ -260,8 +262,22 @@ export default function Contact() {
             className="font-victor text-xs"
             style={{ color: "rgba(176,170,152,0.3)", lineHeight: 1.8 }}
           >
-            we don&apos;t do cold calls. you reach out. we respond.
+            Envienos un mensaje y sera atendido a la brevedad.
           </p>
+        </div>
+
+        {/* ── Custom commissions showcase ── */}
+        <div className="mb-20">
+          <div className="flex items-center gap-4 mb-6">
+            <span className="chapter-label text-[9px]">piezas a medida — selección</span>
+            <div className="h-px flex-1" style={{ background: "rgba(176,170,152,0.08)" }} />
+          </div>
+          <AutoFilmstrip
+            images={customPhotos}
+            alt="Comisión custom Mafia Metal"
+            grayscale={false}
+            speed={70}
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
@@ -276,19 +292,14 @@ export default function Contact() {
             <div className="space-y-9">
               {[
                 {
-                  label: "showroom",
-                  value: "by appointment only",
-                  detail: "Little Italy, New York",
-                },
-                {
-                  label: "phone",
-                  value: "+1 (212) 000 — MAFIA",
-                  detail: "Mon–Fri, 10am–7pm EST",
+                  label: "teléfono",
+                  value: "+54 9 223 000-0000",
+                  detail: "lun a vie, 10 a 19 hs",
                 },
                 {
                   label: "mail",
                   value: "vault@mafiametal.com",
-                  detail: "replies within 24h",
+                  detail: "respondemos en menos de 24 hs",
                 },
               ].map(({ label, value, detail }) => (
                 <div key={label}>
@@ -311,11 +322,10 @@ export default function Contact() {
               <div className="gold-divider" />
 
               <div>
-                <p className="chapter-label text-[9px] mb-4">channels</p>
+                <p className="chapter-label text-[9px] mb-4">Canales</p>
                 <div className="flex flex-col gap-2">
                   {[
                     { label: "instagram", handle: "@mafiametal" },
-                    { label: "telegram", handle: "@mafiametal_vault" },
                   ].map(({ label, handle }) => (
                     <div
                       key={label}
@@ -353,15 +363,15 @@ export default function Contact() {
                     className="font-victor text-[9px] tracking-[0.3em] uppercase"
                     style={{ color: "#8b0000" }}
                   >
-                    confidential
+                    confidencial
                   </span>
                 </div>
                 <p
                   className="font-victor text-[10px] leading-relaxed"
                   style={{ color: "rgba(176,170,152,0.3)" }}
                 >
-                  all communications treated with full discretion.
-                  your information is never shared.
+                  toda la comunicación se trata con total discreción.
+                  tu información nunca se comparte.
                 </p>
               </div>
             </div>
@@ -393,17 +403,17 @@ export default function Contact() {
                   className="font-victor font-bold text-lg mb-4 tracking-wide"
                   style={{ color: "#d4af37" }}
                 >
-                  message received
+                  mensaje recibido
                 </h3>
                 <p
                   className="font-victor text-xs leading-relaxed max-w-xs"
                   style={{ color: "rgba(176,170,152,0.4)" }}
                 >
-                  your file has been added to our dossier.
-                  expect contact within 24 hours.
+                  tu consulta fue registrada.
+                  te contactamos dentro de las próximas 24 horas.
                 </p>
                 <div className="mt-8 classified-stamp text-[10px]">
-                  case opened
+                  consulta enviada
                 </div>
               </motion.div>
             ) : (
@@ -416,20 +426,20 @@ export default function Contact() {
                     className="font-victor text-[10px] tracking-[0.3em]"
                     style={{ color: "rgba(176,170,152,0.3)" }}
                   >
-                    new case file
+                    Nueva consulta
                   </span>
                   <span className="classified-stamp text-[9px]">
-                    confidential
+                    confidencial
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                   <InputField
-                    label="full name"
+                    label="nombre completo"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="your name"
+                    placeholder="tu nombre"
                     required
                   />
                   <InputField
@@ -438,22 +448,22 @@ export default function Contact() {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="your@email.com"
+                    placeholder="tu@email.com"
                     required
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                   <InputField
-                    label="phone"
+                    label="teléfono"
                     name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+1 (000) 000 0000"
+                    placeholder="+54 9 000 000 0000"
                   />
                   <SelectField
-                    label="interest"
+                    label="interés"
                     name="interest"
                     value={formData.interest}
                     onChange={handleChange}
@@ -463,11 +473,11 @@ export default function Contact() {
                 </div>
 
                 <TextAreaField
-                  label="message"
+                  label="mensaje"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="tell us what you're looking for. be specific."
+                  placeholder="contanos qué estás buscando. sé específico."
                 />
 
                 <div
@@ -478,7 +488,7 @@ export default function Contact() {
                     className="font-victor text-[9px]"
                     style={{ color: "rgba(176,170,152,0.2)" }}
                   >
-                    * required
+                    * obligatorio
                   </p>
                   <button
                     type="submit"
@@ -496,10 +506,10 @@ export default function Contact() {
                             borderTopColor: "#0a0908",
                           }}
                         />
-                        sending...
+                        enviando...
                       </span>
                     ) : (
-                      "submit"
+                      "enviar"
                     )}
                   </button>
                 </div>
@@ -529,16 +539,16 @@ export default function Contact() {
             className="font-victor text-[10px] text-center"
             style={{ color: "rgba(176,170,152,0.2)" }}
           >
-            © {new Date().getFullYear()} mafia metal. all rights reserved.
-            forged in new york.
+            © {new Date().getFullYear()} mafia metal. todos los derechos reservados.
+            hecho a mano en argentina.
           </p>
           <div className="flex items-center gap-4">
-            <span className="chapter-label text-[9px]">est. mmxxiv</span>
+            <span className="chapter-label text-[9px]">joyería artesanal</span>
             <div
               className="w-1 h-1 rounded-full"
               style={{ background: "rgba(212,175,55,0.25)" }}
             />
-            <span className="chapter-label text-[9px]">little italy</span>
+            <span className="chapter-label text-[9px]">mar del plata</span>
           </div>
         </div>
       </motion.div>

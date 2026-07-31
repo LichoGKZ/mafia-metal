@@ -1,0 +1,105 @@
+<svg width="900" height="1100" viewBox="0 0 900 1100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" />
+    </filter>
+  </defs>
+
+  <!-- ── Spray splat cluster (gold) ── -->
+  <g opacity="0.5" filter="url(#rough)">
+    <circle cx="120" cy="140" r="70" fill="#D4AF37" opacity="0.5" />
+    <circle cx="70" cy="90" r="10" fill="#D4AF37" opacity="0.4" />
+    <circle cx="200" cy="80" r="6" fill="#D4AF37" opacity="0.35" />
+    <circle cx="185" cy="180" r="14" fill="#D4AF37" opacity="0.3" />
+    <circle cx="40" cy="190" r="7" fill="#D4AF37" opacity="0.3" />
+  </g>
+
+  <!-- ── Drip shapes hanging down ── -->
+  <g opacity="0.45" filter="url(#rough)">
+    <path d="M110 205 q6 40 -2 70 q-8 18 -16 0 q-6 -20 4 -55 z" fill="#D4AF37" />
+    <path d="M150 200 q4 26 -1 44 q-5 12 -10 0 q-4 -14 3 -38 z" fill="#D4AF37" />
+  </g>
+
+  <!-- ── Abstract scribble tag #1 (top right) ── -->
+  <g opacity="0.4" filter="url(#rough)" stroke="#C0C0C0" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M540 60 C 600 20, 660 20, 690 70 S 760 130, 700 150 S 610 130, 630 90 S 700 40, 760 90" />
+  </g>
+
+  <!-- ── Spray mist dots ── -->
+  <g fill="#C0C0C0" opacity="0.35">
+    <circle cx="500" cy="180" r="3" />
+    <circle cx="515" cy="195" r="2" />
+    <circle cx="490" cy="210" r="2.5" />
+    <circle cx="530" cy="165" r="2" />
+    <circle cx="475" cy="185" r="1.8" />
+    <circle cx="545" cy="205" r="2.2" />
+  </g>
+
+  <!-- ── Crimson star burst ── -->
+  <g opacity="0.4" filter="url(#rough)">
+    <path d="M780 260 l14 34 l36 4 l-27 24 l8 36 l-31 -19 l-31 19 l8 -36 l-27 -24 l36 -4 z" fill="#8B0000" />
+  </g>
+
+  <!-- ── Big background splat (silver, low opacity) ── -->
+  <g opacity="0.18" filter="url(#rough)">
+    <ellipse cx="300" cy="420" rx="180" ry="130" fill="#C0C0C0" />
+  </g>
+
+  <!-- ── Second scribble tag (mid left, arrow-ish) ── -->
+  <g opacity="0.42" filter="url(#rough)" stroke="#D4AF37" stroke-width="9" fill="none" stroke-linecap="round">
+    <path d="M40 470 C 90 440, 150 440, 170 480 C 185 510, 150 540, 110 520" />
+    <path d="M170 480 l40 -10 l-14 30 z" fill="#D4AF37" stroke="none" />
+  </g>
+
+  <!-- ── Spray can silhouette (very low opacity, abstract) ── -->
+  <g opacity="0.22" filter="url(#rough)">
+    <rect x="640" y="400" width="46" height="90" rx="8" fill="#C0C0C0" />
+    <rect x="650" y="380" width="26" height="22" rx="4" fill="#C0C0C0" />
+    <rect x="660" y="365" width="10" height="18" rx="3" fill="#C0C0C0" />
+    <circle cx="700" cy="440" r="3" fill="#C0C0C0" />
+    <circle cx="712" cy="430" r="2" fill="#C0C0C0" />
+    <circle cx="708" cy="452" r="2.4" fill="#C0C0C0" />
+  </g>
+
+  <!-- ── Drips under spray can ── -->
+  <g opacity="0.3" filter="url(#rough)">
+    <path d="M650 492 q4 30 -1 50 q-4 10 -8 0 q-3 -16 2 -46 z" fill="#C0C0C0" />
+    <path d="M672 492 q5 22 0 38 q-4 9 -8 0 q-3 -12 2 -34 z" fill="#C0C0C0" />
+  </g>
+
+  <!-- ── Crosshatch tag mark ── -->
+  <g opacity="0.3" stroke="#8B0000" stroke-width="7" stroke-linecap="round">
+    <line x1="420" y1="600" x2="480" y2="660" />
+    <line x1="480" y1="600" x2="420" y2="660" />
+  </g>
+
+  <!-- ── Large splat lower left ── -->
+  <g opacity="0.45" filter="url(#rough)">
+    <circle cx="130" cy="760" r="60" fill="#D4AF37" opacity="0.4" />
+    <circle cx="70" cy="800" r="9" fill="#D4AF37" opacity="0.35" />
+    <circle cx="195" cy="790" r="12" fill="#D4AF37" opacity="0.3" />
+  </g>
+  <g opacity="0.4" filter="url(#rough)">
+    <path d="M120 815 q6 34 -2 58 q-7 15 -14 0 q-5 -17 4 -46 z" fill="#D4AF37" />
+  </g>
+
+  <!-- ── Long freeform scribble tag (bottom, wide) ── -->
+  <g opacity="0.38" filter="url(#rough)" stroke="#C0C0C0" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M330 920 C 380 880, 440 880, 470 920 S 560 960, 600 920 S 690 880, 740 920" />
+  </g>
+
+  <!-- ── Small spray mist bottom right ── -->
+  <g fill="#D4AF37" opacity="0.3">
+    <circle cx="800" cy="980" r="3" />
+    <circle cx="815" cy="995" r="2" />
+    <circle cx="785" cy="1005" r="2.4" />
+    <circle cx="825" cy="965" r="1.8" />
+  </g>
+
+  <!-- ── Faint circle stencil ── -->
+  <g opacity="0.16">
+    <circle cx="770" cy="700" r="70" fill="none" stroke="#C0C0C0" stroke-width="6" />
+    <circle cx="770" cy="700" r="40" fill="none" stroke="#C0C0C0" stroke-width="4" />
+  </g>
+</svg>

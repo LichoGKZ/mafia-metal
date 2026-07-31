@@ -4,19 +4,18 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { storyMilestones } from "@/data/collection";
+import { craftSteps, processPhotos } from "@/data/collection";
+import AutoFilmstrip from "@/components/ui/AutoFilmstrip";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-function MilestoneCard({
-  year,
+function StepCard({
   title,
   body,
   index,
 }: {
-  year: string;
   title: string;
   body: string;
   index: number;
@@ -29,20 +28,15 @@ function MilestoneCard({
 
     gsap.fromTo(
       el,
-      {
-        opacity: 0,
-        x: index % 2 === 0 ? -60 : 60,
-        y: 20,
-      },
+      { opacity: 0, y: 40 },
       {
         opacity: 1,
-        x: 0,
         y: 0,
         duration: 1.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 80%",
+          start: "top 85%",
           toggleActions: "play none none reverse",
         },
       }
@@ -56,88 +50,30 @@ function MilestoneCard({
   }, [index]);
 
   return (
-    <div
-      ref={cardRef}
-      className={`flex gap-6 md:gap-12 items-start ${
-        index % 2 === 0 ? "flex-row" : "flex-row-reverse text-right"
-      }`}
-    >
-      {/* Year column */}
-      <div className="flex-shrink-0 w-20 md:w-32">
-        <span className="font-bebas text-4xl md:text-6xl text-gold/20 leading-none">
-          {year}
-        </span>
-      </div>
-
-      {/* Timeline dot */}
-      <div className="relative flex-shrink-0 mt-3">
-        <div className="w-3 h-3 rounded-full bg-gold shadow-gold" />
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-px h-full bg-gold/20" />
-      </div>
-
-      {/* Content */}
-      <div className={`flex-1 pb-16 ${index % 2 === 0 ? "" : "text-right"}`}>
-        <span className="chapter-label text-[10px] tracking-[0.5em]">
-          {year}
-        </span>
-        <h3 className="font-cinzel font-bold text-xl md:text-2xl text-gold mt-2 mb-4">
-          {title}
-        </h3>
-        <p className="font-inter text-silver/50 text-sm leading-relaxed max-w-md">
-          {body}
-        </p>
-      </div>
+    <div ref={cardRef} className="border border-white/5 p-8 bg-void/30">
+      <span className="chapter-label text-[10px] tracking-[0.4em] text-gold/50">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <h3 className="font-cinzel font-bold text-xl md:text-2xl text-gold mt-3 mb-4">
+        {title}
+      </h3>
+      <p className="font-inter text-silver/50 text-sm leading-relaxed">
+        {body}
+      </p>
     </div>
   );
 }
 
-function ParallaxImage() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!wrapperRef.current || !imgRef.current) return;
-
-    gsap.to(imgRef.current, {
-      yPercent: -20,
-      ease: "none",
-      scrollTrigger: {
-        trigger: wrapperRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
-  }, []);
-
+function ProcessFilmstrip() {
   return (
-    <div ref={wrapperRef} className="relative overflow-hidden h-64 md:h-96 mb-24">
-      <div
-        ref={imgRef}
-        className="absolute inset-0 scale-110 bg-gradient-to-br from-void via-obsidian to-void flex items-center justify-center"
-      >
-        {/* Decorative forge visualization */}
-        <div className="text-center">
-          <div className="font-bebas text-[8rem] md:text-[14rem] text-gold/[0.04] leading-none select-none">
-            1923
-          </div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div className="gold-divider w-32 mb-4" />
-              <p className="font-cinzel text-gold/60 text-sm tracking-[0.4em]">
-                THE FORGE OF LEGENDS
-              </p>
-              <div className="gold-divider w-32 mt-4" />
-            </div>
-          </div>
-        </div>
+    <div className="relative mb-24">
+      <div className="text-center mb-8">
+        <p className="chapter-label text-[10px] tracking-[0.5em] mb-3">
+          DETRÁS DEL TALLER
+        </p>
+        <div className="gold-divider w-32 mx-auto" />
       </div>
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-obsidian via-transparent to-obsidian" />
+      <AutoFilmstrip images={processPhotos} alt="Proceso de forja Mafia Metal" speed={60} />
     </div>
   );
 }
@@ -173,43 +109,35 @@ export default function Story() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-obsidian py-24 md:py-40 overflow-hidden"
+      className="relative street-tint py-24 md:py-40 overflow-hidden"
     >
-      {/* Background */}
       <div className="absolute inset-0 opacity-[0.02] noise-texture" />
       <div className="absolute left-0 top-0 bottom-0 w-px bg-gold/10" />
       <div className="absolute right-0 top-0 bottom-0 w-px bg-gold/10" />
 
       <div className="max-w-5xl mx-auto px-6">
-        {/* Chapter header */}
         <div ref={headingRef} className="text-center mb-24 opacity-0">
           <span className="chapter-label tracking-[0.6em]">
-            CHAPTER III — THE FORGE
+            EL TALLER
           </span>
           <h2 className="font-cinzel font-black text-[clamp(2.5rem,7vw,5.5rem)] text-gold-gradient mt-4 leading-none">
-            THE FORGE
+            NUESTRO OFICIO
           </h2>
           <div className="gold-divider max-w-sm mx-auto mt-6" />
           <p className="font-inter text-silver/40 text-sm mt-6 tracking-wider max-w-lg mx-auto leading-relaxed">
-            Every dynasty has an origin. Every empire, a first fire.
-            This is ours.
+            Cada pieza se diseña, se modela y se termina a mano.
+            Así se hace una pieza que dura.
           </p>
         </div>
 
-        {/* Parallax image */}
-        <ParallaxImage />
+        <ProcessFilmstrip />
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Center line */}
-          <div className="absolute left-[5.5rem] md:left-[9.5rem] top-0 bottom-0 w-px bg-gold/10" />
-
-          {storyMilestones.map((milestone, i) => (
-            <MilestoneCard key={milestone.year} {...milestone} index={i} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {craftSteps.map((step, i) => (
+            <StepCard key={step.title} {...step} index={i} />
           ))}
         </div>
 
-        {/* Bottom quote */}
         <motion.div
           className="mt-24 text-center border border-gold/10 p-12 relative"
           initial={{ opacity: 0, y: 40 }}
@@ -217,7 +145,6 @@ export default function Story() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          {/* Corner ornaments */}
           <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-gold/40" />
           <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-gold/40" />
           <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-gold/40" />
@@ -225,13 +152,12 @@ export default function Story() {
 
           <div className="text-gold/30 text-4xl mb-4 font-cinzel">"</div>
           <blockquote className="font-cinzel text-xl md:text-2xl text-silver/70 leading-relaxed max-w-2xl mx-auto">
-            We do not make jewelry. We make statements.
-            And statements, in our world, are permanent.
+            (aca tiene que ir un re texto de mafia metal).
           </blockquote>
           <div className="mt-6 flex items-center justify-center gap-4">
             <div className="h-px w-12 bg-gold/30" />
             <span className="chapter-label text-[10px]">
-              FOUNDER, MAFIA METAL
+              MAFIA METAL
             </span>
             <div className="h-px w-12 bg-gold/30" />
           </div>

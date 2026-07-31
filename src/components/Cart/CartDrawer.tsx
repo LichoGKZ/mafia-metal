@@ -53,7 +53,7 @@ export default function CartDrawer() {
                 className="font-victor text-xs tracking-[0.35em] uppercase"
                 style={{ color: "#d4af37" }}
               >
-                your order ({lines.length})
+                tu pedido ({lines.length})
               </span>
               <button
                 onClick={closeCart}
@@ -61,7 +61,7 @@ export default function CartDrawer() {
                 style={{ color: "rgba(176,170,152,0.5)" }}
                 aria-label="Close cart"
               >
-                ✕ close
+                ✕ cerrar
               </button>
             </div>
 
@@ -73,7 +73,7 @@ export default function CartDrawer() {
                     className="font-victor text-xs tracking-[0.2em]"
                     style={{ color: "rgba(176,170,152,0.35)" }}
                   >
-                    your dossier is empty.
+                    tu pedido está vacío.
                   </p>
                   <button
                     onClick={handleContinueShopping}
@@ -135,7 +135,7 @@ export default function CartDrawer() {
                             className="font-victor text-[10px] tracking-[0.2em] ml-2"
                             style={{ color: "rgba(139,0,0,0.7)" }}
                           >
-                            remove
+                            quitar
                           </button>
                         </div>
                       </div>

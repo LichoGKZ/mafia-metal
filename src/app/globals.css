@@ -39,6 +39,30 @@ body {
   cursor: none;
 }
 
+/* ── Fondo continuo de graffiti urbano ──
+   Ya no es un tile fijo que se repite: es un SVG único generado a la
+   altura real de toda la página, posicionado en flujo normal (baja con
+   el scroll) dentro de .page-bg-wrap. Ver GraffitiBackground.tsx */
+.graffiti-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+.page-bg-wrap {
+  position: relative;
+}
+
+/* ── Tinte unificado por sección: mismo tono/opacidad en toda la página
+   para que no haya saltos de tonalidad entre secciones ── */
+.street-tint {
+  position: relative;
+  background-color: rgba(9, 8, 7, 0.55);
+}
+
 /* ── Custom Cursor ── */
 .cursor-dot {
   position: fixed;
@@ -127,7 +151,7 @@ body {
 
 /* ── Light paper for product sections ── */
 .paper-light-bg {
-  background-color: var(--paper-light);
+  background-color: rgba(9, 8, 7, 0.55);
   position: relative;
 }
 

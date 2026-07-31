@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "MAFIA METAL",
     short_name: "MAFIA METAL",
-    description: "Forged in Steel. Built for Legends.",
+    description: "Joyería artesanal en plata y oro.",
     start_url: "/",
     display: "standalone",
     background_color: "#0B0B0B",

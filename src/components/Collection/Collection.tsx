@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { collectionItems, JewelryItem } from "@/data/collection";
 import { useCart } from "@/context/CartContext";
+import ImageCarousel from "@/components/ui/ImageCarousel";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -24,8 +25,16 @@ const itemAmbients: Record<string, { gradient: string }> = {
   },
 };
 
-/* ── Foto del producto (o placeholder si todavía no la subieron) ── */
-function ProductImage({ item, className }: { item: JewelryItem; className?: string }) {
+/* ── Foto del producto (carrusel si hay varias, o placeholder si no hay) ── */
+function ProductImage({
+  item,
+  className,
+  carousel = false,
+}: {
+  item: JewelryItem;
+  className?: string;
+  carousel?: boolean;
+}) {
   if (!item.image) {
     return (
       <div
@@ -41,6 +50,18 @@ function ProductImage({ item, className }: { item: JewelryItem; className?: stri
       </div>
     );
   }
+
+  if (carousel && item.images && item.images.length > 1) {
+    return (
+      <ImageCarousel
+        images={item.images}
+        alt={item.name}
+        aspect="h-full w-full"
+        className={className}
+      />
+    );
+  }
+
   return (
     <Image
       src={item.image}
@@ -178,7 +199,7 @@ function ProductRow({
           className="font-victor text-[10px] tracking-[0.25em] mb-4"
           style={{ color: "rgba(176,170,152,0.35)" }}
         >
-          {item.subtitle?.toLowerCase() || item.material?.toLowerCase()} &nbsp;|&nbsp; in
+          {item.subtitle?.toLowerCase() || item.material?.toLowerCase()} &nbsp;|&nbsp; en
           stock &nbsp;|&nbsp; {new Date().getFullYear()}
         </p>
 
@@ -205,7 +226,7 @@ function ProductRow({
             }}
             data-cursor-hover
           >
-            view →
+            ver →
           </button>
         </div>
       </div>
@@ -246,10 +267,11 @@ function ItemModal({
       />
 
       <motion.div
-        className="relative w-full max-w-4xl overflow-hidden"
+        className="relative w-full max-w-4xl overflow-y-auto"
         style={{
           background: "#1a1916",
           border: "1px solid rgba(212,175,55,0.15)",
+          maxHeight: "90vh",
         }}
         initial={{ scale: 0.94, y: 30, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -280,7 +302,7 @@ function ItemModal({
               minHeight: 360,
             }}
           >
-            <ProductImage item={item} />
+            <ProductImage item={item} carousel />
           </div>
 
           {/* Details */}
@@ -312,7 +334,7 @@ function ItemModal({
               <div className="space-y-3 mb-8">
                 {[
                   { label: "MATERIAL", value: item.material },
-                  { label: "PRICE", value: item.price },
+                  { label: "PRECIO", value: item.price },
                 ].map(({ label, value }) => (
                   <div
                     key={label}
@@ -341,7 +363,7 @@ function ItemModal({
                 }}
                 data-cursor-hover
               >
-                {added ? "added ✓" : "ADD TO ORDER"}
+                {added ? "agregado ✓" : "AGREGAR AL PEDIDO"}
               </button>
               <button
                 onClick={() => {
@@ -359,11 +381,41 @@ function ItemModal({
                 }}
                 data-cursor-hover
               >
-                INQUIRE NOW
+                CONSULTAR
               </button>
             </div>
           </div>
         </div>
+
+        {/* ── As worn by (lifestyle) ── */}
+        {item.lifestyleImages && item.lifestyleImages.length > 0 && (
+          <div
+            className="border-t px-8 py-8"
+            style={{ borderColor: "rgba(212,175,55,0.08)" }}
+          >
+            <div className="flex items-center gap-4 mb-5">
+              <span className="chapter-label text-[10px]">en la calle</span>
+              <div className="h-px flex-1" style={{ background: "rgba(176,170,152,0.08)" }} />
+            </div>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+              {item.lifestyleImages.map((src, i) => (
+                <div
+                  key={src}
+                  className="relative aspect-square overflow-hidden group"
+                  style={{ border: "1px solid rgba(212,175,55,0.08)" }}
+                >
+                  <Image
+                    src={src}
+                    alt={`${item.name} en la calle ${i + 1}`}
+                    fill
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                    sizes="150px"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );
@@ -395,7 +447,7 @@ export default function Collection() {
 
   return (
     <section
-      className="relative py-24 md:py-36 overflow-hidden"
+      className="relative street-tint py-24 md:py-36 overflow-hidden"
       id="collection"
     >
       {/* ── Subtle crosshatch corner marks (like reference screenshots) ── */}
@@ -431,7 +483,7 @@ export default function Collection() {
       <div className="max-w-5xl mx-auto px-6">
         {/* ── Section header ── */}
         <div ref={headingRef} className="mb-20 opacity-0">
-          <p className="chapter-label tracking-[0.5em] mb-3">products</p>
+          <p className="chapter-label tracking-[0.5em] mb-3">productos</p>
           <div
             className="h-px w-full mb-12"
             style={{ background: "rgba(176,170,152,0.08)" }}
@@ -461,7 +513,7 @@ export default function Collection() {
             className="font-victor text-[10px] tracking-[0.5em] mb-5"
             style={{ color: "rgba(176,170,152,0.25)" }}
           >
-            private commissions available
+            Piezas personalizadas a medida.
           </p>
           <button
             className="font-victor text-xs tracking-[0.3em] px-10 py-3 transition-all"
@@ -471,7 +523,7 @@ export default function Collection() {
             }}
             data-cursor-hover
           >
-            request custom piece
+            pedir pieza a medida
           </button>
         </motion.div>
       </div>

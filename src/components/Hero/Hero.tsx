@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import Image from "next/image";
+import InteractiveMixer from "@/components/ui/InteractiveMixer"; // ajustá el path a donde lo guardes
+
 export default function Hero() {
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +27,8 @@ export default function Hero() {
         <Image
           src="/images/hero-dj.jpg"
           alt="Mafia Metal DJ"
-          fill
+          width={1920}
+          height={50}
           className="object-cover object-center"
           priority
         />
@@ -33,7 +36,7 @@ export default function Hero() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url(\"data:image/svg+xml,...\")",
+            
             opacity: 0.08,
           }}
         />
@@ -47,7 +50,7 @@ export default function Hero() {
             "linear-gradient(to bottom, rgba(17,16,14,0.15) 0%, rgba(17,16,14,0.05) 40%, rgba(17,16,14,0.7) 100%)",
         }}
       />
-
+      <InteractiveMixer />
       {/* ── Bottom content: "NEW IN / check it out!" style ── */}
       <motion.div
         className="relative z-20 w-full px-6 pb-16 md:pb-20 flex flex-col items-center gap-3"

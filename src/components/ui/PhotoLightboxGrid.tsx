@@ -4,10 +4,7 @@ import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/**
- * Grilla de fotos (mosaico) con lightbox a pantalla completa.
- * Usada para tandas grandes de fotos del mismo tema (gallery, custom, etc).
- */
+
 export default function PhotoLightboxGrid({
   images,
   alt,

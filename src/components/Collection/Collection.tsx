@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { collectionItems, JewelryItem } from "@/data/collection";
+import { JewelryItem } from "@/data/collection";
 import { useCart } from "@/context/CartContext";
 import ImageCarousel from "@/components/ui/ImageCarousel";
 
@@ -422,7 +422,7 @@ function ItemModal({
 }
 
 /* ── Main Collection section ── */
-export default function Collection() {
+export default function Collection({ items }: { items: JewelryItem[] }) {
   const [selectedItem, setSelectedItem] = useState<JewelryItem | null>(null);
   const headingRef = useRef<HTMLDivElement>(null);
 
@@ -491,7 +491,7 @@ export default function Collection() {
         </div>
 
         {/* ── Product rows ── */}
-        {collectionItems.map((item, i) => (
+        {items.map((item, i) => (
           <ProductRow
             key={item.id}
             item={item}

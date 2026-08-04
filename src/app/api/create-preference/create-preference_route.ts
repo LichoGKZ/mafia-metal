@@ -50,8 +50,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Basic server-side validation of prices/quantities to avoid a tampered
-  // client sending arbitrary amounts.
+  // Validación básica de precios/cantidades para evitar un carrito manipulado
+  // desde el cliente con montos arbitrarios.
   for (const line of lines) {
     if (
       typeof line.priceARS !== "number" ||
@@ -67,6 +67,20 @@ export async function POST(req: NextRequest) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || req.nextUrl.origin;
+
+  // Mercado Pago rechaza (o ignora) auto_return si las back_urls no son
+  // públicas y https. En localhost esto rompe la creación de la preferencia
+  // o el redirect automático. Solo lo activamos si tenemos una URL https real.
+  const isPublicHttps = siteUrl.startsWith("https://");
+
+  if (!isPublicHttps) {
+    console.warn(
+      `[create-preference] NEXT_PUBLIC_SITE_URL/origin ("${siteUrl}") no es https. ` +
+        `Mercado Pago no acepta auto_return con back_urls no públicas: se omitirá auto_return. ` +
+        `Para probar el flujo completo en local, usá un túnel (ngrok, cloudflared) y seteá ` +
+        `NEXT_PUBLIC_SITE_URL con esa URL https, o probá directamente en el dominio de producción/preview.`
+    );
+  }
 
   try {
     const client = new MercadoPagoConfig({ accessToken });
@@ -103,19 +117,37 @@ export async function POST(req: NextRequest) {
           failure: `${siteUrl}/checkout/failure`,
           pending: `${siteUrl}/checkout/pending`,
         },
-        auto_return: "approved",
+        ...(isPublicHttps ? { auto_return: "approved" as const } : {}),
         statement_descriptor: "MAFIA METAL",
       },
     });
 
+    // Con credenciales de TEST, MP devuelve además sandbox_init_point,
+    // que es el que hay que usar para pagar con usuarios de prueba.
+    const initPoint =
+      (result as unknown as { sandbox_init_point?: string }).sandbox_init_point ||
+      result.init_point;
+
     return NextResponse.json({
-      init_point: result.init_point,
+      init_point: initPoint,
       preference_id: result.id,
     });
   } catch (err) {
+    // Antes esto se tragaba el motivo real del rechazo de Mercado Pago.
+    // Lo logueamos completo para poder diagnosticar (permisos, cuenta,
+    // formato de datos, etc.) y devolvemos algo más útil al cliente.
     console.error("Mercado Pago preference error:", err);
+
+    const mpMessage =
+      typeof err === "object" && err !== null && "message" in err
+        ? String((err as { message?: unknown }).message)
+        : null;
+
     return NextResponse.json(
-      { error: "No se pudo crear la preferencia de pago." },
+      {
+        error:
+          mpMessage || "No se pudo crear la preferencia de pago.",
+      },
       { status: 502 }
     );
   }

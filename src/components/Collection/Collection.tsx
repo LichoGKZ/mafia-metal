@@ -500,32 +500,6 @@ export default function Collection({ items }: { items: JewelryItem[] }) {
           />
         ))}
 
-        {/* ── Bottom CTA ── */}
-        <motion.div
-          className="mt-8 pt-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          style={{ borderTop: "1px solid rgba(176,170,152,0.06)" }}
-        >
-          <p
-            className="font-victor text-[10px] tracking-[0.5em] mb-5"
-            style={{ color: "rgba(176,170,152,0.25)" }}
-          >
-            Piezas personalizadas a medida.
-          </p>
-          <button
-            className="font-victor text-xs tracking-[0.3em] px-10 py-3 transition-all"
-            style={{
-              border: "1px solid rgba(212,175,55,0.2)",
-              color: "rgba(212,175,55,0.7)",
-            }}
-            data-cursor-hover
-          >
-            pedir pieza a medida
-          </button>
-        </motion.div>
       </div>
 
       {/* ── Item Modal ── */}

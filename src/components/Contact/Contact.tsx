@@ -240,11 +240,10 @@ export default function Contact() {
   };
 
   const interestOptions = [
-    { value: "rings", label: "Anillos y sellos" },
+    { value: "rings", label: "Anillos" },
     { value: "chains", label: "Cadenas y collares" },
     { value: "bracelets", label: "Pulseras" },
     { value: "custom", label: "Pieza a medida" },
-    { value: "vault", label: "Colección Bóveda" },
     { value: "wholesale", label: "Consulta mayorista" },
   ];
 
@@ -258,19 +257,11 @@ export default function Contact() {
             className="h-px mb-6"
             style={{ background: "rgba(176,170,152,0.08)" }}
           />
-          <p
-            className="font-victor text-xs"
-            style={{ color: "rgba(176,170,152,0.3)", lineHeight: 1.8 }}
-          >
-            Envienos un mensaje y sera atendido a la brevedad.
-          </p>
         </div>
 
         {/* ── Custom commissions showcase ── */}
         <div className="mb-20">
           <div className="flex items-center gap-4 mb-6">
-            <span className="chapter-label text-[9px]">piezas a medida — selección</span>
-            <div className="h-px flex-1" style={{ background: "rgba(176,170,152,0.08)" }} />
           </div>
           <AutoFilmstrip
             images={customPhotos}
@@ -294,13 +285,8 @@ export default function Contact() {
                 {
                   label: "teléfono",
                   value: "+54 9 223 000-0000",
-                  detail: "lun a vie, 10 a 19 hs",
                 },
-                {
-                  label: "mail",
-                  value: "vault@mafiametal.com",
-                  detail: "respondemos en menos de 24 hs",
-                },
+
               ].map(({ label, value, detail }) => (
                 <div key={label}>
                   <p className="chapter-label text-[9px] mb-1.5">{label}</p>
@@ -345,34 +331,6 @@ export default function Contact() {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              <div
-                className="p-4"
-                style={{
-                  border: "1px solid rgba(139,0,0,0.2)",
-                  background: "rgba(139,0,0,0.04)",
-                }}
-              >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div
-                    className="w-1.5 h-1.5 rounded-full animate-pulse"
-                    style={{ background: "#8b0000" }}
-                  />
-                  <span
-                    className="font-victor text-[9px] tracking-[0.3em] uppercase"
-                    style={{ color: "#8b0000" }}
-                  >
-                    confidencial
-                  </span>
-                </div>
-                <p
-                  className="font-victor text-[10px] leading-relaxed"
-                  style={{ color: "rgba(176,170,152,0.3)" }}
-                >
-                  toda la comunicación se trata con total discreción.
-                  tu información nunca se comparte.
-                </p>
               </div>
             </div>
           </motion.div>
@@ -428,9 +386,6 @@ export default function Contact() {
                   >
                     Nueva consulta
                   </span>
-                  <span className="classified-stamp text-[9px]">
-                    confidencial
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
@@ -477,7 +432,7 @@ export default function Contact() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="contanos qué estás buscando. sé específico."
+                  placeholder="contanos qué estás buscando."
                 />
 
                 <div

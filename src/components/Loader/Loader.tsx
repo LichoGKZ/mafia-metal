@@ -73,10 +73,10 @@ export default function Loader() {
             <div className="chapter-label mb-4 tracking-[0.6em]">
               MAR DEL PLATA
             </div>
-            <h1 className="font-cinzel text-4xl md:text-6xl font-black text-gold-gradient tracking-widest">
+            <h1 className="font-victor text-4xl md:text-6xl font-black text-gold-gradient tracking-widest">
               MAFIA
             </h1>
-            <h1 className="font-cinzel text-4xl md:text-6xl font-black text-silver-gradient tracking-[0.5em]">
+            <h1 className="font-victor text-4xl md:text-6xl font-black text-silver-gradient tracking-[0.5em]">
               METAL
             </h1>
           </motion.div>
@@ -90,7 +90,7 @@ export default function Loader() {
           >
             <div className="flex justify-between mb-2">
               <span className="chapter-label text-xs">CARGANDO</span>
-              <span className="font-bebas text-gold text-lg">{progress}%</span>
+              <span className="font-victor text-gold text-lg">{progress}%</span>
             </div>
             <div className="h-px bg-void w-full relative overflow-hidden">
               <div
@@ -108,7 +108,7 @@ export default function Loader() {
             animate={{ opacity: 0.4 }}
             transition={{ delay: 0.8 }}
           >
-            <span className="font-bebas text-xs tracking-[0.5em] text-silver">
+            <span className="font-victor text-xs tracking-[0.5em] text-silver">
               HECHO A MANO EN ARGENTINA
             </span>
           </motion.div>

@@ -54,10 +54,10 @@ function StepCard({
       <span className="chapter-label text-[10px] tracking-[0.4em] text-gold/50">
         {String(index + 1).padStart(2, "0")}
       </span>
-      <h3 className="font-cinzel font-bold text-xl md:text-2xl text-gold mt-3 mb-4">
+      <h3 className="font-victor font-bold text-xl md:text-2xl text-gold mt-3 mb-4">
         {title}
       </h3>
-      <p className="font-inter text-silver/50 text-sm leading-relaxed">
+      <p className="font-victor text-silver/50 text-sm leading-relaxed">
         {body}
       </p>
     </div>
@@ -117,16 +117,12 @@ export default function Story() {
 
       <div className="max-w-5xl mx-auto px-6">
         <div ref={headingRef} className="text-center mb-24 opacity-0">
-          <span className="chapter-label tracking-[0.6em]">
-            EL TALLER
-          </span>
-          <h2 className="font-cinzel font-black text-[clamp(2.5rem,7vw,5.5rem)] text-gold-gradient mt-4 leading-none">
+          <h2 className="font-victor font-black text-[clamp(2.5rem,7vw,5.5rem)] text-gold-gradient mt-4 leading-none">
             NUESTRO OFICIO
           </h2>
           <div className="gold-divider max-w-sm mx-auto mt-6" />
-          <p className="font-inter text-silver/40 text-sm mt-6 tracking-wider max-w-lg mx-auto leading-relaxed">
+          <p className="font-victor text-silver/40 text-sm mt-6 tracking-wider max-w-lg mx-auto leading-relaxed">
             Cada pieza se diseña, se modela y se termina a mano.
-            Así se hace una pieza que dura.
           </p>
         </div>
 
@@ -150,9 +146,8 @@ export default function Story() {
           <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-gold/40" />
           <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold/40" />
 
-          <div className="text-gold/30 text-4xl mb-4 font-cinzel">"</div>
-          <blockquote className="font-cinzel text-xl md:text-2xl text-silver/70 leading-relaxed max-w-2xl mx-auto">
-            (aca tiene que ir un re texto de mafia metal).
+          <blockquote className="font-victor text-xl md:text-2xl text-silver/70 leading-relaxed max-w-2xl mx-auto">
+            Hecho a mano en Argentina.
           </blockquote>
           <div className="mt-6 flex items-center justify-center gap-4">
             <div className="h-px w-12 bg-gold/30" />

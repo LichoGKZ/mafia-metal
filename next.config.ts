@@ -4,7 +4,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "jlcscdppeevfseanohvh.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
   },
   webpack(config) {
     config.module.rules.push({

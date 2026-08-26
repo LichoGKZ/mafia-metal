@@ -276,7 +276,7 @@ export default function InteractiveMixer() {
       {/* Único elemento visible: el toggle de sonido */}
       <button
         onClick={() => setSoundOn((v) => !v)}
-        className="absolute top-[70px] right-6 md:top-[76px] md:right-8 font-bebas text-[10px] tracking-[0.3em] px-3 py-1.5 transition-colors"
+        className="absolute top-[70px] right-6 md:top-[76px] md:right-8 font-victor text-[10px] tracking-[0.3em] px-3 py-1.5 transition-colors"
         style={{
           pointerEvents: "auto",
           background: "rgba(10,9,8,0.55)",
@@ -597,23 +597,23 @@ function CalibrationGrid() {
             style={{ top: `${p}%`, height: "1px", background: "rgba(255,0,150,0.25)" }}
           />
           <span
-            className="absolute font-bebas text-[9px]"
+            className="absolute font-victor text-[9px]"
             style={{ left: `${p}%`, top: 2, color: "rgba(255,0,150,0.7)" }}
           >
             {p}
           </span>
           <span
-            className="absolute font-bebas text-[9px]"
+            className="absolute font-victor text-[9px]"
             style={{ top: `${p}%`, left: 2, color: "rgba(255,0,150,0.7)" }}
           >
             {p}
           </span>
         </div>
       ))}
-      <div className="absolute top-2 right-2 font-bebas text-[10px] tracking-[0.2em] text-crimson">
+      <div className="absolute top-2 right-2 font-victor text-[10px] tracking-[0.2em] text-crimson">
         MODO CALIBRACIÓN — presioná "C" para salir
       </div>
-      <div className="absolute bottom-2 right-2 font-bebas text-[10px] tracking-[0.2em] text-gold/70">
+      <div className="absolute bottom-2 right-2 font-victor text-[10px] tracking-[0.2em] text-gold/70">
         visibilityFactor: {visibilityFactor.toFixed(2)}
       </div>
     </div>

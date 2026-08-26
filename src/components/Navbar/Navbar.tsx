@@ -60,7 +60,7 @@ export default function Navbar() {
         {/* Logo */}
         <button
           onClick={() => handleNavClick("#home")}
-          className="flex items-center gap-2.5 font-cinzel font-black text-sm tracking-[0.35em] text-gold hover:text-gold-light transition-colors"
+          className="flex items-center gap-2.5 font-victor font-black text-sm tracking-[0.35em] text-gold hover:text-gold-light transition-colors"
         >
           <Image
             src="/images/brand/logo-mafia-gold.svg"
@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* Cart button */}
           <button
             onClick={openCart}
-            className="relative flex items-center gap-2 font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
+            className="relative flex items-center gap-2 font-victor text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
             aria-label="Open cart"
             data-cursor-hover
           >
@@ -97,7 +97,7 @@ export default function Navbar() {
           {/* CASE FILE button */}
           <button
             onClick={() => setOpen((o) => !o)}
-            className="relative flex items-center gap-3 font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
+            className="relative flex items-center gap-3 font-victor text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
             aria-label="Open navigation"
           >
             <span className="text-gold opacity-60 group-hover:opacity-100 transition-opacity">
@@ -140,7 +140,7 @@ export default function Navbar() {
 
             {/* Close button */}
             <div className="relative z-10 flex justify-between items-center px-6 md:px-12 py-5">
-              <span className="flex items-center gap-2.5 font-cinzel font-black text-sm tracking-[0.35em] text-gold">
+              <span className="flex items-center gap-2.5 font-victor font-black text-sm tracking-[0.35em] text-gold">
                 <Image
                   src="/images/brand/logo-mafia-gold.svg"
                   alt=""
@@ -152,7 +152,7 @@ export default function Navbar() {
               </span>
               <button
                 onClick={() => setOpen(false)}
-                className="font-bebas text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors flex items-center gap-3"
+                className="font-victor text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors flex items-center gap-3"
               >
                 CERRAR
                 <span className="text-crimson">✕</span>
@@ -170,7 +170,7 @@ export default function Navbar() {
                     <span className="classified-stamp text-xs">MAFIA METAL</span>
                     <div className="h-px flex-1 bg-gold/20" />
                   </div>
-                  <p className="font-bebas text-xs tracking-[0.4em] text-silver/40 mt-4">
+                  <p className="font-victor text-xs tracking-[0.4em] text-silver/40 mt-4">
                     JOYERÍA HECHA A MANO — MAR DEL PLATA
                   </p>
                 </div>
@@ -190,10 +190,10 @@ export default function Navbar() {
                         className="group flex items-center gap-6 w-full py-4 border-b border-white/5 hover:border-gold/30 transition-colors"
                         data-cursor-hover
                       >
-                        <span className="font-bebas text-sm text-gold/50 group-hover:text-gold transition-colors w-8">
+                        <span className="font-victor text-sm text-gold/50 group-hover:text-gold transition-colors w-8">
                           {item.number}
                         </span>
-                        <span className="font-cinzel text-3xl md:text-5xl font-bold text-silver/80 group-hover:text-gold transition-colors tracking-wider">
+                        <span className="font-victor text-3xl md:text-5xl font-bold text-silver/80 group-hover:text-gold transition-colors tracking-wider">
                           {item.label}
                         </span>
                         <span className="ml-auto text-gold/30 group-hover:text-gold transition-colors transform group-hover:translate-x-2 duration-300">

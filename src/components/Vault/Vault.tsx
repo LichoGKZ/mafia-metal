@@ -89,7 +89,7 @@ export default function Vault() {
         <span className="chapter-label tracking-[0.6em]">
           LA BÓVEDA
         </span>
-        <h2 className="font-cinzel font-black text-[clamp(2.5rem,7vw,6rem)] text-gold-gradient mt-4 leading-none">
+        <h2 className="font-victor font-black text-[clamp(2.5rem,7vw,6rem)] text-gold-gradient mt-4 leading-none">
           LA BÓVEDA
         </h2>
         <div className="gold-divider max-w-md mx-auto mt-6" />
@@ -129,7 +129,7 @@ export default function Vault() {
             >
               <div>
                 <p className="chapter-label text-[10px] mb-2">ACCESO</p>
-                <p className="font-bebas text-crimson text-sm tracking-widest">
+                <p className="font-victor text-crimson text-sm tracking-widest">
                   RESTRINGIDO
                 </p>
               </div>
@@ -219,7 +219,7 @@ export default function Vault() {
                         className="w-full h-full flex items-center justify-center"
                         style={{ background: "linear-gradient(135deg, #1e1d1a, #141310)" }}
                       >
-                        <p className="font-bebas text-silver/20 tracking-[0.3em] text-sm">
+                        <p className="font-victor text-silver/20 tracking-[0.3em] text-sm">
                           FOTO PRÓXIMAMENTE
                         </p>
                       </div>
@@ -233,7 +233,7 @@ export default function Vault() {
                 <div>
                   <p className="chapter-label text-[10px]">PIEZA REAL</p>
                   <motion.p
-                    className="font-inter text-xs mt-1 transition-colors duration-500"
+                    className="font-victor text-xs mt-1 transition-colors duration-500"
                     animate={{ color: isViewerHovered ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}
                   >
                     Mafia Metal
@@ -241,7 +241,7 @@ export default function Vault() {
                 </div>
                 <div className="text-right">
                   <p className="chapter-label text-[10px]">MATERIAL</p>
-                  <p className="font-bebas text-gold text-sm tracking-widest mt-1">
+                  <p className="font-victor text-gold text-sm tracking-widest mt-1">
                     {activeItem.material}
                   </p>
                 </div>
@@ -262,7 +262,7 @@ export default function Vault() {
                 <button
                   key={item.id}
                   onClick={() => setActiveIndex(i)}
-                  className={`flex-1 py-3 font-bebas text-xs tracking-[0.3em] border transition-all ${
+                  className={`flex-1 py-3 font-victor text-xs tracking-[0.3em] border transition-all ${
                     activeIndex === i
                       ? "border-gold bg-gold/10 text-gold"
                       : "border-white/10 text-silver/40 hover:border-gold/30 hover:text-silver/60"
@@ -284,10 +284,10 @@ export default function Vault() {
                 transition={{ duration: 0.4 }}
               >
                 {/* Name */}
-                <h3 className="font-cinzel font-black text-3xl md:text-4xl text-gold-gradient mb-2">
+                <h3 className="font-victor font-black text-3xl md:text-4xl text-gold-gradient mb-2">
                   {activeItem.name}
                 </h3>
-                <p className="font-bebas text-silver/50 tracking-[0.4em] text-sm mb-8">
+                <p className="font-victor text-silver/50 tracking-[0.4em] text-sm mb-8">
                   {activeItem.tagline}
                 </p>
 
@@ -307,24 +307,17 @@ export default function Vault() {
                       className="border border-white/5 p-4 bg-void/50"
                     >
                       <p className="chapter-label text-[10px] mb-2">{label}</p>
-                      <p className="font-bebas text-silver text-sm tracking-widest">
+                      <p className="font-victor text-silver text-sm tracking-widest">
                         {value}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                {/* Classified stamp */}
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="classified-stamp text-xs">PIEZA DE BÓVEDA</div>
-                  <p className="font-inter text-silver/30 text-xs">
-                    Pieza disponible en 7 dias
-                  </p>
-                </div>
 
                 {/* CTA */}
                 <button
-                  className="w-full py-4 font-bebas tracking-[0.4em] text-sm text-obsidian bg-gold hover:bg-gold-light transition-colors metal-shine"
+                  className="w-full py-4 font-victor tracking-[0.4em] text-sm text-obsidian bg-gold hover:bg-gold-light transition-colors metal-shine"
                   data-cursor-hover
                 >
                   SOLICITAR PIEZA ESPECIAL

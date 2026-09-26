@@ -129,7 +129,6 @@ export default function Story() {
         <ProcessFilmstrip />
 
 
-
         <motion.div
           className="mt-24 text-center border border-gold/10 p-12 relative"
           initial={{ opacity: 0, y: 40 }}

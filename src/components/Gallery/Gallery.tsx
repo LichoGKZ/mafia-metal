@@ -16,8 +16,9 @@ export default function Gallery() {
 
   useEffect(() => {
     if (!headingRef.current) return;
-    gsap.fromTo(
-      headingRef.current,
+    const el = headingRef.current;
+    const tween = gsap.fromTo(
+      el,
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -25,12 +26,16 @@ export default function Gallery() {
         duration: 1,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: headingRef.current,
+          trigger: el,
           start: "top 80%",
           toggleActions: "play none none reverse",
         },
       }
     );
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
   }, []);
 
   return (

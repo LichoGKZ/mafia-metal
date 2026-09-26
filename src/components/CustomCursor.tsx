@@ -11,6 +11,8 @@ export default function CustomCursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
+    document.body.classList.add("custom-cursor-active");
+
     let mouseX = 0;
     let mouseY = 0;
     let ringX = 0;
@@ -18,6 +20,12 @@ export default function CustomCursor() {
     let rafId: number;
 
     const onMouseMove = (e: MouseEvent) => {
+      if (dot.style.opacity !== "1") {
+        dot.style.opacity = "1";
+        ring.style.opacity = "1";
+        ringX = e.clientX;
+        ringY = e.clientY;
+      }
       mouseX = e.clientX;
       mouseY = e.clientY;
       dot.style.left = `${mouseX}px`;
@@ -71,6 +79,7 @@ export default function CustomCursor() {
       cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMouseMove);
       observer.disconnect();
+      document.body.classList.remove("custom-cursor-active");
     };
   }, []);
 

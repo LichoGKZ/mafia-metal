@@ -43,6 +43,12 @@ body {
   color: var(--ink);
   font-family: var(--font-victor-mono), monospace;
   overflow-x: hidden;
+}
+
+/* El cursor real sólo se oculta cuando CustomCursor.tsx está montado y
+   dibujando el punto/anillo de reemplazo (hoy sólo en la home). Así el
+   admin, el login y el checkout conservan el mouse normal del sistema. */
+body.custom-cursor-active {
   cursor: none;
 }
 
@@ -81,8 +87,9 @@ body {
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
+  opacity: 0;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
 .cursor-ring {
@@ -95,6 +102,7 @@ body {
   border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
+  opacity: 0;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
 }

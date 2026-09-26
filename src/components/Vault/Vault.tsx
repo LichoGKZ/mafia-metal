@@ -87,10 +87,10 @@ export default function Vault() {
       {/* Chapter header */}
       <div ref={titleRef} className="text-center mb-16 px-6 opacity-0">
         <span className="chapter-label tracking-[0.6em]">
-          LA BÓVEDA
+          
         </span>
         <h2 className="font-victor font-black text-[clamp(2.5rem,7vw,6rem)] text-gold-gradient mt-4 leading-none">
-          LA BÓVEDA
+          
         </h2>
         <div className="gold-divider max-w-md mx-auto mt-6" />
       </div>

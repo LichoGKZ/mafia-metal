@@ -10,16 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         obsidian: "#0b0b0b",
-        void: "#151515",
-        paper: "#1a1916",
-        "paper-light": "#22211e",
-        "paper-mid": "#2a2925",
+        void: "#eee9db",
+        paper: "#f3f0e7",
+        "paper-light": "#eeeadd",
+        "paper-mid": "#e6e1d2",
         gold: "#D4AF37",
         "gold-dark": "#A67C00",
-        silver: "#C0C0C0",
+        silver: "#2a2822",
         crimson: "#8B0000",
         "gold-light": "#F0D060",
-        ink: "#b0aa98",
+        ink: "#17150f",
       },
       fontFamily: {
         mono: ["var(--font-victor-mono)", "monospace"],

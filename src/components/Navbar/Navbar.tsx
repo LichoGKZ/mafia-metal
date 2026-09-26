@@ -48,42 +48,56 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Fixed navbar bar */}
+      {/* Fixed navbar bar — barra negra sólida, como la referencia que mandó
+          la clienta: links directos a la izquierda, logo arriba a la
+          derecha, hover pasa a gris (no dorado). */}
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-[9000] flex items-center justify-between px-6 md:px-12 py-5 transition-all duration-500 ${
-          scrolled ? "glass-dark" : "bg-transparent"
-        }`}
+        className="fixed top-0 left-0 right-0 z-[9000] flex items-center justify-between px-6 md:px-12 py-5 transition-colors duration-500"
+        style={{
+          background: scrolled ? "rgba(11,11,11,0.92)" : "rgba(11,11,11,0.75)",
+          backdropFilter: "blur(6px)",
+        }}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 2.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Logo */}
-        <button
-          onClick={() => handleNavClick("#home")}
-          className="flex items-center gap-2.5 font-victor font-black text-sm tracking-[0.35em] text-gold hover:text-gold-light transition-colors"
-        >
-          <Image
-            src="/images/brand/logo-mafia-gold.svg"
-            alt=""
-            width={22}
-            height={22}
-            className="opacity-90"
-          />
-          MAFIA<span className="text-silver mx-1">·</span>METAL
-        </button>
+        {/* Links — mismo texto/orden que la captura de referencia.
+            "Pictures" y "About" quedan en inglés como en la referencia;
+            si en algún momento se quieren en español avisame y los cambio
+            (PRODUCTOS / FOTOS / NOSOTROS). */}
+        <div className="flex items-center gap-6 md:gap-10">
+          <button
+            onClick={() => handleNavClick("#collection")}
+            className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
+            data-cursor-hover
+          >
+            Products
+          </button>
+          <button
+            onClick={() => handleNavClick("#gallery")}
+            className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
+            data-cursor-hover
+          >
+            Pictures
+          </button>
+          <button
+            onClick={() => handleNavClick("#contact")}
+            className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
+            data-cursor-hover
+          >
+            About
+          </button>
+        </div>
 
-        <div className="flex items-center gap-6">
-          {/* Cart button */}
+        <div className="flex items-center gap-5">
+          {/* Cart button — no está en la referencia, se mantiene chico para no perder la función */}
           <button
             onClick={openCart}
-            className="relative flex items-center gap-2 font-victor text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
+            className="relative flex items-center gap-1.5 font-victor text-[11px] tracking-[0.2em] text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             aria-label="Open cart"
             data-cursor-hover
           >
-            <span className="text-gold opacity-70 group-hover:opacity-100 transition-opacity">
-              ◆
-            </span>
-            <span className="hidden sm:inline">PEDIDO</span>
+            ◆
             {itemCount > 0 && (
               <span
                 className="flex items-center justify-center w-4 h-4 rounded-full font-victor text-[9px]"
@@ -94,17 +108,19 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* CASE FILE button */}
+          {/* Logo — arriba a la derecha, como en la captura */}
           <button
             onClick={() => setOpen((o) => !o)}
-            className="relative flex items-center gap-3 font-victor text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors group"
+            className="flex items-center justify-center hover:opacity-70 transition-opacity"
             aria-label="Open navigation"
           >
-            <span className="text-gold opacity-60 group-hover:opacity-100 transition-opacity">
-              ▶
-            </span>
-            MENÚ
-            <div className="absolute -bottom-1 left-0 right-0 h-px bg-gold scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            <Image
+              src="/images/brand/logo-mafia-gold.svg"
+              alt="Mafia Metal"
+              width={26}
+              height={26}
+              className="opacity-90 w-[26px] h-[26px]"
+            />
           </button>
         </div>
       </motion.nav>
@@ -146,7 +162,7 @@ export default function Navbar() {
                   alt=""
                   width={20}
                   height={20}
-                  className="opacity-90"
+                  className="opacity-90 w-[20px] h-[20px]"
                 />
                 MAFIA<span className="text-silver mx-1">·</span>METAL
               </span>

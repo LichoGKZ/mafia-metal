@@ -50,7 +50,7 @@ function StepCard({
   }, [index]);
 
   return (
-    <div ref={cardRef} className="border border-white/5 p-8 bg-void/30">
+    <div ref={cardRef} className="border border-ink/5 p-8 bg-void/30">
       <span className="chapter-label text-[10px] tracking-[0.4em] text-gold/50">
         {String(index + 1).padStart(2, "0")}
       </span>

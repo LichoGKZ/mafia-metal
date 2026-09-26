@@ -46,7 +46,7 @@ function InputField({
     <div className="relative">
       <label
         className="font-victor text-[9px] tracking-[0.35em] uppercase mb-2 block transition-colors duration-200"
-        style={{ color: focused ? "#d4af37" : "rgba(176,170,152,0.3)" }}
+        style={{ color: focused ? "#d4af37" : "rgba(23,21,15,0.3)" }}
       >
         {label} {required && <span style={{ color: "#8b0000" }}>*</span>}
       </label>
@@ -54,7 +54,7 @@ function InputField({
         className="relative pb-0.5"
         style={{
           borderBottom: `1px solid ${
-            focused ? "#d4af37" : "rgba(176,170,152,0.1)"
+            focused ? "#d4af37" : "rgba(23,21,15,0.1)"
           }`,
           transition: "border-color 0.2s",
         }}
@@ -70,7 +70,7 @@ function InputField({
           required={required}
           className="w-full bg-transparent py-2.5 font-victor text-xs outline-none"
           style={{
-            color: "#b0aa98",
+            color: "#17150f",
           }}
         />
       </div>
@@ -98,7 +98,7 @@ function SelectField({
     <div>
       <label
         className="font-victor text-[9px] tracking-[0.35em] uppercase mb-2 block transition-colors duration-200"
-        style={{ color: focused ? "#d4af37" : "rgba(176,170,152,0.3)" }}
+        style={{ color: focused ? "#d4af37" : "rgba(23,21,15,0.3)" }}
       >
         {label} {required && <span style={{ color: "#8b0000" }}>*</span>}
       </label>
@@ -106,7 +106,7 @@ function SelectField({
         className="relative"
         style={{
           borderBottom: `1px solid ${
-            focused ? "#d4af37" : "rgba(176,170,152,0.1)"
+            focused ? "#d4af37" : "rgba(23,21,15,0.1)"
           }`,
           transition: "border-color 0.2s",
         }}
@@ -119,16 +119,16 @@ function SelectField({
           onBlur={() => setFocused(false)}
           required={required}
           className="w-full bg-transparent py-2.5 font-victor text-xs outline-none appearance-none cursor-pointer"
-          style={{ color: "#b0aa98", background: "transparent" }}
+          style={{ color: "#17150f", background: "transparent" }}
         >
-          <option value="" style={{ background: "#1a1916" }}>
+          <option value="" style={{ background: "#f3f0e7" }}>
             elegí un interés
           </option>
           {options.map((opt) => (
             <option
               key={opt.value}
               value={opt.value}
-              style={{ background: "#1a1916" }}
+              style={{ background: "#f3f0e7" }}
             >
               {opt.label}
             </option>
@@ -136,7 +136,7 @@ function SelectField({
         </select>
         <div
           className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-xs"
-          style={{ color: "rgba(176,170,152,0.3)" }}
+          style={{ color: "rgba(23,21,15,0.3)" }}
         >
           ▾
         </div>
@@ -163,14 +163,14 @@ function TextAreaField({
     <div>
       <label
         className="font-victor text-[9px] tracking-[0.35em] uppercase mb-2 block transition-colors"
-        style={{ color: focused ? "#d4af37" : "rgba(176,170,152,0.3)" }}
+        style={{ color: focused ? "#d4af37" : "rgba(23,21,15,0.3)" }}
       >
         {label}
       </label>
       <div
         style={{
           borderBottom: `1px solid ${
-            focused ? "#d4af37" : "rgba(176,170,152,0.1)"
+            focused ? "#d4af37" : "rgba(23,21,15,0.1)"
           }`,
           transition: "border-color 0.2s",
         }}
@@ -184,7 +184,7 @@ function TextAreaField({
           placeholder={placeholder}
           rows={4}
           className="w-full bg-transparent py-2.5 font-victor text-xs outline-none resize-none"
-          style={{ color: "#b0aa98" }}
+          style={{ color: "#17150f" }}
         />
       </div>
     </div>
@@ -255,7 +255,7 @@ export default function Contact() {
           <p className="chapter-label tracking-[0.5em] mb-3">contacto</p>
           <div
             className="h-px mb-6"
-            style={{ background: "rgba(176,170,152,0.08)" }}
+            style={{ background: "rgba(23,21,15,0.08)" }}
           />
         </div>
 
@@ -292,13 +292,13 @@ export default function Contact() {
                   <p className="chapter-label text-[9px] mb-1.5">{label}</p>
                   <p
                     className="font-victor text-xs mb-1"
-                    style={{ color: "#b0aa98" }}
+                    style={{ color: "#17150f" }}
                   >
                     {value}
                   </p>
                   <p
                     className="font-victor text-[10px]"
-                    style={{ color: "rgba(176,170,152,0.3)" }}
+                    style={{ color: "rgba(23,21,15,0.3)" }}
                   >
                     {detail}
                   </p>
@@ -317,7 +317,7 @@ export default function Contact() {
                       key={label}
                       className="flex items-center justify-between px-4 py-3 cursor-pointer group transition-all"
                       style={{
-                        border: "1px solid rgba(176,170,152,0.06)",
+                        border: "1px solid rgba(23,21,15,0.06)",
                       }}
                       data-cursor-hover
                     >
@@ -365,7 +365,7 @@ export default function Contact() {
                 </h3>
                 <p
                   className="font-victor text-xs leading-relaxed max-w-xs"
-                  style={{ color: "rgba(176,170,152,0.4)" }}
+                  style={{ color: "rgba(23,21,15,0.4)" }}
                 >
                   tu consulta fue registrada.
                   te contactamos dentro de las próximas 24 horas.
@@ -382,7 +382,7 @@ export default function Contact() {
                 >
                   <span
                     className="font-victor text-[10px] tracking-[0.3em]"
-                    style={{ color: "rgba(176,170,152,0.3)" }}
+                    style={{ color: "rgba(23,21,15,0.3)" }}
                   >
                     Nueva consulta
                   </span>
@@ -437,11 +437,11 @@ export default function Contact() {
 
                 <div
                   className="flex items-center justify-between pt-4"
-                  style={{ borderTop: "1px solid rgba(176,170,152,0.06)" }}
+                  style={{ borderTop: "1px solid rgba(23,21,15,0.06)" }}
                 >
                   <p
                     className="font-victor text-[9px]"
-                    style={{ color: "rgba(176,170,152,0.2)" }}
+                    style={{ color: "rgba(23,21,15,0.2)" }}
                   >
                     * obligatorio
                   </p>
@@ -477,7 +477,7 @@ export default function Contact() {
       {/* ── Footer ── */}
       <motion.div
         className="mt-24 px-6"
-        style={{ borderTop: "1px solid rgba(176,170,152,0.05)" }}
+        style={{ borderTop: "1px solid rgba(23,21,15,0.05)" }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
@@ -492,7 +492,7 @@ export default function Contact() {
           </div>
           <p
             className="font-victor text-[10px] text-center"
-            style={{ color: "rgba(176,170,152,0.2)" }}
+            style={{ color: "rgba(23,21,15,0.2)" }}
           >
             © {new Date().getFullYear()} mafia metal. todos los derechos reservados.
             hecho a mano en argentina.

@@ -1,181 +1,55 @@
-import React, { memo, useMemo } from "react";
+import React, { memo } from "react";
 
 export interface BackgroundProps {
   opacity?: number;
-  seed?: number;
   className?: string;
 }
 
+/**
+ * Fondo de "mural gigante" — la textura real de papel envejecido
+ * (paper-grunge-tile.webp) más varias manchas de color grandes,
+ * ancladas a distintas alturas de TODA la página (no del viewport),
+ * para que a medida que bajás el scroll el fondo vaya cambiando de
+ * tono como si fueran distintas paredes de un mismo mural — en vez
+ * de un tile que se repite siempre igual.
+ *
+ * Importante: este layer va en flujo normal (position: absolute
+ * dentro de .page-bg-wrap, que mide lo mismo que <main>), NO fixed.
+ * Así se desplaza junto con el contenido y cada mancha queda
+ * "pegada" a la sección de la página que le corresponde, siempre en
+ * el mismo lugar aunque el usuario suba y baje.
+ */
 const VintagePaperBackground = memo<BackgroundProps>(
-  ({ opacity = 1, seed, className }) => {
-    const id = useMemo(
-      () => `paper-${seed ?? Math.floor(Math.random() * 100000)}`,
-      [seed]
-    );
-
+  ({ opacity = 1, className }) => {
     return (
-      <svg
+      <div
         className={className}
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
+        aria-hidden
         style={{
-          position: "fixed",
+          position: "absolute",
           inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
           zIndex: -1,
           opacity,
+          pointerEvents: "none",
+          backgroundColor: "#f3f0e7",
+          backgroundImage: [
+            // Manchas grandes tipo mural, cada una anclada a una altura
+            // distinta de la página completa (no del viewport)
+            "radial-gradient(ellipse 70% 40% at 20% 6%,  rgba(212,175,55,0.10) 0%, transparent 65%)", // dorado arriba
+            "radial-gradient(ellipse 80% 45% at 80% 22%, rgba(140,90,40,0.08)  0%, transparent 65%)", // óxido
+            "radial-gradient(ellipse 75% 40% at 15% 42%, rgba(90,110,90,0.07)  0%, transparent 65%)", // verdoso
+            "radial-gradient(ellipse 85% 45% at 75% 58%, rgba(120,110,90,0.08) 0%, transparent 65%)", // gris piedra
+            "radial-gradient(ellipse 75% 40% at 25% 76%, rgba(212,175,55,0.09) 0%, transparent 65%)", // dorado
+            "radial-gradient(ellipse 90% 45% at 70% 94%, rgba(100,80,60,0.09)  0%, transparent 65%)", // sepia abajo
+            // .webp: ~4KB, textura real del diseño aprobado
+            "url('/images/texture/paper-grunge-tile.webp')",
+          ].join(", "),
+          backgroundRepeat:
+            "no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat",
+          backgroundSize:
+            "100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 340px 265px",
         }}
-      >
-        <defs>
-          {/* Fine Grain */}
-          <filter id={`${id}-grain`}>
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="1.2"
-              numOctaves="2"
-              seed={seed ?? 3}
-            />
-            <feColorMatrix type="saturate" values="0" />
-            <feComponentTransfer>
-              {/* Grano sutil pero visible sobre fondo oscuro */}
-              <feFuncA type="table" tableValues="0 0.05" />
-            </feComponentTransfer>
-          </filter>
-
-          {/* Fibers */}
-          <filter id={`${id}-fibers`}>
-            <feTurbulence
-              type="turbulence"
-              baseFrequency="0.015 0.35"
-              numOctaves="2"
-              seed={(seed ?? 3) + 10}
-            />
-            <feGaussianBlur stdDeviation="0.35" />
-            <feComponentTransfer>
-              <feFuncA type="table" tableValues="0 0.03" />
-            </feComponentTransfer>
-          </filter>
-
-          {/* Stains / manchas de sombra, no de suciedad clara */}
-          <filter id={`${id}-stains`}>
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.015"
-              numOctaves="4"
-              seed={(seed ?? 3) + 20}
-            />
-            <feGaussianBlur stdDeviation="3" />
-            <feColorMatrix
-              type="matrix"
-              values="
-              1 0 0 0 0
-              0 1 0 0 0
-              0 0 1 0 0
-              0 0 0 .25 0"
-            />
-          </filter>
-
-          {/* Viñeta hacia negro en los bordes, no hacia blanco */}
-          <radialGradient id={`${id}-vignette`}>
-            <stop offset="55%" stopColor="black" stopOpacity="0" />
-            <stop offset="100%" stopColor="black" stopOpacity=".35" />
-          </radialGradient>
-
-          {/* Leve resplandor dorado ambiental, muy sutil, centrado */}
-          <radialGradient id={`${id}-goldglow`} cx="50%" cy="35%" r="70%">
-            <stop offset="0%" stopColor="#d4af37" stopOpacity=".05" />
-            <stop offset="60%" stopColor="#d4af37" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        {/* Base: fondo oscuro (obsidian/paper), NO papel claro */}
-        <rect width="100%" height="100%" fill="#0b0b0b" />
-        <rect width="100%" height="100%" fill="#1a1916" opacity="0.9" />
-
-        {/* Resplandor dorado ambiental */}
-        <rect width="100%" height="100%" fill={`url(#${id}-goldglow)`} />
-
-        {/* Variación tonal oscura */}
-        <rect
-          width="100%"
-          height="100%"
-          filter={`url(#${id}-stains)`}
-          fill="#000"
-          opacity=".25"
-        />
-
-        {/* Film Grain (grano claro sobre oscuro, sutil) */}
-        <rect
-          width="100%"
-          height="100%"
-          filter={`url(#${id}-grain)`}
-          fill="#fff"
-        />
-
-        {/* Fibers */}
-        <rect
-          width="100%"
-          height="100%"
-          filter={`url(#${id}-fibers)`}
-          fill="#fff"
-        />
-
-        {/* Viñeta hacia los bordes */}
-        <rect width="100%" height="100%" fill={`url(#${id}-vignette)`} />
-
-        {/* Polvo aleatorio, ahora claro (dorado tenue) sobre fondo oscuro */}
-        {useMemo(() => {
-          const dots = [];
-          const rand = (n: number) =>
-            Math.abs(Math.sin((seed ?? 5) * n * 12.9898)) % 1;
-
-          for (let i = 0; i < 120; i++) {
-            dots.push(
-              <circle
-                key={i}
-                cx={rand(i + 1) * 100}
-                cy={rand(i + 30) * 100}
-                r={0.02 + rand(i + 60) * 0.12}
-                fill="#d4af37"
-                opacity={0.015 + rand(i + 90) * 0.05}
-              />
-            );
-          }
-
-          return dots;
-        }, [seed])}
-
-        {/* Marcas sutiles */}
-        <g opacity=".04">
-          <circle
-            cx="72"
-            cy="38"
-            r="8"
-            fill="none"
-            stroke="#d4af37"
-            strokeWidth=".3"
-            strokeDasharray="1 2"
-          />
-          <circle
-            cx="22"
-            cy="73"
-            r="10"
-            fill="none"
-            stroke="#d4af37"
-            strokeWidth=".25"
-            strokeDasharray=".8 2.2"
-          />
-        </g>
-
-        {/* Rayones finos */}
-        <g stroke="#d4af37" opacity=".05">
-          <line x1="10" y1="18" x2="42" y2="15" strokeWidth=".08" />
-          <line x1="63" y1="76" x2="95" y2="72" strokeWidth=".08" />
-          <line x1="48" y1="8" x2="53" y2="32" strokeWidth=".05" />
-        </g>
-      </svg>
+      />
     );
   }
 );

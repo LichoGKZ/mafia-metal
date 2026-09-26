@@ -217,7 +217,7 @@ export default function Vault() {
                     ) : (
                       <div
                         className="w-full h-full flex items-center justify-center"
-                        style={{ background: "linear-gradient(135deg, #1e1d1a, #141310)" }}
+                        style={{ background: "linear-gradient(135deg, #f0ede2, #e6e1d1)" }}
                       >
                         <p className="font-victor text-silver/20 tracking-[0.3em] text-sm">
                           FOTO PRÓXIMAMENTE
@@ -265,7 +265,7 @@ export default function Vault() {
                   className={`flex-1 py-3 font-victor text-xs tracking-[0.3em] border transition-all ${
                     activeIndex === i
                       ? "border-gold bg-gold/10 text-gold"
-                      : "border-white/10 text-silver/40 hover:border-gold/30 hover:text-silver/60"
+                      : "border-ink/10 text-silver/40 hover:border-gold/30 hover:text-silver/60"
                   }`}
                   data-cursor-hover
                 >
@@ -304,7 +304,7 @@ export default function Vault() {
                   ].map(({ label, value }) => (
                     <div
                       key={label}
-                      className="border border-white/5 p-4 bg-void/50"
+                      className="border border-ink/5 p-4 bg-void/50"
                     >
                       <p className="chapter-label text-[10px] mb-2">{label}</p>
                       <p className="font-victor text-silver text-sm tracking-widest">

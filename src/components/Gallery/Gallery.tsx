@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { galleryPhotos } from "@/data/collection";
 import FramedGallery from "@/components/ui/FramedGallery";
+import PhotoTeaser from "@/components/ui/PhotoTeaser";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -49,7 +50,11 @@ export default function Gallery() {
           <div className="gold-divider max-w-sm mx-auto mt-6" />
         </div>
 
-        <FramedGallery images={galleryPhotos} alt="Mafia Metal en la calle" />
+        <PhotoTeaser image={galleryPhotos[0]} targetId="gallery-wall" />
+
+        <div id="gallery-wall">
+          <FramedGallery images={galleryPhotos} alt="Mafia Metal en la calle" />
+        </div>
       </div>
     </section>
   );

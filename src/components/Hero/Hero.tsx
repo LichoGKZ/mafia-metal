@@ -22,13 +22,13 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden flex items-end justify-center">
+    <section className="relative h-[72vh] md:h-[82vh] w-full overflow-hidden flex items-end justify-center">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero-dj.jpg"
           alt="Mafia Metal DJ"
-          width={1920}
-          height={50}
+          fill
+          sizes="100vw"
           className="object-cover object-center"
           priority
         />

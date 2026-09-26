@@ -106,11 +106,9 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${cinzel.variable} ${bebasNeue.variable} ${inter.variable} ${victorMono.variable}`}
+      suppressHydrationWarning
     >
-      <body
-        className="antialiased"
-        style={{ background: "#1a1916", color: "#b0aa98" }}
-      >
+      <body className="antialiased" suppressHydrationWarning>
         <CartProvider>
           {children}
           <CartDrawer />

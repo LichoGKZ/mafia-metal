@@ -119,7 +119,7 @@ export default function FramedGallery({
         {/* fondo detrás de las fotos, dentro del marco */}
         <div
           className="absolute inset-0 -z-10"
-          style={{ background: "#141310" }}
+          style={{ background: "#eae5d6" }}
         />
 
         <div className="relative flex flex-wrap items-center justify-center gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-10 py-8 sm:py-10 px-2 sm:px-4">
@@ -221,7 +221,7 @@ export default function FramedGallery({
             <button
               onClick={close}
               className="absolute top-5 right-5 md:top-8 md:right-8 z-10 w-9 h-9 flex items-center justify-center font-victor text-sm text-silver/60 hover:text-gold transition-colors"
-              style={{ border: "1px solid rgba(176,170,152,0.15)" }}
+              style={{ border: "1px solid rgba(23,21,15,0.15)" }}
               aria-label="Cerrar"
             >
               ×

@@ -10,9 +10,10 @@
 :root {
   --obsidian: #0b0b0b;
   --void: #151515;
-  --paper: #1a1916;
-  --paper-light: #22211e;
-  --paper-mid: #2a2925;
+  --paper: #f3f0e7;
+  --paper-light: #eeeadd;
+  --paper-mid: #e6e1d2;
+  --ink: #17150f;
   --gold: #d4af37;
   --gold-dark: #a67c00;
   --silver: #c0c0c0;
@@ -29,11 +30,17 @@
 html {
   scroll-behavior: auto;
   overflow-x: hidden;
+  background-color: var(--paper);
 }
 
 body {
-  background-color: var(--paper);
-  color: #b0aa98;
+  /* el color sólido lo pone VintagePaperBackground (SVG con textura,
+     fixed + z-index -1); si el body también pinta un fondo opaco acá,
+     tapa la textura porque el body no genera stacking context y su
+     background se dibuja por debajo del hijo con z-index negativo.
+     Por eso queda transparent. */
+  background-color: transparent;
+  color: var(--ink);
   font-family: var(--font-victor-mono), monospace;
   overflow-x: hidden;
   cursor: none;
@@ -60,7 +67,7 @@ body {
    para que no haya saltos de tonalidad entre secciones ── */
 .street-tint {
   position: relative;
-  background-color: rgba(9, 8, 7, 0.55);
+  background-color: rgba(243, 240, 231, 0.4);
 }
 
 /* ── Custom Cursor ── */
@@ -151,7 +158,7 @@ body {
 
 /* ── Light paper for product sections ── */
 .paper-light-bg {
-  background-color: rgba(9, 8, 7, 0.55);
+  background-color: rgba(243, 240, 231, 0.4);
   position: relative;
 }
 
@@ -216,7 +223,7 @@ body {
   font-family: var(--font-victor-mono), monospace;
   font-size: 0.65rem;
   letter-spacing: 0.35em;
-  color: rgba(212, 175, 55, 0.45);
+  color: rgba(23, 21, 15, 0.55);
   text-transform: uppercase;
 }
 
@@ -354,7 +361,7 @@ html.lenis, html.lenis body { height: auto; }
   font-family: var(--font-victor-mono), monospace;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
-  color: rgba(176, 170, 152, 0.7);
+  color: rgba(23, 21, 15, 0.7);
   transition: color 0.2s;
   text-decoration: none;
   position: relative;
@@ -377,4 +384,18 @@ html.lenis, html.lenis body { height: auto; }
 /* ── Responsive Canvas ── */
 @media (max-width: 768px) {
   .hero-canvas { height: 50vh !important; }
+}
+
+/* ── Evitar auto-zoom de iOS Safari en formularios ──
+   Cualquier input/textarea/select con font-size menor a 16px hace que
+   Safari en iPhone haga zoom automático al tocarlo (rompe el layout y
+   hay que hacer zoom-out a mano). El form de contacto usaba text-xs
+   (12px), así que forzamos 16px real en mobile sin cambiar el tamaño
+   visual en desktop. */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
 }

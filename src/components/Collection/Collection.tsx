@@ -39,11 +39,11 @@ function ProductImage({
     return (
       <div
         className={`w-full h-full flex items-center justify-center ${className ?? ""}`}
-        style={{ background: "linear-gradient(135deg, #1e1d1a, #141310)" }}
+        style={{ background: "linear-gradient(135deg, #f0ede2, #e6e1d1)" }}
       >
         <p
           className="font-victor text-[10px] tracking-[0.3em] text-center px-4"
-          style={{ color: "rgba(176,170,152,0.3)" }}
+          style={{ color: "rgba(23,21,15,0.3)" }}
         >
           FOTO PRÓXIMAMENTE
         </p>
@@ -62,12 +62,16 @@ function ProductImage({
     );
   }
 
+  // NOTA: hasta que tengamos el PNG sin fondo de cada pieza, usamos
+  // object-contain (no recorta ni "revienta" la imagen) sobre un fondo
+  // neutro. En cuanto lleguen los archivos sin fondo, esto va a quedar
+  // igual que el mockup (la pieza flotando sola).
   return (
     <Image
       src={item.image}
       alt={item.name}
       fill
-      className={`object-cover ${className ?? ""}`}
+      className={`object-contain p-6 ${className ?? ""}`}
       sizes="(max-width: 768px) 100vw, 50vw"
     />
   );
@@ -134,7 +138,10 @@ function ProductRow({
       {/* ── Foto del producto ── */}
       <div className="w-full md:w-1/2 relative z-[1]">
         <div className="relative overflow-hidden">
-          <div className="h-64 md:h-80 relative">
+          <div
+            className="h-64 md:h-80 relative"
+            style={{ background: "linear-gradient(135deg, #f0ede2, #e6e1d1)" }}
+          >
             <ProductImage item={item} />
           </div>
           {/* Badge */}
@@ -166,7 +173,7 @@ function ProductRow({
       >
         <div
           className="flex-1 h-px transition-colors duration-500"
-          style={{ background: "rgba(176,170,152,0.15)" }}
+          style={{ background: "rgba(23,21,15,0.55)" }}
         />
       </div>
 
@@ -177,58 +184,35 @@ function ProductRow({
         }`}
       >
         <div
-          className="font-victor mb-4"
+          className="font-victor mb-2"
           style={{
-            fontSize: "3rem",
-            color: "rgba(176,170,152,0.06)",
+            fontSize: "2.75rem",
+            color: "#17150f",
             lineHeight: 1,
-            fontWeight: 700,
+            fontWeight: 400,
           }}
         >
           {String(index + 1).padStart(2, "0")}
         </div>
 
         <div
-          className="font-victor text-sm tracking-[0.2em] mb-1"
-          style={{ color: "#d4af37" }}
+          className="font-victor font-bold text-lg md:text-xl tracking-[0.08em] mb-1"
+          style={{ color: "#17150f" }}
         >
-          [ {item.name} ]
+          {item.name}
         </div>
 
+        {/* Solo material | stock | año — sin descripción ni precio, tal
+            como pidió la clienta (que solo se vea el nombre del producto
+            y este dato corto). El detalle completo sigue disponible al
+            hacer click, en el modal. */}
         <p
-          className="font-victor text-[10px] tracking-[0.25em] mb-4"
-          style={{ color: "rgba(176,170,152,0.35)" }}
+          className="font-victor text-[10px] tracking-[0.25em]"
+          style={{ color: "rgba(23,21,15,0.35)" }}
         >
           {item.subtitle?.toLowerCase() || item.material?.toLowerCase()} &nbsp;|&nbsp; en
           stock &nbsp;|&nbsp; {new Date().getFullYear()}
         </p>
-
-        <p
-          className="font-victor text-xs leading-relaxed mb-6 max-w-xs"
-          style={{ color: "rgba(176,170,152,0.45)" }}
-        >
-          {item.description}
-        </p>
-
-        <div className="flex items-center gap-6" style={{ justifyContent: isEven ? "flex-start" : "flex-end" }}>
-          <span
-            className="font-victor text-base tracking-widest"
-            style={{ color: "#d4af37" }}
-          >
-            {item.price}
-          </span>
-          <button
-            onClick={(e) => { e.stopPropagation(); onSelect(item); }}
-            className="font-victor text-[10px] tracking-[0.3em] px-5 py-2 transition-all hover:border-gold/60"
-            style={{
-              border: "1px solid rgba(176,170,152,0.15)",
-              color: "rgba(176,170,152,0.6)",
-            }}
-            data-cursor-hover
-          >
-            ver →
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -287,7 +271,7 @@ function ItemModal({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center font-victor text-xs"
-          style={{ color: "rgba(176,170,152,0.5)", border: "1px solid rgba(176,170,152,0.1)" }}
+          style={{ color: "rgba(23,21,15,0.5)", border: "1px solid rgba(23,21,15,0.1)" }}
         >
           ×
         </button>
@@ -298,7 +282,7 @@ function ItemModal({
             className="relative border-b md:border-b-0 md:border-r"
             style={{
               borderColor: "rgba(212,175,55,0.08)",
-              background: "linear-gradient(135deg, #1e1d1a, #141310)",
+              background: "linear-gradient(135deg, #f0ede2, #e6e1d1)",
               minHeight: 360,
             }}
           >
@@ -317,7 +301,7 @@ function ItemModal({
               </h2>
               <p
                 className="font-victor text-[10px] tracking-[0.3em] mb-6"
-                style={{ color: "rgba(176,170,152,0.35)" }}
+                style={{ color: "rgba(23,21,15,0.35)" }}
               >
                 {item.subtitle}
               </p>
@@ -326,7 +310,7 @@ function ItemModal({
 
               <p
                 className="font-victor text-xs leading-relaxed mb-8"
-                style={{ color: "rgba(176,170,152,0.5)" }}
+                style={{ color: "rgba(23,21,15,0.5)" }}
               >
                 {item.description}
               </p>
@@ -339,7 +323,7 @@ function ItemModal({
                   <div
                     key={label}
                     className="flex justify-between pb-3"
-                    style={{ borderBottom: "1px solid rgba(176,170,152,0.06)" }}
+                    style={{ borderBottom: "1px solid rgba(23,21,15,0.06)" }}
                   >
                     <span className="chapter-label text-[10px]">{label}</span>
                     <span
@@ -395,7 +379,7 @@ function ItemModal({
           >
             <div className="flex items-center gap-4 mb-5">
               <span className="chapter-label text-[10px]">en la calle</span>
-              <div className="h-px flex-1" style={{ background: "rgba(176,170,152,0.08)" }} />
+              <div className="h-px flex-1" style={{ background: "rgba(23,21,15,0.08)" }} />
             </div>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
               {item.lifestyleImages.map((src, i) => (
@@ -454,29 +438,29 @@ export default function Collection({ items }: { items: JewelryItem[] }) {
       <div
         className="absolute top-8 left-8 w-5 h-5 hidden md:block"
         style={{
-          borderTop: "1px solid rgba(176,170,152,0.12)",
-          borderLeft: "1px solid rgba(176,170,152,0.12)",
+          borderTop: "1px solid rgba(23,21,15,0.12)",
+          borderLeft: "1px solid rgba(23,21,15,0.12)",
         }}
       />
       <div
         className="absolute top-8 right-8 w-5 h-5 hidden md:block"
         style={{
-          borderTop: "1px solid rgba(176,170,152,0.12)",
-          borderRight: "1px solid rgba(176,170,152,0.12)",
+          borderTop: "1px solid rgba(23,21,15,0.12)",
+          borderRight: "1px solid rgba(23,21,15,0.12)",
         }}
       />
       <div
         className="absolute bottom-8 left-8 w-5 h-5 hidden md:block"
         style={{
-          borderBottom: "1px solid rgba(176,170,152,0.12)",
-          borderLeft: "1px solid rgba(176,170,152,0.12)",
+          borderBottom: "1px solid rgba(23,21,15,0.12)",
+          borderLeft: "1px solid rgba(23,21,15,0.12)",
         }}
       />
       <div
         className="absolute bottom-8 right-8 w-5 h-5 hidden md:block"
         style={{
-          borderBottom: "1px solid rgba(176,170,152,0.12)",
-          borderRight: "1px solid rgba(176,170,152,0.12)",
+          borderBottom: "1px solid rgba(23,21,15,0.12)",
+          borderRight: "1px solid rgba(23,21,15,0.12)",
         }}
       />
 
@@ -486,7 +470,7 @@ export default function Collection({ items }: { items: JewelryItem[] }) {
           <p className="chapter-label tracking-[0.5em] mb-3">productos</p>
           <div
             className="h-px w-full mb-12"
-            style={{ background: "rgba(176,170,152,0.08)" }}
+            style={{ background: "rgba(23,21,15,0.08)" }}
           />
         </div>
 

@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { customPhotos } from "@/data/collection";
 import AutoFilmstrip from "@/components/ui/AutoFilmstrip";
+import { submitContactMessage } from "@/app/admin/mensajes/actions";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -201,6 +202,7 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const headingRef = useRef<HTMLDivElement>(null);
 
@@ -238,10 +240,24 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1600));
-    setSending(false);
-    setSubmitted(true);
+    try {
+      await submitContactMessage({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        interest: formData.interest,
+        message: formData.message,
+      });
+      setSubmitted(true);
+    } catch {
+      setError(
+        "no pudimos enviar tu consulta. probá de nuevo en unos segundos."
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   const interestOptions = [
@@ -448,6 +464,15 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="contanos qué estás buscando."
                 />
+
+                {error && (
+                  <p
+                    className="font-victor text-[11px]"
+                    style={{ color: "#8b0000" }}
+                  >
+                    {error}
+                  </p>
+                )}
 
                 <div
                   className="flex items-center justify-between pt-4"

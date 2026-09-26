@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { craftSteps, processPhotos } from "@/data/collection";
+import {processPhotos } from "@/data/collection";
 import AutoFilmstrip from "@/components/ui/AutoFilmstrip";
 
 if (typeof window !== "undefined") {
@@ -128,11 +128,7 @@ export default function Story() {
 
         <ProcessFilmstrip />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {craftSteps.map((step, i) => (
-            <StepCard key={step.title} {...step} index={i} />
-          ))}
-        </div>
+
 
         <motion.div
           className="mt-24 text-center border border-gold/10 p-12 relative"

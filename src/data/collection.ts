@@ -125,24 +125,7 @@ export const vaultItems: VaultItem[] = [
   },
 ];
 
-export const craftSteps = [
-  {
-    title: "DISEÑO",
-    body: "Explicacion diseño Lorem ipsum dolor sit amet.",
-  },
-  {
-    title: "MODELADO",
-    body: "Explicacion modelado Lorem ipsum dolor sit amet.",
-  },
-  {
-    title: "FUNDICIÓN",
-    body: "Explicacion fundicion Lorem ipsum dolor sit amet.",
-  },
-  {
-    title: "TERMINACIÓN",
-    body: "Explicacion terminacion Lorem ipsum dolor sit amet.",
-  },
-];
+
 export const galleryPhotos: string[] = [
   "/images/gallery/gallery-01.jpg",
   "/images/gallery/gallery-02.jpg",

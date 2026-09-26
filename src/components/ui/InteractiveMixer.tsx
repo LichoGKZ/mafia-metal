@@ -258,40 +258,6 @@ export default function InteractiveMixer() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-
-  return (
-    <div
-      ref={rootRef}
-      className="absolute inset-0 z-[15]"
-      style={{ pointerEvents: "none" }}
-    >
-      {KNOBS.map((k) => (
-        <Knob key={k.id} {...k} soundOnRef={soundOnRef} debug={calibrate} />
-      ))}
-
-      <Crossfader {...CROSSFADER} soundOnRef={soundOnRef} debug={calibrate} />
-
-      <Platter {...PLATTER} soundOnRef={soundOnRef} debug={calibrate} />
-
-      {/* Único elemento visible: el toggle de sonido */}
-      <button
-        onClick={() => setSoundOn((v) => !v)}
-        className="absolute top-[70px] right-6 md:top-[76px] md:right-8 font-victor text-[10px] tracking-[0.3em] px-3 py-1.5 transition-colors"
-        style={{
-          pointerEvents: "auto",
-          background: "rgba(10,9,8,0.55)",
-          border: "1px solid rgba(212,175,55,0.3)",
-          color: soundOn ? "#d4af37" : "rgba(176,170,152,0.4)",
-        }}
-        data-cursor-hover
-        aria-label="Activar o silenciar sonido"
-      >
-        {soundOn ? "♪ SONIDO" : "✕ SILENCIO"}
-      </button>
-
-      {calibrate && <CalibrationGrid />}
-    </div>
-  );
 }
 
 // ── Knob individual — invisible, solo tacto + sonido ────────────────────────

@@ -50,7 +50,7 @@ export default function Hero() {
             "linear-gradient(to bottom, rgba(17,16,14,0.15) 0%, rgba(17,16,14,0.05) 40%, rgba(17,16,14,0.7) 100%)",
         }}
       />
-      <InteractiveMixer />
+      
       {/* ── Bottom content: "NEW IN / check it out!" style ── */}
       <motion.div
         className="relative z-20 w-full px-6 pb-16 md:pb-20 flex flex-col items-center gap-3"

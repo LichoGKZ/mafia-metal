@@ -8,7 +8,7 @@ import { useCart } from "@/context/CartContext";
 
 const navItems = [
   { number: "01", label: "INICIO", href: "#home" },
-  { number: "02", label: "LA BÓVEDA", href: "#vault" },
+  { number: "02", label: "ULTIMOS", href: "#vault" },
   { number: "03", label: "EL TALLER", href: "#forge" },
   { number: "04", label: "COLECCIÓN", href: "#collection" },
   { number: "05", label: "GALERÍA", href: "#gallery" },

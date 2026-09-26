@@ -36,11 +36,11 @@ const victorMono = Victor_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://mafiametal.com"),
   title: {
-    default: "MAFIA METAL — Joyería artesanal en Mar del Plata",
+    default: "Mafia Metal",
     template: "%s | MAFIA METAL",
   },
   description:
-    "MAFIA METAL crea joyería en plata y oro hecha a mano en Mar del Plata. Piezas de colección y a medida, con foco en el detalle y la calidad de cada terminación.",
+    "MAFIA METAL.",
   keywords: [
     "joyería",
     "mafia metal",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_AR",
     url: "https://mafiametal.com",
-    title: "MAFIA METAL — Joyería artesanal en Mar del Plata",
+    title: "Mafia Metal",
     description:
       "Colecciones & drops.",
     siteName: "MAFIA METAL",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MAFIA METAL — Joyería artesanal en Mar del Plata",
+    title: "Mafia Metal",
     description:
       "Colecciones & drops.",
     images: ["/og-image.jpg"],

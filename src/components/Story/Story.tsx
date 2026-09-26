@@ -118,7 +118,7 @@ export default function Story() {
       <div className="max-w-5xl mx-auto px-6">
         <div ref={headingRef} className="text-center mb-24 opacity-0">
           <h2 className="font-victor font-black text-[clamp(2.5rem,7vw,5.5rem)] text-gold-gradient mt-4 leading-none">
-            NUESTRO OFICIO
+            El taller
           </h2>
           <div className="gold-divider max-w-sm mx-auto mt-6" />
           <p className="font-victor text-silver/40 text-sm mt-6 tracking-wider max-w-lg mx-auto leading-relaxed">

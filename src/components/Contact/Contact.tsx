@@ -287,7 +287,16 @@ export default function Contact() {
                   value: "+54 9 223 000-0000",
                 },
 
-              ].map(({ label, value, detail }) => (
+              ].map(
+                ({
+                  label,
+                  value,
+                  detail,
+                }: {
+                  label: string;
+                  value: string;
+                  detail?: string;
+                }) => (
                 <div key={label}>
                   <p className="chapter-label text-[9px] mb-1.5">{label}</p>
                   <p

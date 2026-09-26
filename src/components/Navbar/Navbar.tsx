@@ -85,21 +85,21 @@ export default function Navbar() {
             className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             data-cursor-hover
           >
-            Productos
+            Products
           </button>
           <button
             onClick={() => handleNavClick("#gallery")}
             className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             data-cursor-hover
           >
-            Fotos
+            Pictures
           </button>
           <button
             onClick={() => handleNavClick("#contact")}
             className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             data-cursor-hover
           >
-            Nosotros
+            About
           </button>
         </div>
 

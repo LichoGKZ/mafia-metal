@@ -1,13 +1,35 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import Image from "next/image";
 import InteractiveMixer from "@/components/ui/InteractiveMixer"; // ajustá el path a donde lo guardes
 
+// Debe coincidir con la clave usada en Loader.tsx.
+const SESSION_KEY = "mm_loader_seen";
+// Con el loader completo (primera visita de la sesión): el contenido
+// del Hero espera a que termine de deslizarse hacia arriba.
+const FIRST_VISIT_DELAY = 1.9;
+// Con el loader salteado (siguientes navegaciones/recargas): casi sin espera.
+const RETURN_VISIT_DELAY = 0.15;
+
 export default function Hero() {
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  // Por defecto asumimos primera visita (coincide con lo que renderiza
+  // el servidor) y lo corregimos antes del primer paint si corresponde,
+  // para evitar tanto el mismatch de hidratación como un "salto" visible.
+  const [contentDelay, setContentDelay] = useState(FIRST_VISIT_DELAY);
+
+  useLayoutEffect(() => {
+    try {
+      if (sessionStorage.getItem(SESSION_KEY) === "1") {
+        setContentDelay(RETURN_VISIT_DELAY);
+      }
+    } catch {
+      /* no-op: si falla, se mantiene el delay de primera visita */
+    }
+  }, []);
 
   useEffect(() => {
     if (!scrollIndicatorRef.current) return;
@@ -56,7 +78,7 @@ export default function Hero() {
         className="relative z-20 w-full px-6 pb-16 md:pb-20 flex flex-col items-center gap-3"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 3.0, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: contentDelay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Label */}
         <span
@@ -92,7 +114,7 @@ export default function Hero() {
         className="absolute top-[52px] left-6 z-20 hidden md:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.4, duration: 0.6 }}
+        transition={{ delay: contentDelay + 0.4, duration: 0.6 }}
       >
         <p
           className="font-victor text-[10px] tracking-[0.5em] uppercase"

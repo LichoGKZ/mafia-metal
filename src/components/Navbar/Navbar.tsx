@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { useCart } from "@/context/CartContext";
+
+// Debe coincidir con la clave usada en Loader.tsx / Hero.tsx.
+const SESSION_KEY = "mm_loader_seen";
+const FIRST_VISIT_DELAY = 1.9;
+const RETURN_VISIT_DELAY = 0.1;
 
 const navItems = [
   { number: "01", label: "INICIO", href: "#home" },
@@ -20,6 +25,17 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { itemCount, openCart } = useCart();
+  const [navDelay, setNavDelay] = useState(FIRST_VISIT_DELAY);
+
+  useLayoutEffect(() => {
+    try {
+      if (sessionStorage.getItem(SESSION_KEY) === "1") {
+        setNavDelay(RETURN_VISIT_DELAY);
+      }
+    } catch {
+      /* no-op */
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -59,33 +75,31 @@ export default function Navbar() {
         }}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 2.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: navDelay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Links — mismo texto/orden que la captura de referencia.
-            "Pictures" y "About" quedan en inglés como en la referencia;
-            si en algún momento se quieren en español avisame y los cambio
-            (PRODUCTOS / FOTOS / NOSOTROS). */}
+        {/* Links — traducidos al español para mantener consistencia con
+            el resto del copy del sitio (antes decían Products/Pictures/About). */}
         <div className="flex items-center gap-6 md:gap-10">
           <button
             onClick={() => handleNavClick("#collection")}
             className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             data-cursor-hover
           >
-            Products
+            Productos
           </button>
           <button
             onClick={() => handleNavClick("#gallery")}
             className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             data-cursor-hover
           >
-            Pictures
+            Fotos
           </button>
           <button
             onClick={() => handleNavClick("#contact")}
             className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
             data-cursor-hover
           >
-            About
+            Nosotros
           </button>
         </div>
 
@@ -94,7 +108,7 @@ export default function Navbar() {
           <button
             onClick={openCart}
             className="relative flex items-center gap-1.5 font-victor text-[11px] tracking-[0.2em] text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
-            aria-label="Open cart"
+            aria-label="Abrir carrito"
             data-cursor-hover
           >
             ◆
@@ -112,7 +126,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen((o) => !o)}
             className="flex items-center justify-center hover:opacity-70 transition-opacity"
-            aria-label="Open navigation"
+            aria-label="Abrir menú de navegación"
           >
             <Image
               src="/images/brand/logo-mafia-gold.svg"

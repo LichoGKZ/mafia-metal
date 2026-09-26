@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Clave usada para saber si ya se mostró el loader completo en esta
+// sesión de navegación. Ver nota UX más abajo.
+const SESSION_KEY = "mm_loader_seen";
 
 export default function Loader() {
   const [visible, setVisible] = useState(true);
@@ -11,13 +15,33 @@ export default function Loader() {
   const loaderRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // UX: el loader de marca (con progreso, textos, etc.) tiene sentido la
+  // primera vez que alguien entra al sitio, pero repetirlo en cada
+  // navegación/recarga dentro de la misma sesión es fricción pura frente
+  // al catálogo. Con sessionStorage lo mostramos una sola vez por sesión;
+  // las veces siguientes se salta con una transición mínima.
+  useLayoutEffect(() => {
+    let alreadySeen = false;
+    try {
+      alreadySeen = sessionStorage.getItem(SESSION_KEY) === "1";
+    } catch {
+      // sessionStorage puede fallar (modo privado, SSR, etc.) — en ese
+      // caso simplemente mostramos el loader completo como antes.
+    }
+
+    if (alreadySeen) {
+      setVisible(false);
+      return;
+    }
+
     const tl = gsap.timeline();
 
+    // Duración recortada (antes 2.2s + 1.2s = 3.4s) para que la primera
+    // acción útil de la página (el CTA del Hero) aparezca antes.
     tl.to(
       {},
       {
-        duration: 2.2,
+        duration: 1.4,
         onUpdate: function () {
           setProgress(Math.round(this.progress() * 100));
         },
@@ -25,9 +49,20 @@ export default function Loader() {
     ).then(() => {
       gsap.to(loaderRef.current, {
         yPercent: -100,
-        duration: 1.2,
+        duration: 0.9,
         ease: "power4.inOut",
-        onComplete: () => setVisible(false),
+        onComplete: () => {
+          setVisible(false);
+          // Recién acá marcamos la sesión como "ya vio el loader": si lo
+          // hiciéramos al empezar, el Hero (que lee esta misma clave en
+          // su propio useLayoutEffect) podría leerla ya en "1" durante la
+          // primera visita y saltarse su propia espera por error.
+          try {
+            sessionStorage.setItem(SESSION_KEY, "1");
+          } catch {
+            /* no-op */
+          }
+        },
       });
     });
   }, []);

@@ -1,30 +1,13 @@
 import type { Metadata } from "next";
-import { Cinzel, Bebas_Neue, Inter, Victor_Mono } from "next/font/google";
+import { Victor_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/Cart/CartDrawer";
 
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  variable: "--font-cinzel",
-  display: "swap", 
-  weight: ["400", "600", "700", "900"],
-});
-
-const bebasNeue = Bebas_Neue({
-  subsets: ["latin"],
-  variable: "--font-bebas",
-  weight: "400",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  weight: ["300", "400", "500", "600"],
-});
-
+// NOTA UX/Performance: se sacaron Cinzel, Bebas Neue e Inter porque
+// globals.css fuerza `* { font-family: var(--font-victor-mono) }` en todo
+// el sitio — esas tres familias se descargaban pero no se usaban en
+// ningún componente, agregando peso muerto a la carga inicial.
 const victorMono = Victor_Mono({
   subsets: ["latin"],
   variable: "--font-victor-mono",
@@ -40,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | MAFIA METAL",
   },
   description:
-    "MAFIA METAL.",
+    "Joyería artesanal en plata y oro hecha a mano en Mar del Plata. Piezas exclusivas y colecciones limitadas de Mafia Metal.",
   keywords: [
     "joyería",
     "mafia metal",
@@ -59,7 +42,7 @@ export const metadata: Metadata = {
     url: "https://mafiametal.com",
     title: "Mafia Metal",
     description:
-      "Colecciones & drops.",
+      "Joyería artesanal en plata y oro hecha a mano en Mar del Plata. Piezas exclusivas y colecciones limitadas.",
     siteName: "MAFIA METAL",
     images: [
       {
@@ -74,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Mafia Metal",
     description:
-      "Colecciones & drops.",
+      "Joyería artesanal en plata y oro hecha a mano en Mar del Plata.",
     images: ["/og-image.jpg"],
     creator: "@mafiametal",
   },
@@ -105,7 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${cinzel.variable} ${bebasNeue.variable} ${inter.variable} ${victorMono.variable}`}
+      className={victorMono.variable}
       suppressHydrationWarning
     >
       <body className="antialiased" suppressHydrationWarning>

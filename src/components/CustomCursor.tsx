@@ -11,6 +11,17 @@ export default function CustomCursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
+    // UX/Accesibilidad: el cursor custom sólo tiene sentido en
+    // dispositivos con puntero fino y hover real (mouse/trackpad). En
+    // touch u otros punteros "gruesos" no hay cursor que reemplazar, y
+    // ocultar el cursor nativo del sistema (body.custom-cursor-active)
+    // ahí no aporta nada — sólo puede romper la interacción en híbridos.
+    const supportsCustomCursor =
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    if (!supportsCustomCursor) return;
+
     document.body.classList.add("custom-cursor-active");
 
     let mouseX = 0;

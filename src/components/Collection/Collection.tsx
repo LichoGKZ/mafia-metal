@@ -6,7 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { JewelryItem } from "@/data/collection";
-import { useCart } from "@/context/CartContext";
+import { useCart, formatARS } from "@/context/CartContext";
+import { useScrollLock } from "@/hooks/useScrollLock";
+import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import ImageCarousel from "@/components/ui/ImageCarousel";
 
 if (typeof window !== "undefined") {
@@ -218,7 +220,34 @@ function ProductRow({
   );
 }
 
-/* ── Item Modal ── */
+/* ── Iconos ── */
+function BagIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M5 8h14l-1 12H6L5 8Z" />
+      <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+    </svg>
+  );
+}
+
+/* ── Item Modal ──
+   Contraste: antes los textos usaban rgba(23,21,15,x) (tinta oscura) sobre
+   un fondo #1a1916 (también oscuro) → ilegible. Ahora la ficha es papel
+   claro con tinta oscura (como el mockup) y todos los textos usan los
+   tokens de abajo (mínimo 4.5:1 de contraste). */
+const INK = "#0b0b0b";
+const INK_SOFT = "rgba(11,11,11,0.72)"; // texto secundario (≈ 7:1 sobre blanco)
+const LINE = "#0b0b0b";
+
 function ItemModal({
   item,
   onClose,
@@ -228,12 +257,46 @@ function ItemModal({
 }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const [size, setSize] = useState("");
+  const [sizeError, setSizeError] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
+  const [material, setMaterial] = useState(item.material);
+
+  const needsSize = !!item.sizes && item.sizes.length > 0;
+  const sizeMissing = needsSize && !size;
+
+  useScrollLock(true);
+
+  // Escape cierra la ficha (la guía de talles captura su propio Escape).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !guideOpen) onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose, guideOpen]);
+
+  const pickSize = (v: string) => {
+    setSize(v);
+    setSizeError(false);
+  };
 
   const handleAddToOrder = () => {
-    addItem(item, 1);
+    if (sizeMissing) {
+      setSizeError(true); // feedback visual en vez de agregar sin talle
+      return;
+    }
+    addItem({ ...item, material }, 1, needsSize ? size : undefined);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   };
+
+  const priceLabel =
+    item.priceARS > 0 ? formatARS(item.priceARS) : item.price;
+
+  // Variantes de material: hoy una por pieza; si más adelante hay
+  // más (ej. "Plata" / "Alpaca") alcanza con sumarlas acá.
+  const materialOptions = [item.material].filter(Boolean);
 
   return (
     <motion.div
@@ -244,44 +307,51 @@ function ItemModal({
     >
       <motion.div
         className="absolute inset-0"
-        style={{ background: "rgba(10,9,8,0.92)", backdropFilter: "blur(12px)" }}
+        style={{
+          background: "rgba(10,9,8,0.7)",
+          backdropFilter: "blur(5px)",
+          WebkitBackdropFilter: "blur(5px)",
+        }}
         onClick={onClose}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       />
 
+      {/* data-lenis-prevent + overscroll-contain: la ficha scrollea sola y
+          no arrastra la página de atrás. */}
       <motion.div
-        className="relative w-full max-w-4xl overflow-y-auto"
+        data-lenis-prevent
+        className="relative w-full max-w-4xl overflow-y-auto overscroll-contain"
         style={{
-          background: "#1a1916",
-          border: "1px solid rgb(var(--gold-rgb) / 0.15)",
+          background: "#fff",
+          color: INK,
+          border: `2px solid ${LINE}`,
           maxHeight: "90vh",
         }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={item.name}
         initial={{ scale: 0.94, y: 30, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.94, y: 30, opacity: 0 }}
         transition={{ type: "spring", damping: 28, stiffness: 300 }}
       >
-        {/* Corner marks */}
-        <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-gold/40 z-10" />
-        <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-gold/40 z-10" />
-        <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-gold/40 z-10" />
-        <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-gold/40 z-10" />
-
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center font-victor text-xs"
-          style={{ color: "rgba(23,21,15,0.5)", border: "1px solid rgba(23,21,15,0.1)" }}
+          aria-label="Cerrar"
+          className="absolute top-3 right-3 z-20 w-8 h-8 flex items-center justify-center text-sm bg-white hover:bg-black hover:text-white transition-colors"
+          style={{ color: INK, border: `1px solid ${LINE}` }}
+          data-cursor-hover
         >
-          ×
+          ✕
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Foto del producto */}
           <div
-            className="relative border-b md:border-b-0 md:border-r"
+            className="relative border-b-2 md:border-b-0 md:border-r-2"
             style={{
-              borderColor: "rgb(var(--gold-rgb) / 0.08)",
+              borderColor: LINE,
               background: "linear-gradient(135deg, #f0ede2, #e6e1d1)",
               minHeight: 360,
             }}
@@ -289,83 +359,162 @@ function ItemModal({
             <ProductImage item={item} carousel />
           </div>
 
-          {/* Details */}
-          <div className="p-8 flex flex-col justify-between">
-            <div>
-              <p className="chapter-label text-[10px] mb-3">{item.material}</p>
-              <h2
-                className="font-victor font-bold text-xl mb-1 tracking-wide"
-                style={{ color: "var(--gold)" }}
-              >
-                [ {item.name} ]
-              </h2>
-              <p
-                className="font-victor text-[10px] tracking-[0.3em] mb-6"
-                style={{ color: "rgba(23,21,15,0.35)" }}
-              >
-                {item.subtitle}
-              </p>
+          {/* Detalles */}
+          <div className="flex flex-col">
+            <h2
+              className="font-victor text-xl md:text-2xl px-6 pt-6 pb-4 pr-14 border-b-2"
+              style={{ color: INK, borderColor: LINE }}
+            >
+              {item.subtitle || item.name}
+            </h2>
 
-              <div className="gold-divider mb-6" />
+            {/* Precio | tipo */}
+            <div
+              className="grid grid-cols-2 border-b-2 text-center text-sm"
+              style={{ borderColor: LINE }}
+            >
+              <div className="py-3 border-r-2" style={{ borderColor: LINE }}>
+                {priceLabel}
+              </div>
+              <div className="py-3 uppercase">{item.name}</div>
+            </div>
 
+            {/* Material | Talle — mismo nivel visual que precio */}
+            <div
+              className="grid grid-cols-[1.4fr_1fr] border-b-2"
+              style={{ borderColor: LINE }}
+            >
+              <div className="p-4 border-r-2" style={{ borderColor: LINE }}>
+                <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
+                  Material
+                </p>
+                <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Material">
+                  {materialOptions.map((m) => {
+                    const on = material === m;
+                    return (
+                      <button
+                        key={m}
+                        type="button"
+                        role="radio"
+                        aria-checked={on}
+                        onClick={() => setMaterial(m)}
+                        className="px-3 py-1.5 text-xs uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white"
+                        style={{
+                          border: `1.5px solid ${LINE}`,
+                          background: on ? INK : "#fff",
+                          color: on ? "#fff" : INK,
+                        }}
+                        data-cursor-hover
+                      >
+                        {m}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <label
+                    htmlFor="talle-select"
+                    className="text-[11px] tracking-[0.2em] uppercase"
+                    style={{ color: INK_SOFT }}
+                  >
+                    Talle
+                  </label>
+                  {needsSize && (
+                    <button
+                      type="button"
+                      onClick={() => setGuideOpen(true)}
+                      aria-label="Abrir guía de talles"
+                      title="Guía de talles"
+                      className="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold hover:bg-black hover:text-white transition-colors"
+                      style={{ border: `1.5px solid ${LINE}`, color: INK }}
+                      data-cursor-hover
+                    >
+                      ?
+                    </button>
+                  )}
+                </div>
+
+                {needsSize ? (
+                  <motion.div
+                    key={sizeError ? "err" : "ok"}
+                    animate={sizeError ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <select
+                      id="talle-select"
+                      value={size}
+                      onChange={(e) => pickSize(e.target.value)}
+                      aria-invalid={sizeError}
+                      className="w-full px-2 py-1.5 text-xs outline-none cursor-pointer"
+                      style={{
+                        // Estado inicial gris neutro → negro al elegir
+                        background: size ? "#fff" : "#e4e4e1",
+                        color: size ? INK : "#5a5a56",
+                        border: size
+                          ? `1.5px solid ${LINE}`
+                          : `1.5px dashed ${sizeError ? "#b00020" : "#8a8a85"}`,
+                      }}
+                    >
+                      <option value="">Elegir talle</option>
+                      {item.sizes!.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </motion.div>
+                ) : (
+                  <p className="text-xs" style={{ color: INK_SOFT }}>
+                    Talle único
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Descripción */}
+            <div className="p-6 flex-1">
               <p
-                className="font-victor text-xs leading-relaxed mb-8"
-                style={{ color: "rgba(23,21,15,0.5)" }}
+                className="text-xs leading-relaxed mb-6"
+                style={{ color: INK_SOFT }}
               >
                 {item.description}
               </p>
 
-              <div className="space-y-3 mb-8">
-                {[
-                  { label: "MATERIAL", value: item.material },
-                  { label: "PRECIO", value: item.price },
-                ].map(({ label, value }) => (
-                  <div
-                    key={label}
-                    className="flex justify-between pb-3"
-                    style={{ borderBottom: "1px solid rgba(23,21,15,0.06)" }}
+              {sizeError && (
+                <p
+                  role="alert"
+                  className="text-xs mb-3"
+                  style={{ color: "#b00020" }}
+                >
+                  Elegí un talle para agregar al carrito.{" "}
+                  <button
+                    type="button"
+                    onClick={() => setGuideOpen(true)}
+                    className="underline"
                   >
-                    <span className="chapter-label text-[10px]">{label}</span>
-                    <span
-                      className="font-victor text-xs tracking-widest"
-                      style={{ color: "var(--gold)" }}
-                    >
-                      {value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    Ver guía de talles
+                  </button>
+                </p>
+              )}
 
-            <div className="space-y-3">
+              {/* Botón: bolsa. Sin talle queda en gris y avisa al tocarlo. */}
               <button
                 onClick={handleAddToOrder}
-                className="w-full py-3 font-victor text-xs tracking-[0.35em] transition-colors metal-shine"
+                aria-disabled={sizeMissing}
+                aria-label={added ? "Agregado al carrito" : "Agregar al carrito"}
+                className="w-full py-3 flex items-center justify-center gap-3 text-xs tracking-[0.3em] uppercase transition-colors"
                 style={{
-                  background: "var(--gold)",
-                  color: "#0a0908",
+                  background: sizeMissing ? "#c9c9c5" : INK,
+                  color: sizeMissing ? "#3d3d3a" : "#fff",
+                  cursor: sizeMissing ? "not-allowed" : "pointer",
                 }}
                 data-cursor-hover
               >
-                {added ? "agregado ✓" : "AGREGAR AL PEDIDO"}
-              </button>
-              <button
-                onClick={() => {
-                  onClose();
-                  setTimeout(() => {
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }, 300);
-                }}
-                className="w-full py-3 font-victor text-xs tracking-[0.35em] transition-all"
-                style={{
-                  border: "1px solid rgb(var(--gold-rgb) / 0.25)",
-                  color: "var(--gold)",
-                }}
-                data-cursor-hover
-              >
-                CONSULTAR
+                <BagIcon className="w-5 h-5" />
+                {added ? "Agregado ✓" : sizeMissing ? "Elegí tu talle" : "Agregar"}
               </button>
             </div>
           </div>
@@ -373,20 +522,19 @@ function ItemModal({
 
         {/* ── As worn by (lifestyle) ── */}
         {item.lifestyleImages && item.lifestyleImages.length > 0 && (
-          <div
-            className="border-t px-8 py-8"
-            style={{ borderColor: "rgb(var(--gold-rgb) / 0.08)" }}
-          >
-            <div className="flex items-center gap-4 mb-5">
-              <span className="chapter-label text-[10px]">en la calle</span>
-              <div className="h-px flex-1" style={{ background: "rgba(23,21,15,0.08)" }} />
+          <div className="border-t-2 px-6 py-6" style={{ borderColor: LINE }}>
+            <div className="flex items-center gap-4 mb-4">
+              <span className="text-[11px] tracking-[0.3em] uppercase" style={{ color: INK_SOFT }}>
+                en la calle
+              </span>
+              <div className="h-px flex-1" style={{ background: "rgba(11,11,11,0.25)" }} />
             </div>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
               {item.lifestyleImages.map((src, i) => (
                 <div
                   key={src}
                   className="relative aspect-square overflow-hidden group"
-                  style={{ border: "1px solid rgb(var(--gold-rgb) / 0.08)" }}
+                  style={{ border: `1px solid ${LINE}` }}
                 >
                   <Image
                     src={src}
@@ -401,6 +549,19 @@ function ItemModal({
           </div>
         )}
       </motion.div>
+
+      <AnimatePresence>
+        {guideOpen && (
+          <SizeGuideModal
+            onClose={() => setGuideOpen(false)}
+            selected={size}
+            onPick={(v) => {
+              pickSize(v);
+              setGuideOpen(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

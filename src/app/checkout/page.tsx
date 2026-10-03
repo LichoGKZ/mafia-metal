@@ -127,19 +127,19 @@ export default function CheckoutPage() {
             <ul className="space-y-5 mb-8">
               {lines.map((line) => (
                 <li
-                  key={line.id}
+                  key={line.key}
                   className="pb-5 flex flex-col gap-2"
                   style={{ borderBottom: "1px solid rgba(176,170,152,0.08)" }}
                 >
                   <div className="flex justify-between">
-                    <span className="font-victor text-sm">{line.name}</span>
+                    <span className="font-victor text-sm">{line.name}{line.size ? ` · talle ${line.size}` : ""}</span>
                     <span className="font-victor text-sm" style={{ color: "var(--gold)" }}>
                       {formatARS(line.priceARS * line.qty)}
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => updateQty(line.id, line.qty - 1)}
+                      onClick={() => updateQty(line.key, line.qty - 1)}
                       className="w-6 h-6 text-xs"
                       style={{ border: "1px solid rgba(176,170,152,0.15)" }}
                     >
@@ -147,14 +147,14 @@ export default function CheckoutPage() {
                     </button>
                     <span className="font-victor text-xs w-4 text-center">{line.qty}</span>
                     <button
-                      onClick={() => updateQty(line.id, line.qty + 1)}
+                      onClick={() => updateQty(line.key, line.qty + 1)}
                       className="w-6 h-6 text-xs"
                       style={{ border: "1px solid rgba(176,170,152,0.15)" }}
                     >
                       +
                     </button>
                     <button
-                      onClick={() => removeItem(line.id)}
+                      onClick={() => removeItem(line.key)}
                       className="font-victor text-[10px] tracking-[0.2em] ml-2"
                       style={{ color: "rgba(139,0,0,0.7)" }}
                     >

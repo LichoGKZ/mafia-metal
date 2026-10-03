@@ -66,7 +66,7 @@ export default function CartDrawer() {
             </div>
 
             {/* Lines */}
-            <div className="flex-1 overflow-y-auto px-6 py-6">
+            <div className="flex-1 overflow-y-auto px-6 py-6" data-lenis-prevent>
               {lines.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center gap-4">
                   <p
@@ -91,7 +91,7 @@ export default function CartDrawer() {
                 <ul className="space-y-6">
                   {lines.map((line) => (
                     <li
-                      key={line.id}
+                      key={line.key}
                       className="flex items-start justify-between gap-4 pb-6"
                       style={{ borderBottom: "1px solid rgba(176,170,152,0.06)" }}
                     >
@@ -107,12 +107,13 @@ export default function CartDrawer() {
                           style={{ color: "rgba(176,170,152,0.35)" }}
                         >
                           {line.material}
+                          {line.size ? ` · talle ${line.size}` : ""}
                         </p>
 
                         {/* Qty stepper */}
                         <div className="flex items-center gap-3">
                           <button
-                            onClick={() => updateQty(line.id, line.qty - 1)}
+                            onClick={() => updateQty(line.key, line.qty - 1)}
                             className="w-6 h-6 flex items-center justify-center font-victor text-xs"
                             style={{ border: "1px solid rgba(176,170,152,0.15)", color: "#b0aa98" }}
                             aria-label="Decrease quantity"
@@ -123,7 +124,7 @@ export default function CartDrawer() {
                             {line.qty}
                           </span>
                           <button
-                            onClick={() => updateQty(line.id, line.qty + 1)}
+                            onClick={() => updateQty(line.key, line.qty + 1)}
                             className="w-6 h-6 flex items-center justify-center font-victor text-xs"
                             style={{ border: "1px solid rgba(176,170,152,0.15)", color: "#b0aa98" }}
                             aria-label="Increase quantity"
@@ -131,7 +132,7 @@ export default function CartDrawer() {
                             +
                           </button>
                           <button
-                            onClick={() => removeItem(line.id)}
+                            onClick={() => removeItem(line.key)}
                             className="font-victor text-[10px] tracking-[0.2em] ml-2"
                             style={{ color: "rgba(139,0,0,0.7)" }}
                           >

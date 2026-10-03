@@ -11,7 +11,12 @@ import {
 import { JewelryItem } from "@/data/collection";
 
 export interface CartLine {
+  /** Clave única de la línea: id del producto + talle (mismo producto con
+   *  distinto talle = líneas distintas). */
+  key: string;
   id: string;
+  /** Talle elegido (solo productos que lo requieren, ej. anillos). */
+  size?: string;
   name: string;
   price: string; // display price, e.g. "$2,400"
   priceARS: number; // numeric price used for totals / Mercado Pago
@@ -24,9 +29,9 @@ interface CartContextValue {
   isOpen: boolean;
   itemCount: number;
   subtotalARS: number;
-  addItem: (item: JewelryItem, qty?: number) => void;
-  removeItem: (id: string) => void;
-  updateQty: (id: string, qty: number) => void;
+  addItem: (item: JewelryItem, qty?: number, size?: string) => void;
+  removeItem: (key: string) => void;
+  updateQty: (key: string, qty: number) => void;
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
@@ -45,7 +50,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setLines(JSON.parse(raw));
+      if (raw) {
+        // Migración: carritos guardados antes de existir `key`/`size`.
+        const parsed = JSON.parse(raw) as CartLine[];
+        setLines(parsed.map((l) => ({ ...l, key: l.key ?? l.id })));
+      }
     } catch {
       // ignore corrupt storage
     } finally {
@@ -63,18 +72,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [lines, hydrated]);
 
-  const addItem = (item: JewelryItem, qty = 1) => {
+  const addItem = (item: JewelryItem, qty = 1, size?: string) => {
+    const key = size ? `${item.id}::${size}` : item.id;
     setLines((prev) => {
-      const existing = prev.find((l) => l.id === item.id);
+      const existing = prev.find((l) => l.key === key);
       if (existing) {
         return prev.map((l) =>
-          l.id === item.id ? { ...l, qty: l.qty + qty } : l
+          l.key === key ? { ...l, qty: l.qty + qty } : l
         );
       }
       return [
         ...prev,
         {
+          key,
           id: item.id,
+          size,
           name: item.name,
           price: item.price,
           priceARS: item.priceARS,
@@ -86,16 +98,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsOpen(true);
   };
 
-  const removeItem = (id: string) => {
-    setLines((prev) => prev.filter((l) => l.id !== id));
+  const removeItem = (key: string) => {
+    setLines((prev) => prev.filter((l) => l.key !== key));
   };
 
-  const updateQty = (id: string, qty: number) => {
+  const updateQty = (key: string, qty: number) => {
     if (qty <= 0) {
-      removeItem(id);
+      removeItem(key);
       return;
     }
-    setLines((prev) => prev.map((l) => (l.id === id ? { ...l, qty } : l)));
+    setLines((prev) => prev.map((l) => (l.key === key ? { ...l, qty } : l)));
   };
 
   const clearCart = () => setLines([]);

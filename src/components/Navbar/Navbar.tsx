@@ -107,17 +107,30 @@ export default function Navbar() {
           {/* Cart button — no está en la referencia, se mantiene chico para no perder la función */}
           <button
             onClick={openCart}
-            className="relative flex items-center gap-1.5 font-victor text-[11px] tracking-[0.2em] text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
-            aria-label="Abrir carrito"
+            className="relative flex items-center text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
+            aria-label={`Abrir carrito (${itemCount} ${itemCount === 1 ? "producto" : "productos"})`}
             data-cursor-hover
           >
-            ◆
+            <svg
+              viewBox="0 0 24 24"
+              className="w-[22px] h-[22px]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 8h14l-1 12H6L5 8Z" />
+              <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+            </svg>
             {itemCount > 0 && (
               <span
-                className="flex items-center justify-center w-4 h-4 rounded-full font-victor text-[9px]"
+                key={itemCount}
+                className="absolute -top-2 -right-2.5 min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-victor text-[9px] font-bold animate-[badgePop_0.3s_ease-out]"
                 style={{ background: "var(--gold)", color: "#0a0908" }}
               >
-                {itemCount}
+                {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}
           </button>

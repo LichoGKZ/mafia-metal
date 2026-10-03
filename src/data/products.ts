@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { JewelryItem } from "@/data/collection";
+import { RING_SIZES, type JewelryItem } from "@/data/collection";
 
 interface ProductRow {
   id: string;
@@ -15,7 +15,17 @@ interface ProductRow {
   image: string | null;
   images: string[] | null;
   lifestyle_images: string[] | null;
+  /** Columna opcional `sizes text[]`. Si no existe, se infiere por nombre. */
+  sizes?: string[] | null;
   sort_order: number;
+}
+
+/** Piezas que llevan talle. Si en Supabase agregás la columna `sizes`
+ *  (text[]), manda esa; si no, se infiere por nombre/subtítulo. */
+function resolveSizes(row: ProductRow): string[] | undefined {
+  if (row.sizes) return row.sizes.length > 0 ? row.sizes : undefined;
+  const text = `${row.name} ${row.subtitle ?? ""}`.toLowerCase();
+  return /anillo|ring|only trust|one love/.test(text) ? RING_SIZES : undefined;
 }
 
 function rowToItem(row: ProductRow): JewelryItem {
@@ -30,6 +40,7 @@ function rowToItem(row: ProductRow): JewelryItem {
     chapter: row.chapter ?? "",
     badge: row.badge ?? undefined,
     color: row.color,
+    sizes: resolveSizes(row),
     image: row.image ?? "",
     images: row.images && row.images.length > 0 ? row.images : undefined,
     lifestyleImages:

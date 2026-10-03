@@ -4,6 +4,7 @@ import { MercadoPagoConfig, Preference } from "mercadopago";
 interface IncomingLine {
   id: string;
   name: string;
+  size?: string;
   priceARS: number;
   qty: number;
 }
@@ -90,7 +91,7 @@ export async function POST(req: NextRequest) {
       body: {
         items: lines.map((line) => ({
           id: line.id,
-          title: line.name,
+          title: line.size ? `${line.name} - Talle ${line.size}` : line.name,
           quantity: line.qty,
           unit_price: line.priceARS,
           currency_id: "ARS",

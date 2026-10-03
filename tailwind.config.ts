@@ -56,6 +56,11 @@ const config: Config = {
           "80%": { transform: "translate(3%, 35%)" },
           "90%": { transform: "translate(-10%, 10%)" },
         },
+        badgePop: {
+          "0%": { transform: "scale(0.4)" },
+          "70%": { transform: "scale(1.25)" },
+          "100%": { transform: "scale(1)" },
+        },
         floatUp: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-8px)" },

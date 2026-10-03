@@ -11,6 +11,8 @@ export interface JewelryItem {
   chapter: string;
   badge?: string;
   color: "gold" | "silver" | "mixed";
+  /** Talles disponibles. Si existe, el cliente DEBE elegir uno para comprar. */
+  sizes?: string[];
   /** Ruta de la foto real del producto dentro de /public. Vacío = falta subir la foto. */
   image: string;
   /** Set de fotos de estudio del producto (para el carrusel). Si está vacío, se usa `image`. */
@@ -18,6 +20,9 @@ export interface JewelryItem {
   /** Fotos "as worn by" — el producto en la calle / en artistas / en vivo. */
   lifestyleImages?: string[];
 }
+
+/** Talles de anillo (Argentina) — coinciden con la guía de talles. */
+export const RING_SIZES = Array.from({ length: 23 }, (_, i) => String(13 + i));
 
 export const collectionItems: JewelryItem[] = [
   {

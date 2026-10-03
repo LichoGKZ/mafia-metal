@@ -43,12 +43,10 @@ export const collectionItems: JewelryItem[] = [
     chapter: "I",
     badge: "BESTSELLER",
     color: "silver",
-    image: "/images/products/one-love-01.jpg",
+    image: "/images/products/one-love-01.png",
     images: [
-      "/images/products/one-love-01.jpg",
-      "/images/products/one-love-02.jpg",
-      "/images/products/one-love-03.jpg",
-      "/images/products/one-love-04.jpg",
+      "/images/products/one-love-01.png",
+      "/images/products/one-love-02.png",
     ],
     lifestyleImages: [
       "/images/lifestyle/one-love-01.jpg",
@@ -72,7 +70,11 @@ export const collectionItems: JewelryItem[] = [
       "Pulsera de eslabones diseñada y modelada desde cero, pieza maciza y pesada, donde la estética industrial se logra a través de un trabajo preciso de textura y acabado en cada eslabón. Cada eslabón lleva el sello de Mafia Metal en la cara posterior. El cierre presenta la frase 'Only trust your mafia'.",
     chapter: "II",
     color: "silver",
-    image: "/images/products/only-trust.jpg",
+    image: "/images/products/only-trust-01.png",
+    images: [
+      "/images/products/only-trust-01.png",
+      "/images/products/only-trust-02.png",
+    ],
   },
   {
     id: "tag-mafia",
@@ -88,7 +90,12 @@ export const collectionItems: JewelryItem[] = [
     chapter: "III",
     badge: "NEW",
     color: "silver",
-    image: "", // TODO: subir foto (fondo amarillo)
+    image: "/images/products/tag-mafia-01.png",
+    images: [
+      "/images/products/tag-mafia-01.png",
+      "/images/products/tag-mafia-02.png",
+      "/images/products/tag-mafia-03.png",
+    ],
   },
 ];
 

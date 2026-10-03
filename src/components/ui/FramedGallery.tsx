@@ -7,17 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * Galería "pared de forense" — fotos prendidas con un poco de desorden
- * intencional (rotación + offset por foto, tamaños mezclados), todo
- * contenido dentro de UN marco ornamentado que engloba el conjunto
- * (CSS border-image, no <img> por foto).
+ * intencional (rotación + offset por foto, tamaños mezclados), cada
+ * foto con su cuadro blanco tipo polaroid y cinta washi, sin marco general.
  *
  * Determinístico: usamos el índice como semilla en vez de Math.random()
  * para que el layout no cambie entre server render y client render
  * (evita el warning de hydration de Next).
  */
-
-/** Marco ornamentado general que envuelve todo el collage. Poné `false` para quitarlo. */
-const SHOW_COLLAGE_FRAME = true;
 
 // pseudo-random estable [0,1) a partir de un entero — mismo patrón que
 // usan en GraffitiBackground.tsx
@@ -104,29 +100,7 @@ export default function FramedGallery({
 
   return (
     <>
-      <div
-        className={`relative mx-auto max-w-6xl ${className}`}
-        style={SHOW_COLLAGE_FRAME ? {
-          // el marco: una sola imagen que envuelve todo el bloque de fotos.
-          // ajustá border-image-slice / -width al tamaño real del PNG si
-          // hace falta afinar el grosor de las esquinas.
-          borderStyle: "solid",
-          borderWidth: "clamp(34px, 6vw, 78px)",
-          borderImageSource: "url('/images/brand/marco-ornamentado.png')",
-          borderImageSlice: "130 fill",
-          borderImageWidth: "clamp(34px, 6vw, 78px)",
-          borderImageOutset: "0",
-          borderImageRepeat: "stretch",
-        } : undefined}
-      >
-        {/* fondo detrás de las fotos, dentro del marco */}
-        {SHOW_COLLAGE_FRAME && (
-          <div
-            className="absolute inset-0 -z-10"
-            style={{ background: "#eae5d6" }}
-          />
-        )}
-
+      <div className={`relative mx-auto max-w-6xl ${className}`}>
         <div className="relative flex flex-wrap items-center justify-center gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-10 py-8 sm:py-10 px-2 sm:px-4">
           {images.map((src, i) => {
             const l = layout[i];
@@ -157,16 +131,21 @@ export default function FramedGallery({
                   className="relative block w-full h-full"
                   suppressHydrationWarning
                 >
-                  {/* foto directa, sin marco/borde blanco extra */}
-                  <div className="relative w-full h-full overflow-hidden shadow-[0_10px_24px_rgba(0,0,0,0.55)]">
-                    <Image
-                      src={src}
-                      alt={`${alt} ${i + 1}`}
-                      fill
-                      className="object-cover grayscale-[0.15] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0"
-                      sizes="(max-width: 768px) 45vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-obsidian/0 group-hover:bg-obsidian/10 transition-colors duration-300" />
+                  {/* polaroid: cuadro blanco alrededor de la foto */}
+                  <div
+                    className="relative w-full h-full p-[6px] sm:p-2 shadow-[0_10px_24px_rgba(0,0,0,0.55)]"
+                    style={{ background: "#f2ede2" }}
+                  >
+                    <div className="relative w-full h-full overflow-hidden">
+                      <Image
+                        src={src}
+                        alt={`${alt} ${i + 1}`}
+                        fill
+                        className="object-cover grayscale-[0.15] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0"
+                        sizes="(max-width: 768px) 45vw, 25vw"
+                      />
+                      <div className="absolute inset-0 bg-obsidian/0 group-hover:bg-obsidian/10 transition-colors duration-300" />
+                    </div>
                   </div>
 
                   {/* cinta washi en TODAS las fotos (incluida la fila inferior) */}

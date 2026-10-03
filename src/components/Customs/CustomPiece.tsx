@@ -223,8 +223,7 @@ export default function CustomPiece() {
             className="font-victor text-xs md:text-sm mt-5 max-w-xl mx-auto leading-relaxed"
             style={{ color: "rgba(23,21,15,0.6)" }}
           >
-            Contanos qué tenés en mente: la modelamos y fundimos a mano en Mar
-            del Plata, a tu medida.
+            Contanos qué tenés en mente y nosotros hacemos el resto.
           </p>
           <div className="gold-divider max-w-md mx-auto mt-6" />
         </motion.div>
@@ -372,7 +371,7 @@ export default function CustomPiece() {
                     name="description"
                     value={form.description}
                     onChange={handleChange}
-                    placeholder="Contanos el diseño: forma, textos, detalles, terminación, para quién es…"
+                    placeholder="Contanos el diseño: forma, textos, detalles, terminación…"
                     required
                   />
 

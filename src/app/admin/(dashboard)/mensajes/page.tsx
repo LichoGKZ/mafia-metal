@@ -28,7 +28,7 @@ export default async function AdminMessagesPage({
       <div className="flex items-center justify-between mb-8">
         <h1
           className="font-victor text-sm tracking-[0.35em] uppercase"
-          style={{ color: "#d4af37" }}
+          style={{ color: "var(--gold)" }}
         >
           mensajes
         </h1>

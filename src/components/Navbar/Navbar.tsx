@@ -13,9 +13,9 @@ const RETURN_VISIT_DELAY = 0.1;
 
 const navItems = [
   { number: "01", label: "INICIO", href: "#home" },
-  { number: "02", label: "ULTIMOS", href: "#vault" },
-  { number: "03", label: "EL TALLER", href: "#forge" },
-  { number: "04", label: "COLECCIÓN", href: "#collection" },
+  { number: "02", label: "PRODUCTOS", href: "#collection" },
+  { number: "03", label: "PIEZA PERSONALIZADA", href: "#customs" },
+  { number: "04", label: "EL TALLER", href: "#forge" },
   { number: "05", label: "GALERÍA", href: "#gallery" },
   { number: "06", label: "CONTACTO", href: "#contact" },
 ];
@@ -115,7 +115,7 @@ export default function Navbar() {
             {itemCount > 0 && (
               <span
                 className="flex items-center justify-center w-4 h-4 rounded-full font-victor text-[9px]"
-                style={{ background: "#d4af37", color: "#0a0908" }}
+                style={{ background: "var(--gold)", color: "#0a0908" }}
               >
                 {itemCount}
               </span>

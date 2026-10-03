@@ -14,11 +14,14 @@
   --paper-light: #eeeadd;
   --paper-mid: #e6e1d2;
   --ink: #17150f;
-  --gold: #d4af37;
-  --gold-dark: #a67c00;
   --silver: #c0c0c0;
   --crimson: #8b0000;
-  --gold-light: #f0d060;
+
+  /* Dorado de marca: los valores viven en src/lib/brand.ts y se inyectan
+     en <html> desde layout.tsx. Acá solo se derivan los alias. */
+  --gold: rgb(var(--gold-rgb));
+  --gold-light: rgb(var(--gold-light-rgb));
+  --gold-dark: rgb(var(--gold-dark-rgb));
 }
 
 * {
@@ -83,7 +86,7 @@ body.custom-cursor-active {
   left: 0;
   width: 6px;
   height: 6px;
-  background: #d4af37;
+  background: var(--gold);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
@@ -98,7 +101,7 @@ body.custom-cursor-active {
   left: 0;
   width: 28px;
   height: 28px;
-  border: 1px solid rgba(212, 175, 55, 0.5);
+  border: 1px solid rgb(var(--gold-rgb) / 0.5);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
@@ -115,7 +118,7 @@ body.custom-cursor-active {
 .cursor-ring.hovering {
   width: 44px;
   height: 44px;
-  border-color: rgba(212, 175, 55, 0.8);
+  border-color: rgb(var(--gold-rgb) / 0.8);
 }
 
 /* ── Film Grain ── */
@@ -147,13 +150,13 @@ body.custom-cursor-active {
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--paper); }
-::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #f0d060; }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
 
 /* ── Selection ── */
 ::selection {
-  background: rgba(212, 175, 55, 0.25);
-  color: #f0d060;
+  background: rgb(var(--gold-rgb) / 0.25);
+  color: var(--gold-light);
 }
 
 /* ── Paper Texture bg ── */
@@ -181,7 +184,7 @@ body.custom-cursor-active {
 
 /* ── Gold text gradient ── */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #d4af37 0%, #f0d060 50%, #a67c00 100%);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -199,7 +202,7 @@ body.custom-cursor-active {
   background: rgba(17, 16, 14, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.08);
+  border: 1px solid rgb(var(--gold-rgb) / 0.08);
 }
 
 /* ── Metal Shine Effect ── */
@@ -241,9 +244,9 @@ body.custom-cursor-active {
   background: linear-gradient(
     90deg,
     transparent,
-    #d4af37,
-    #f0d060,
-    #d4af37,
+    var(--gold),
+    var(--gold-light),
+    var(--gold),
     transparent
   );
 }
@@ -286,14 +289,14 @@ body.custom-cursor-active {
   content: '';
   position: absolute;
   inset: -8px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgb(var(--gold-rgb) / 0.15);
   pointer-events: none;
   z-index: 2;
 }
 
 .ornament-frame::after {
   inset: -4px;
-  border-color: rgba(212, 175, 55, 0.08);
+  border-color: rgb(var(--gold-rgb) / 0.08);
 }
 
 /* ── Product line / callout ── */
@@ -309,11 +312,11 @@ body.custom-cursor-active {
 .shimmer-text {
   background: linear-gradient(
     90deg,
-    #a67c00 0%,
-    #d4af37 25%,
-    #f0d060 50%,
-    #d4af37 75%,
-    #a67c00 100%
+    var(--gold-dark) 0%,
+    var(--gold) 25%,
+    var(--gold-light) 50%,
+    var(--gold) 75%,
+    var(--gold-dark) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -376,7 +379,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 .nav-link:hover {
-  color: #d4af37;
+  color: var(--gold);
 }
 
 /* ── Hero photo overlay ── */

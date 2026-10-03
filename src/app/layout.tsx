@@ -3,6 +3,7 @@ import { Victor_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/Cart/CartDrawer";
+import { brandCssVars } from "@/lib/brand";
 
 // NOTA UX/Performance: se sacaron Cinzel, Bebas Neue e Inter porque
 // globals.css fuerza `* { font-family: var(--font-victor-mono) }` en todo
@@ -89,6 +90,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={victorMono.variable}
+      style={brandCssVars as React.CSSProperties}
       suppressHydrationWarning
     >
       <body className="antialiased" suppressHydrationWarning>

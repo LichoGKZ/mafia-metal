@@ -19,7 +19,7 @@ export default function AdminNavLink({
     <Link
       href={href}
       className="relative font-victor text-[10px] tracking-[0.3em] uppercase transition-colors"
-      style={{ color: active ? "#d4af37" : "rgba(176,170,152,0.5)" }}
+      style={{ color: active ? "var(--gold)" : "rgba(176,170,152,0.5)" }}
     >
       {children}
       {!!badge && badge > 0 && (

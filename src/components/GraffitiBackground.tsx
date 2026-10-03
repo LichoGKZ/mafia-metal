@@ -35,11 +35,11 @@ const VintagePaperBackground = memo<BackgroundProps>(
           backgroundImage: [
             // Manchas grandes tipo mural, cada una anclada a una altura
             // distinta de la página completa (no del viewport)
-            "radial-gradient(ellipse 70% 40% at 20% 6%,  rgba(212,175,55,0.10) 0%, transparent 65%)", // dorado arriba
+            "radial-gradient(ellipse 70% 40% at 20% 6%,  rgb(var(--gold-rgb) / 0.10) 0%, transparent 65%)", // dorado arriba
             "radial-gradient(ellipse 80% 45% at 80% 22%, rgba(140,90,40,0.08)  0%, transparent 65%)", // óxido
             "radial-gradient(ellipse 75% 40% at 15% 42%, rgba(90,110,90,0.07)  0%, transparent 65%)", // verdoso
             "radial-gradient(ellipse 85% 45% at 75% 58%, rgba(120,110,90,0.08) 0%, transparent 65%)", // gris piedra
-            "radial-gradient(ellipse 75% 40% at 25% 76%, rgba(212,175,55,0.09) 0%, transparent 65%)", // dorado
+            "radial-gradient(ellipse 75% 40% at 25% 76%, rgb(var(--gold-rgb) / 0.09) 0%, transparent 65%)", // dorado
             "radial-gradient(ellipse 90% 45% at 70% 94%, rgba(100,80,60,0.09)  0%, transparent 65%)", // sepia abajo
             // .webp: ~4KB, textura real del diseño aprobado
             "url('/images/texture/paper-grunge-tile.webp')",

@@ -73,9 +73,9 @@ export default function FiltersBar({
               onClick={() => setParam("status", tab.value)}
               className="px-4 py-2 font-victor text-[10px] tracking-[0.25em] uppercase transition-colors"
               style={{
-                background: active ? "#d4af37" : "transparent",
+                background: active ? "var(--gold)" : "transparent",
                 color: active ? "#0a0908" : "rgba(176,170,152,0.6)",
-                border: `1px solid ${active ? "#d4af37" : "rgba(176,170,152,0.15)"}`,
+                border: `1px solid ${active ? "var(--gold)" : "rgba(176,170,152,0.15)"}`,
               }}
             >
               {tab.label}
@@ -125,7 +125,7 @@ export default function FiltersBar({
       </div>
 
       {isPending && (
-        <p className="font-victor text-[9px] tracking-[0.3em] uppercase" style={{ color: "rgba(212,175,55,0.5)" }}>
+        <p className="font-victor text-[9px] tracking-[0.3em] uppercase" style={{ color: "rgb(var(--gold-rgb) / 0.5)" }}>
           actualizando...
         </p>
       )}

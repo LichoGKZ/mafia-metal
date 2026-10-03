@@ -22,7 +22,7 @@ export default async function DashboardLayout({
           <Link
             href="/admin/productos"
             className="font-victor text-sm tracking-[0.35em] uppercase"
-            style={{ color: "#d4af37" }}
+            style={{ color: "var(--gold)" }}
           >
             panel · mafia metal
           </Link>
@@ -38,7 +38,7 @@ export default async function DashboardLayout({
             <form action={signOut}>
               <button
                 type="submit"
-                className="font-victor text-[10px] tracking-[0.3em] uppercase transition-colors hover:text-[#d4af37]"
+                className="font-victor text-[10px] tracking-[0.3em] uppercase transition-colors hover:text-[var(--gold)]"
                 style={{ color: "rgba(176,170,152,0.5)" }}
               >
                 cerrar sesión

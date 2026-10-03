@@ -83,7 +83,7 @@ export default function Hero() {
         {/* Label */}
         <span
           className="chapter-label tracking-[0.5em] text-[11px]"
-          style={{ color: "rgba(212,175,55,0.7)" }}
+          style={{ color: "rgb(var(--gold-rgb) / 0.7)" }}
         >
           NUEVO
         </span>

@@ -42,11 +42,11 @@ export default function AdminLoginPage() {
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm p-8"
-        style={{ border: "1px solid rgba(212,175,55,0.15)" }}
+        style={{ border: "1px solid rgb(var(--gold-rgb) / 0.15)" }}
       >
         <h1
           className="font-victor text-sm tracking-[0.35em] uppercase mb-8 text-center"
-          style={{ color: "#d4af37" }}
+          style={{ color: "var(--gold)" }}
         >
           panel · mafia metal
         </h1>
@@ -89,7 +89,7 @@ export default function AdminLoginPage() {
           type="submit"
           disabled={loading}
           className="w-full py-3 font-victor text-xs tracking-[0.35em] disabled:opacity-50"
-          style={{ background: "#d4af37", color: "#0a0908" }}
+          style={{ background: "var(--gold)", color: "#0a0908" }}
         >
           {loading ? "ingresando..." : "ingresar"}
         </button>

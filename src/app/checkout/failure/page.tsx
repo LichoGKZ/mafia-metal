@@ -24,7 +24,7 @@ export default function CheckoutFailurePage() {
         <Link
           href="/checkout"
           className="px-8 py-3 font-victor text-xs tracking-[0.35em]"
-          style={{ background: "#d4af37", color: "#0a0908" }}
+          style={{ background: "var(--gold)", color: "#0a0908" }}
         >
           reintentar pago
         </Link>

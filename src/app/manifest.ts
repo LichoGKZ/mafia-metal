@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { GOLD_HEX } from "@/lib/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -8,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     background_color: "#0B0B0B",
-    theme_color: "#D4AF37",
+    theme_color: GOLD_HEX,
     icons: [
       {
         src: "/favicon.ico",

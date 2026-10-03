@@ -1,5 +1,6 @@
 "use client";
 
+import { GOLD_HEX } from "@/lib/brand";
 import { Suspense, useRef, useState, useCallback } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
@@ -18,7 +19,7 @@ import * as THREE from "three";
 
 
 function RingModel({
-  color = "#D4AF37",
+  color = GOLD_HEX,
   roughness = 0.05,
   metalness = 1,
 }: {
@@ -161,7 +162,7 @@ function CrossModel({
   );
 }
 
-function SignetModel({ color = "#D4AF37" }: { color?: string }) {
+function SignetModel({ color = GOLD_HEX }: { color?: string }) {
   const ref = useRef<THREE.Group>(null);
   const { mouse } = useThree();
 
@@ -223,7 +224,7 @@ function BraceletModel({ color = "#C0C0C0" }: { color?: string }) {
         castShadow
       >
         <meshStandardMaterial
-          color={i % 3 === 0 ? "#D4AF37" : color}
+          color={i % 3 === 0 ? GOLD_HEX : color}
           roughness={0.06}
           metalness={1}
           envMapIntensity={2}
@@ -235,7 +236,7 @@ function BraceletModel({ color = "#C0C0C0" }: { color?: string }) {
   return <group ref={ref}>{segments}</group>;
 }
 
-function PendantModel({ color = "#D4AF37" }: { color?: string }) {
+function PendantModel({ color = GOLD_HEX }: { color?: string }) {
   const ref = useRef<THREE.Group>(null);
   const { mouse } = useThree();
 
@@ -347,7 +348,7 @@ function MetallicParticles({ count = 80 }: { count?: number }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.035}
-        color="#D4AF37"
+        color={GOLD_HEX}
         transparent
         opacity={0.6}
         sizeAttenuation
@@ -367,7 +368,7 @@ function Lighting() {
       <directionalLight
         position={[5, 5, 5]}
         intensity={1.5}
-        color="#D4AF37"
+        color={GOLD_HEX}
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-bias={-0.0001}
@@ -377,7 +378,7 @@ function Lighting() {
         intensity={0.8}
         color="#C0C0C0"
       />
-      <pointLight position={[0, 3, 0]} intensity={1} color="#D4AF37" distance={10} />
+      <pointLight position={[0, 3, 0]} intensity={1} color={GOLD_HEX} distance={10} />
       <pointLight position={[3, -2, 3]} intensity={0.5} color="#8B0000" distance={8} />
     </>
   );
@@ -433,7 +434,7 @@ export interface JewelryViewerProps {
 export default function JewelryViewer({
   modelType = "ring",
   modelUrl,
-  color = "#D4AF37",
+  color = GOLD_HEX,
   height = 400,
   particles = true,
   shadows = true,

@@ -88,7 +88,7 @@ export default function CheckoutPage() {
         <Link
           href="/#collection"
           className="px-8 py-3 font-victor text-xs tracking-[0.35em]"
-          style={{ background: "#d4af37", color: "#0a0908" }}
+          style={{ background: "var(--gold)", color: "#0a0908" }}
         >
           seguir comprando
         </Link>
@@ -105,7 +105,7 @@ export default function CheckoutPage() {
         <div className="flex items-center justify-between mb-12">
           <h1
             className="font-victor font-bold text-lg tracking-[0.3em] uppercase"
-            style={{ color: "#d4af37" }}
+            style={{ color: "var(--gold)" }}
           >
             pagar
           </h1>
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
                 >
                   <div className="flex justify-between">
                     <span className="font-victor text-sm">{line.name}</span>
-                    <span className="font-victor text-sm" style={{ color: "#d4af37" }}>
+                    <span className="font-victor text-sm" style={{ color: "var(--gold)" }}>
                       {formatARS(line.priceARS * line.qty)}
                     </span>
                   </div>
@@ -164,11 +164,11 @@ export default function CheckoutPage() {
                 </li>
               ))}
             </ul>
-            <div className="flex justify-between pt-4" style={{ borderTop: "1px solid rgba(212,175,55,0.15)" }}>
+            <div className="flex justify-between pt-4" style={{ borderTop: "1px solid rgb(var(--gold-rgb) / 0.15)" }}>
               <span className="font-victor text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(176,170,152,0.5)" }}>
                 total
               </span>
-              <span className="font-victor text-lg tracking-widest" style={{ color: "#d4af37" }}>
+              <span className="font-victor text-lg tracking-widest" style={{ color: "var(--gold)" }}>
                 {formatARS(subtotalARS)}
               </span>
             </div>
@@ -212,7 +212,7 @@ export default function CheckoutPage() {
               onClick={handlePay}
               disabled={loading}
               className="w-full mt-8 py-4 font-victor text-xs tracking-[0.35em] metal-shine disabled:opacity-50"
-              style={{ background: "#d4af37", color: "#0a0908" }}
+              style={{ background: "var(--gold)", color: "#0a0908" }}
             >
               {loading ? "redirigiendo a mercado pago..." : "pagar con mercado pago"}
             </button>

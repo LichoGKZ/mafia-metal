@@ -221,7 +221,7 @@ export default function ProductForm({ mode, initial }: Props) {
       <Field label="foto principal">
         <input type="file" accept="image/*" onChange={handleMainImage} className="font-victor text-xs" />
         {form.image && (
-          <img src={form.image} alt="" className="mt-3 w-32 h-32 object-cover" style={{ border: "1px solid rgba(212,175,55,0.2)" }} />
+          <img src={form.image} alt="" className="mt-3 w-32 h-32 object-cover" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
         )}
       </Field>
 
@@ -236,7 +236,7 @@ export default function ProductForm({ mode, initial }: Props) {
         <div className="flex flex-wrap gap-2 mt-3">
           {form.images.map((url) => (
             <div key={url} className="relative">
-              <img src={url} alt="" className="w-20 h-20 object-cover" style={{ border: "1px solid rgba(212,175,55,0.2)" }} />
+              <img src={url} alt="" className="w-20 h-20 object-cover" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
               <button
                 type="button"
                 onClick={() => removeFromGallery("images", url)}
@@ -261,7 +261,7 @@ export default function ProductForm({ mode, initial }: Props) {
         <div className="flex flex-wrap gap-2 mt-3">
           {form.lifestyleImages.map((url) => (
             <div key={url} className="relative">
-              <img src={url} alt="" className="w-20 h-20 object-cover" style={{ border: "1px solid rgba(212,175,55,0.2)" }} />
+              <img src={url} alt="" className="w-20 h-20 object-cover" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
               <button
                 type="button"
                 onClick={() => removeFromGallery("lifestyleImages", url)}
@@ -294,7 +294,7 @@ export default function ProductForm({ mode, initial }: Props) {
         type="submit"
         disabled={saving || uploading}
         className="px-8 py-3 font-victor text-xs tracking-[0.35em] disabled:opacity-50"
-        style={{ background: "#d4af37", color: "#0a0908" }}
+        style={{ background: "var(--gold)", color: "#0a0908" }}
       >
         {uploading ? "subiendo imágenes..." : saving ? "guardando..." : "guardar"}
       </button>

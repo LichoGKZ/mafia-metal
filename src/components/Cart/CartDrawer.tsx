@@ -37,7 +37,7 @@ export default function CartDrawer() {
             className="fixed top-0 right-0 h-full z-[9900] w-full max-w-md flex flex-col"
             style={{
               background: "#1a1916",
-              borderLeft: "1px solid rgba(212,175,55,0.15)",
+              borderLeft: "1px solid rgb(var(--gold-rgb) / 0.15)",
             }}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -51,7 +51,7 @@ export default function CartDrawer() {
             >
               <span
                 className="font-victor text-xs tracking-[0.35em] uppercase"
-                style={{ color: "#d4af37" }}
+                style={{ color: "var(--gold)" }}
               >
                 tu pedido ({lines.length})
               </span>
@@ -79,8 +79,8 @@ export default function CartDrawer() {
                     onClick={handleContinueShopping}
                     className="px-6 py-2.5 font-victor text-[10px] tracking-[0.3em]"
                     style={{
-                      border: "1px solid rgba(212,175,55,0.25)",
-                      color: "#d4af37",
+                      border: "1px solid rgb(var(--gold-rgb) / 0.25)",
+                      color: "var(--gold)",
                     }}
                     data-cursor-hover
                   >
@@ -142,7 +142,7 @@ export default function CartDrawer() {
 
                       <span
                         className="font-victor text-sm tracking-widest whitespace-nowrap"
-                        style={{ color: "#d4af37" }}
+                        style={{ color: "var(--gold)" }}
                       >
                         {formatARS(line.priceARS * line.qty)}
                       </span>
@@ -167,7 +167,7 @@ export default function CartDrawer() {
                   </span>
                   <span
                     className="font-victor text-base tracking-widest"
-                    style={{ color: "#d4af37" }}
+                    style={{ color: "var(--gold)" }}
                   >
                     {formatARS(subtotalARS)}
                   </span>
@@ -176,7 +176,7 @@ export default function CartDrawer() {
                 <button
                   onClick={handleCheckout}
                   className="w-full py-3 font-victor text-xs tracking-[0.35em] metal-shine"
-                  style={{ background: "#d4af37", color: "#0a0908" }}
+                  style={{ background: "var(--gold)", color: "#0a0908" }}
                   data-cursor-hover
                 >
                   ir a pagar

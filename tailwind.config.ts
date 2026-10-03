@@ -14,11 +14,11 @@ const config: Config = {
         paper: "#f3f0e7",
         "paper-light": "#eeeadd",
         "paper-mid": "#e6e1d2",
-        gold: "#D4AF37",
-        "gold-dark": "#A67C00",
+        gold: "rgb(var(--gold-rgb) / <alpha-value>)",
+        "gold-dark": "rgb(var(--gold-dark-rgb) / <alpha-value>)",
         silver: "#2a2822",
         crimson: "#8B0000",
-        "gold-light": "#F0D060",
+        "gold-light": "rgb(var(--gold-light-rgb) / <alpha-value>)",
         ink: "#17150f",
       },
       fontFamily: {
@@ -64,13 +64,13 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gold-gradient":
-          "linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #A67C00 100%)",
+          "linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold-dark) 100%)",
         "metal-gradient":
           "linear-gradient(135deg, #8a8a8a 0%, #C0C0C0 50%, #6a6a6a 100%)",
       },
       boxShadow: {
-        gold: "0 0 20px rgba(212, 175, 55, 0.25)",
-        "gold-lg": "0 0 50px rgba(212, 175, 55, 0.4)",
+        gold: "0 0 20px rgb(var(--gold-rgb) / 0.25)",
+        "gold-lg": "0 0 50px rgb(var(--gold-rgb) / 0.4)",
         crimson: "0 0 20px rgba(139, 0, 0, 0.4)",
       },
     },

@@ -47,7 +47,7 @@ function InputField({
     <div className="relative">
       <label
         className="font-victor text-[9px] tracking-[0.35em] uppercase mb-2 block transition-colors duration-200"
-        style={{ color: focused ? "#d4af37" : "rgba(23,21,15,0.3)" }}
+        style={{ color: focused ? "var(--gold)" : "rgba(23,21,15,0.3)" }}
       >
         {label} {required && <span style={{ color: "#8b0000" }}>*</span>}
       </label>
@@ -55,7 +55,7 @@ function InputField({
         className="relative pb-0.5"
         style={{
           borderBottom: `1px solid ${
-            focused ? "#d4af37" : "rgba(23,21,15,0.1)"
+            focused ? "var(--gold)" : "rgba(23,21,15,0.1)"
           }`,
           transition: "border-color 0.2s",
         }}
@@ -99,7 +99,7 @@ function SelectField({
     <div>
       <label
         className="font-victor text-[9px] tracking-[0.35em] uppercase mb-2 block transition-colors duration-200"
-        style={{ color: focused ? "#d4af37" : "rgba(23,21,15,0.3)" }}
+        style={{ color: focused ? "var(--gold)" : "rgba(23,21,15,0.3)" }}
       >
         {label} {required && <span style={{ color: "#8b0000" }}>*</span>}
       </label>
@@ -107,7 +107,7 @@ function SelectField({
         className="relative"
         style={{
           borderBottom: `1px solid ${
-            focused ? "#d4af37" : "rgba(23,21,15,0.1)"
+            focused ? "var(--gold)" : "rgba(23,21,15,0.1)"
           }`,
           transition: "border-color 0.2s",
         }}
@@ -164,14 +164,14 @@ function TextAreaField({
     <div>
       <label
         className="font-victor text-[9px] tracking-[0.35em] uppercase mb-2 block transition-colors"
-        style={{ color: focused ? "#d4af37" : "rgba(23,21,15,0.3)" }}
+        style={{ color: focused ? "var(--gold)" : "rgba(23,21,15,0.3)" }}
       >
         {label}
       </label>
       <div
         style={{
           borderBottom: `1px solid ${
-            focused ? "#d4af37" : "rgba(23,21,15,0.1)"
+            focused ? "var(--gold)" : "rgba(23,21,15,0.1)"
           }`,
           transition: "border-color 0.2s",
         }}
@@ -354,7 +354,7 @@ export default function Contact() {
                       <span className="chapter-label text-[9px]">{label}</span>
                       <span
                         className="font-victor text-[10px] tracking-widest group-hover:text-gold transition-colors"
-                        style={{ color: "rgba(212,175,55,0.5)" }}
+                        style={{ color: "rgb(var(--gold-rgb) / 0.5)" }}
                       >
                         {handle}
                       </span>
@@ -376,20 +376,20 @@ export default function Contact() {
             {submitted ? (
               <motion.div
                 className="flex flex-col items-center justify-center text-center py-20 px-8"
-                style={{ border: "1px solid rgba(212,175,55,0.12)" }}
+                style={{ border: "1px solid rgb(var(--gold-rgb) / 0.12)" }}
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center mb-7"
-                  style={{ border: "1px solid rgba(212,175,55,0.4)" }}
+                  style={{ border: "1px solid rgb(var(--gold-rgb) / 0.4)" }}
                 >
-                  <span style={{ color: "#d4af37" }}>✓</span>
+                  <span style={{ color: "var(--gold)" }}>✓</span>
                 </div>
                 <h3
                   className="font-victor font-bold text-lg mb-4 tracking-wide"
-                  style={{ color: "#d4af37" }}
+                  style={{ color: "var(--gold)" }}
                 >
                   mensaje recibido
                 </h3>
@@ -408,7 +408,7 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-7">
                 <div
                   className="flex items-center justify-between pb-4"
-                  style={{ borderBottom: "1px solid rgba(212,175,55,0.07)" }}
+                  style={{ borderBottom: "1px solid rgb(var(--gold-rgb) / 0.07)" }}
                 >
                   <span
                     className="font-victor text-[10px] tracking-[0.3em]"
@@ -488,7 +488,7 @@ export default function Contact() {
                     type="submit"
                     disabled={sending}
                     className="px-10 py-3 font-victor text-xs tracking-[0.35em] transition-colors metal-shine disabled:opacity-50"
-                    style={{ background: "#d4af37", color: "#0a0908" }}
+                    style={{ background: "var(--gold)", color: "#0a0908" }}
                     data-cursor-hover
                   >
                     {sending ? (
@@ -525,7 +525,7 @@ export default function Contact() {
         <div className="max-w-5xl mx-auto pt-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div
             className="font-victor font-bold text-sm tracking-[0.3em]"
-            style={{ color: "#d4af37" }}
+            style={{ color: "var(--gold)" }}
           >
             MAFIA METAL
           </div>
@@ -540,7 +540,7 @@ export default function Contact() {
             <span className="chapter-label text-[9px]">joyería artesanal</span>
             <div
               className="w-1 h-1 rounded-full"
-              style={{ background: "rgba(212,175,55,0.25)" }}
+              style={{ background: "rgb(var(--gold-rgb) / 0.25)" }}
             />
             <span className="chapter-label text-[9px]">mar del plata</span>
           </div>

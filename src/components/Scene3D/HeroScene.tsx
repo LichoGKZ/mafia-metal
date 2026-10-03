@@ -10,6 +10,7 @@ import {
   Stars,
 } from "@react-three/drei";
 import * as THREE from "three";
+import { GOLD_HEX } from "@/lib/brand";
 
 function FloatingRing() {
   const ref = useRef<THREE.Mesh>(null);
@@ -27,7 +28,7 @@ function FloatingRing() {
     <mesh ref={ref} castShadow>
       <torusGeometry args={[1.2, 0.34, 64, 128]} />
       <meshStandardMaterial
-        color="#D4AF37"
+        color={GOLD_HEX}
         roughness={0.04}
         metalness={1}
         envMapIntensity={3}
@@ -48,7 +49,7 @@ function GoldSphere() {
   return (
     <Sphere ref={ref} args={[0.4, 64, 64]} position={[2.5, 0.8, -1]}>
       <MeshDistortMaterial
-        color="#D4AF37"
+        color={GOLD_HEX}
         roughness={0.05}
         metalness={1}
         distort={0.2}
@@ -113,7 +114,7 @@ function MetallicParticleField() {
       </bufferGeometry>
       <pointsMaterial
         size={0.025}
-        color="#D4AF37"
+        color={GOLD_HEX}
         transparent
         opacity={0.5}
         sizeAttenuation
@@ -149,7 +150,7 @@ function DynamicLights() {
         ref={light1}
         position={[3, 2, 2]}
         intensity={2}
-        color="#D4AF37"
+        color={GOLD_HEX}
         distance={8}
       />
       <pointLight

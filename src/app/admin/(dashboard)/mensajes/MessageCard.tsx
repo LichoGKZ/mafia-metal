@@ -17,7 +17,7 @@ const INTEREST_LABELS: Record<string, string> = {
 };
 
 const STATUS_META: Record<MessageStatus, { label: string; color: string }> = {
-  nuevo: { label: "nuevo", color: "#d4af37" },
+  nuevo: { label: "nuevo", color: "var(--gold)" },
   leido: { label: "leído", color: "#6b9bd1" },
   respondido: { label: "respondido", color: "#4caf6d" },
   archivado: { label: "archivado", color: "rgba(176,170,152,0.4)" },
@@ -74,7 +74,7 @@ export default function MessageCard({ msg }: { msg: ContactMessageRow }) {
     <div
       className="transition-opacity"
       style={{
-        border: `1px solid ${localStatus === "nuevo" ? "rgba(212,175,55,0.3)" : "rgba(176,170,152,0.1)"}`,
+        border: `1px solid ${localStatus === "nuevo" ? "rgb(var(--gold-rgb) / 0.3)" : "rgba(176,170,152,0.1)"}`,
         opacity: isPending ? 0.5 : 1,
       }}
     >
@@ -157,7 +157,7 @@ export default function MessageCard({ msg }: { msg: ContactMessageRow }) {
                 "Re: tu consulta en Mafia Metal"
               )}`}
               className="px-4 py-2 font-victor text-[10px] tracking-[0.25em] uppercase"
-              style={{ background: "#d4af37", color: "#0a0908" }}
+              style={{ background: "var(--gold)", color: "#0a0908" }}
             >
               responder por email
             </a>

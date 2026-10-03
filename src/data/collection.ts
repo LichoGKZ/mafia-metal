@@ -19,18 +19,6 @@ export interface JewelryItem {
   lifestyleImages?: string[];
 }
 
-export interface VaultItem {
-  id: string;
-  name: string;
-  tagline: string;
-  material: string;
-  weight: string;
-  purity: string;
-  edition: string;
-  modelColor: string;
-  image: string;
-}
-
 export const collectionItems: JewelryItem[] = [
   {
     id: "one-love",
@@ -88,43 +76,6 @@ export const collectionItems: JewelryItem[] = [
     image: "", // TODO: subir foto (fondo amarillo)
   },
 ];
-
-export const vaultItems: VaultItem[] = [
-  {
-    id: "vault-one-love",
-    name: "ONE LOVE",
-    tagline: "Ultimo lanzamiento",
-    material: "Plata",
-    weight: "—",
-    purity: "—",
-    edition: "—",
-    modelColor: "#C0C0C0",
-    image: "/images/products/one-love-02.jpg",
-  },
-  {
-    id: "vault-only-trust",
-    name: "ONLY TRUST",
-    tagline: "Only trust your mafia",
-    material: "Plata maciza",
-    weight: "—",
-    purity: "—",
-    edition: "—",
-    modelColor: "#C0C0C0",
-    image: "/images/products/only-trust.jpg",
-  },
-  {
-    id: "vault-tag-mafia",
-    name: "TAG MAFIA",
-    tagline: "El graffiti llevado al metal",
-    material: "Plata",
-    weight: "—",
-    purity: "—",
-    edition: "—",
-    modelColor: "#C0C0C0",
-    image: "",
-  },
-];
-
 
 export const galleryPhotos: string[] = [
   "/images/gallery/gallery-01.jpg",

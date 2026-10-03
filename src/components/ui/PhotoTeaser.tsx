@@ -4,12 +4,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 /**
- * Marco circular con "photo" a la izquierda, "galery" a la derecha y
+ * Marco rectangular (horizontal) con "photo" a la izquierda, "galery" a la derecha y
  * "( click )" debajo — tal cual el mockup que mandó la clienta (imagen +
  * video de Illustrator). Al hacer click baja hasta la sección #gallery.
  *
  * Reusa el mismo grabado ornamentado (marco-ornamentado.png) que ya usa
- * FramedGallery, recortado en círculo con la foto adentro.
+ * FramedGallery, con la foto adentro, sin recorte circular ni proporción cuadrada.
  */
 export default function PhotoTeaser({
   image,
@@ -40,15 +40,17 @@ export default function PhotoTeaser({
         className="relative flex flex-col items-center gap-4 group"
         aria-label="Ver galería"
       >
-        <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px]">
-          {/* foto recortada en círculo */}
-          <div className="absolute inset-[14%] rounded-full overflow-hidden">
+        {/* Marco rectangular horizontal: respeta la proporción real del
+            grabado (605×386) y de la foto, sin forzar un cuadrado. */}
+        <div className="relative w-[min(86vw,560px)] aspect-[605/386]">
+          {/* foto dentro de la ventana del marco (queda por debajo del grabado) */}
+          <div className="absolute inset-x-[7.5%] inset-y-[8.5%] overflow-hidden rounded-[3%/5%]">
             <Image
               src={image}
               alt="Mafia Metal"
               fill
               className="object-cover grayscale-[0.1] transition-all duration-500 group-hover:grayscale-0"
-              sizes="340px"
+              sizes="(max-width: 640px) 86vw, 560px"
             />
           </div>
           {/* grabado ornamentado por encima, mismo asset que el resto del sitio */}
@@ -57,7 +59,8 @@ export default function PhotoTeaser({
             alt=""
             fill
             aria-hidden
-            className="pointer-events-none select-none opacity-90"
+            className="pointer-events-none select-none object-fill opacity-90"
+            sizes="(max-width: 640px) 86vw, 560px"
           />
         </div>
 

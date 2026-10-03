@@ -27,7 +27,7 @@ export default async function EditProductPage({
       <div className="max-w-2xl mx-auto">
         <h1
           className="font-victor text-sm tracking-[0.35em] uppercase mb-10"
-          style={{ color: "#d4af37" }}
+          style={{ color: "var(--gold)" }}
         >
           editar · {product.name}
         </h1>

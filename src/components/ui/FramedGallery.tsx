@@ -16,6 +16,9 @@ import { motion, AnimatePresence } from "framer-motion";
  * (evita el warning de hydration de Next).
  */
 
+/** Marco ornamentado general que envuelve todo el collage. Poné `false` para quitarlo. */
+const SHOW_COLLAGE_FRAME = true;
+
 // pseudo-random estable [0,1) a partir de un entero — mismo patrón que
 // usan en GraffitiBackground.tsx
 function rand(n: number) {
@@ -92,8 +95,8 @@ export default function FramedGallery({
           rotate: round((r1 - 0.5) * 9), // entre -4.5 y 4.5 grados — CSS puro, Framer no la toca
           liftPx: Math.round((r2 - 0.5) * 34), // entre -17 y 17px, desprolijo verticalmente
           size: SIZE_CYCLE[i % SIZE_CYCLE.length],
-          tape: r3 > 0.55, // algunas fotos llevan "cinta" dorada, no todas
-          tapeRotate: round((rand(i + 133) - 0.5) * 30),
+          // todas las fotos llevan cinta washi; solo varía un poco la inclinación
+          tapeRotate: round((r3 - 0.5) * 16), // entre -8° y 8°
         };
       }),
     [images]
@@ -103,7 +106,7 @@ export default function FramedGallery({
     <>
       <div
         className={`relative mx-auto max-w-6xl ${className}`}
-        style={{
+        style={SHOW_COLLAGE_FRAME ? {
           // el marco: una sola imagen que envuelve todo el bloque de fotos.
           // ajustá border-image-slice / -width al tamaño real del PNG si
           // hace falta afinar el grosor de las esquinas.
@@ -114,13 +117,15 @@ export default function FramedGallery({
           borderImageWidth: "clamp(34px, 6vw, 78px)",
           borderImageOutset: "0",
           borderImageRepeat: "stretch",
-        }}
+        } : undefined}
       >
         {/* fondo detrás de las fotos, dentro del marco */}
-        <div
-          className="absolute inset-0 -z-10"
-          style={{ background: "#eae5d6" }}
-        />
+        {SHOW_COLLAGE_FRAME && (
+          <div
+            className="absolute inset-0 -z-10"
+            style={{ background: "#eae5d6" }}
+          />
+        )}
 
         <div className="relative flex flex-wrap items-center justify-center gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-10 py-8 sm:py-10 px-2 sm:px-4">
           {images.map((src, i) => {
@@ -152,37 +157,30 @@ export default function FramedGallery({
                   className="relative block w-full h-full"
                   suppressHydrationWarning
                 >
-                  {/* marco tipo "foto revelada" */}
-                  <div
-                    className="relative w-full h-full p-[6px] sm:p-2 shadow-[0_10px_24px_rgba(0,0,0,0.55)]"
-                    style={{ background: "#f2ede2" }}
-                  >
-                    <div className="relative w-full h-full overflow-hidden">
-                      <Image
-                        src={src}
-                        alt={`${alt} ${i + 1}`}
-                        fill
-                        className="object-cover grayscale-[0.15] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0"
-                        sizes="(max-width: 768px) 45vw, 25vw"
-                      />
-                      <div className="absolute inset-0 bg-obsidian/0 group-hover:bg-obsidian/10 transition-colors duration-300" />
-                    </div>
+                  {/* foto directa, sin marco/borde blanco extra */}
+                  <div className="relative w-full h-full overflow-hidden shadow-[0_10px_24px_rgba(0,0,0,0.55)]">
+                    <Image
+                      src={src}
+                      alt={`${alt} ${i + 1}`}
+                      fill
+                      className="object-cover grayscale-[0.15] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0"
+                      sizes="(max-width: 768px) 45vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-obsidian/0 group-hover:bg-obsidian/10 transition-colors duration-300" />
                   </div>
 
-                  {/* cinta dorada, solo en algunas — da el efecto "pinned" */}
-                  {l.tape && (
-                    <span
-                      aria-hidden
-                      className="absolute -top-2.5 left-1/2 w-10 h-4 sm:w-12 sm:h-5"
-                      style={{
-                        background:
-                          "linear-gradient(180deg, rgba(212,175,55,0.85), rgba(180,140,30,0.75))",
-                        transform: `translateX(-50%) rotate(${l.tapeRotate}deg)`,
-                        boxShadow: "0 2px 4px rgba(0,0,0,0.35)",
-                        opacity: 0.85,
-                      }}
-                    />
-                  )}
+                  {/* cinta washi en TODAS las fotos (incluida la fila inferior) */}
+                  <span
+                    aria-hidden
+                    className="absolute -top-2.5 left-1/2 z-[3] w-10 h-4 sm:w-12 sm:h-5 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgb(var(--gold-rgb) / 0.85), rgb(var(--gold-dark-rgb) / 0.75))",
+                      transform: `translateX(-50%) rotate(${l.tapeRotate}deg)`,
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.35)",
+                      opacity: 0.85,
+                    }}
+                  />
 
                   {/* lupa on hover */}
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

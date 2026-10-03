@@ -22,11 +22,11 @@ export default function CheckoutPendingPage() {
     >
       <div
         className="w-14 h-14 rounded-full flex items-center justify-center"
-        style={{ border: "1px solid rgba(212,175,55,0.4)" }}
+        style={{ border: "1px solid rgb(var(--gold-rgb) / 0.4)" }}
       >
-        <span style={{ color: "#d4af37" }}>…</span>
+        <span style={{ color: "var(--gold)" }}>…</span>
       </div>
-      <h1 className="font-victor font-bold text-xl tracking-wide" style={{ color: "#d4af37" }}>
+      <h1 className="font-victor font-bold text-xl tracking-wide" style={{ color: "var(--gold)" }}>
         pago pendiente
       </h1>
       <p className="font-victor text-xs max-w-sm" style={{ color: "rgba(176,170,152,0.5)" }}>
@@ -36,7 +36,7 @@ export default function CheckoutPendingPage() {
       <Link
         href="/#collection"
         className="mt-4 px-8 py-3 font-victor text-xs tracking-[0.35em]"
-        style={{ background: "#d4af37", color: "#0a0908" }}
+        style={{ background: "var(--gold)", color: "#0a0908" }}
       >
         seguir comprando
       </Link>

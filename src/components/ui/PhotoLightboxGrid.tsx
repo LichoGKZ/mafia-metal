@@ -55,7 +55,7 @@ export default function PhotoLightboxGrid({
             onClick={() => setOpenIndex(i)}
             data-cursor-hover
             className="relative block w-full mb-3 overflow-hidden group break-inside-avoid"
-            style={{ border: "1px solid rgba(212,175,55,0.08)" }}
+            style={{ border: "1px solid rgb(var(--gold-rgb) / 0.08)" }}
           >
             <Image
               src={src}

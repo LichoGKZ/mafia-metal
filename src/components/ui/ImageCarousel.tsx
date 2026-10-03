@@ -107,7 +107,7 @@ export default function ImageCarousel({
                 className="w-1.5 h-1.5 rounded-full transition-all"
                 style={{
                   background:
-                    i === index ? "#d4af37" : "rgba(255,255,255,0.3)",
+                    i === index ? "var(--gold)" : "rgba(255,255,255,0.3)",
                   transform: i === index ? "scale(1.3)" : "scale(1)",
                 }}
                 aria-label={`Ir a la imagen ${i + 1}`}
@@ -119,7 +119,7 @@ export default function ImageCarousel({
           {showCounter && (
             <div
               className="absolute top-3 right-3 z-20 px-2 py-0.5 font-victor text-[9px] tracking-[0.2em]"
-              style={{ background: "rgba(10,9,8,0.5)", color: "rgba(212,175,55,0.9)" }}
+              style={{ background: "rgba(10,9,8,0.5)", color: "rgb(var(--gold-rgb) / 0.9)" }}
             >
               {index + 1} / {images.length}
             </div>

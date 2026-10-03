@@ -13,7 +13,7 @@ export default async function AdminProductsPage() {
       <div className="flex items-center justify-between mb-8">
         <h1
           className="font-victor text-sm tracking-[0.35em] uppercase"
-          style={{ color: "#d4af37" }}
+          style={{ color: "var(--gold)" }}
         >
           productos
         </h1>
@@ -22,7 +22,7 @@ export default async function AdminProductsPage() {
       <Link
           href="/admin/productos/nuevo"
           className="inline-block mb-8 px-6 py-3 font-victor text-xs tracking-[0.3em]"
-          style={{ background: "#d4af37", color: "#0a0908" }}
+          style={{ background: "var(--gold)", color: "#0a0908" }}
         >
           + nuevo producto
         </Link>
@@ -62,7 +62,7 @@ export default async function AdminProductsPage() {
               <Link
                 href={`/admin/productos/${p.id}/editar`}
                 className="font-victor text-[10px] tracking-[0.2em] uppercase"
-                style={{ color: "#d4af37" }}
+                style={{ color: "var(--gold)" }}
               >
                 editar
               </Link>

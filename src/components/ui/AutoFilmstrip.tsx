@@ -37,7 +37,7 @@ export default function AutoFilmstrip({
           <div
             key={`${src}-${i}`}
             className="relative flex-shrink-0 w-56 h-72 md:w-72 md:h-96 overflow-hidden"
-            style={{ border: "1px solid rgba(212,175,55,0.1)" }}
+            style={{ border: "1px solid rgb(var(--gold-rgb) / 0.1)" }}
           >
             <Image
               src={src}

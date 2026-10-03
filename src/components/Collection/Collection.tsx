@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
 
 const itemAmbients: Record<string, { gradient: string }> = {
   "one-love": {
-    gradient: "radial-gradient(ellipse at 35% 50%, rgba(212,175,55,0.10) 0%, rgba(139,90,20,0.06) 45%, transparent 70%)",
+    gradient: "radial-gradient(ellipse at 35% 50%, rgb(var(--gold-rgb) / 0.10) 0%, rgba(139,90,20,0.06) 45%, transparent 70%)",
   },
   "only-trust": {
     gradient: "radial-gradient(ellipse at 35% 50%, rgba(200,200,220,0.10) 0%, rgba(120,120,140,0.06) 40%, transparent 70%)",
@@ -126,7 +126,7 @@ function ProductRow({
       {/* ── Hover border — wraps the entire row ── */}
       <div
         className="absolute inset-0 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.25)" }}
+        style={{ boxShadow: "inset 0 0 0 1px rgb(var(--gold-rgb) / 0.25)" }}
       />
 
       {/* ── Hover ambient background — themed per item ── */}
@@ -153,7 +153,7 @@ function ProductRow({
                   background:
                     item.badge === "LIMITED"
                       ? "rgba(139,0,0,0.9)"
-                      : "rgba(212,175,55,0.9)",
+                      : "rgb(var(--gold-rgb) / 0.9)",
                   color: item.badge === "LIMITED" ? "#fff" : "#0a0908",
                 }}
               >
@@ -254,7 +254,7 @@ function ItemModal({
         className="relative w-full max-w-4xl overflow-y-auto"
         style={{
           background: "#1a1916",
-          border: "1px solid rgba(212,175,55,0.15)",
+          border: "1px solid rgb(var(--gold-rgb) / 0.15)",
           maxHeight: "90vh",
         }}
         initial={{ scale: 0.94, y: 30, opacity: 0 }}
@@ -281,7 +281,7 @@ function ItemModal({
           <div
             className="relative border-b md:border-b-0 md:border-r"
             style={{
-              borderColor: "rgba(212,175,55,0.08)",
+              borderColor: "rgb(var(--gold-rgb) / 0.08)",
               background: "linear-gradient(135deg, #f0ede2, #e6e1d1)",
               minHeight: 360,
             }}
@@ -295,7 +295,7 @@ function ItemModal({
               <p className="chapter-label text-[10px] mb-3">{item.material}</p>
               <h2
                 className="font-victor font-bold text-xl mb-1 tracking-wide"
-                style={{ color: "#d4af37" }}
+                style={{ color: "var(--gold)" }}
               >
                 [ {item.name} ]
               </h2>
@@ -328,7 +328,7 @@ function ItemModal({
                     <span className="chapter-label text-[10px]">{label}</span>
                     <span
                       className="font-victor text-xs tracking-widest"
-                      style={{ color: "#d4af37" }}
+                      style={{ color: "var(--gold)" }}
                     >
                       {value}
                     </span>
@@ -342,7 +342,7 @@ function ItemModal({
                 onClick={handleAddToOrder}
                 className="w-full py-3 font-victor text-xs tracking-[0.35em] transition-colors metal-shine"
                 style={{
-                  background: "#d4af37",
+                  background: "var(--gold)",
                   color: "#0a0908",
                 }}
                 data-cursor-hover
@@ -360,8 +360,8 @@ function ItemModal({
                 }}
                 className="w-full py-3 font-victor text-xs tracking-[0.35em] transition-all"
                 style={{
-                  border: "1px solid rgba(212,175,55,0.25)",
-                  color: "#d4af37",
+                  border: "1px solid rgb(var(--gold-rgb) / 0.25)",
+                  color: "var(--gold)",
                 }}
                 data-cursor-hover
               >
@@ -375,7 +375,7 @@ function ItemModal({
         {item.lifestyleImages && item.lifestyleImages.length > 0 && (
           <div
             className="border-t px-8 py-8"
-            style={{ borderColor: "rgba(212,175,55,0.08)" }}
+            style={{ borderColor: "rgb(var(--gold-rgb) / 0.08)" }}
           >
             <div className="flex items-center gap-4 mb-5">
               <span className="chapter-label text-[10px]">en la calle</span>
@@ -386,7 +386,7 @@ function ItemModal({
                 <div
                   key={src}
                   className="relative aspect-square overflow-hidden group"
-                  style={{ border: "1px solid rgba(212,175,55,0.08)" }}
+                  style={{ border: "1px solid rgb(var(--gold-rgb) / 0.08)" }}
                 >
                   <Image
                     src={src}

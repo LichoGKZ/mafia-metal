@@ -72,7 +72,7 @@ export default function Loader() {
       {visible && (
         <div
           ref={loaderRef}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-obsidian overflow-hidden"
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-obsidian overflow-hidden"
         >
           {/* Noise texture overlay */}
           <div className="absolute inset-0 opacity-5 noise-texture" />
@@ -91,43 +91,74 @@ export default function Loader() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
           />
 
-          {/* Logo */}
+          {/* Logo — el wordmark está centrado exacto en el viewport (vertical y
+              horizontal). El isotipo y la leyenda "Mar del Plata" se anclan por
+              encima con posición absoluta, así no desplazan el centro. */}
           <motion.div
-            className="text-center mb-16"
+            className="relative text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <Image
-              src="/images/brand/logo-mafia-gold.svg"
-              alt=""
-              width={56}
-              height={56}
-              className="mx-auto mb-6 opacity-90"
-            />
-            <div className="chapter-label mb-4 tracking-[0.6em]">
-              MAR DEL PLATA
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-6 flex flex-col items-center">
+              <Image
+                src="/images/brand/logo-mafia-gold.svg"
+                alt=""
+                width={56}
+                height={56}
+                className="mb-5 opacity-90"
+              />
+              <span
+                className="font-victor font-bold text-[11px] md:text-xs uppercase whitespace-nowrap"
+                style={{
+                  letterSpacing: "0.5em",
+                  paddingLeft: "0.5em", // compensa el espacio final del tracking
+                  color: "rgba(255,255,255,0.7)",
+                }}
+              >
+                Mar del Plata
+              </span>
             </div>
-            <h1 className="font-victor text-4xl md:text-6xl font-black text-gold-gradient tracking-widest">
-              MAFIA
-            </h1>
-            <h1 className="font-victor text-4xl md:text-6xl font-black text-silver-gradient tracking-[0.5em]">
-              METAL
+
+            {/* Mismo cuerpo, peso y tracking en ambas líneas (5 letras c/u en
+                monoespaciada → ancho idéntico). Amarillo + blanco sólidos para
+                el máximo contraste sobre obsidiana. */}
+            <h1
+              className="font-victor font-bold leading-[1.05] text-[clamp(2.75rem,11vw,5.5rem)]"
+              style={{ letterSpacing: "0.35em", paddingLeft: "0.35em" }}
+            >
+              <span
+                className="block"
+                style={{
+                  color: "var(--gold)",
+                  textShadow: "0 0 24px rgb(var(--gold-rgb) / 0.35)",
+                }}
+              >
+                MAFIA
+              </span>
+              <span className="block" style={{ color: "#ffffff" }}>
+                METAL
+              </span>
             </h1>
           </motion.div>
 
-          {/* Progress bar */}
+          {/* Progress bar — anclada abajo para no empujar el logo del centro */}
           <motion.div
-            className="w-64 md:w-96"
+            className="absolute bottom-24 left-1/2 -translate-x-1/2 w-64 md:w-96"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
             <div className="flex justify-between mb-2">
-              <span className="chapter-label text-xs">CARGANDO</span>
-              <span className="font-victor text-gold text-lg">{progress}%</span>
+              <span
+                className="font-victor font-bold text-xs tracking-[0.3em]"
+                style={{ color: "rgba(255,255,255,0.75)" }}
+              >
+                CARGANDO
+              </span>
+              <span className="font-victor font-bold text-gold text-lg">{progress}%</span>
             </div>
-            <div className="h-px bg-void w-full relative overflow-hidden">
+            <div className="h-px bg-white/15 w-full relative overflow-hidden">
               <div
                 ref={barRef}
                 className="absolute top-0 left-0 h-full bg-gold transition-none"
@@ -143,7 +174,7 @@ export default function Loader() {
             animate={{ opacity: 0.4 }}
             transition={{ delay: 0.8 }}
           >
-            <span className="font-victor text-xs tracking-[0.5em] text-silver">
+            <span className="font-victor text-xs tracking-[0.5em] text-white/70 whitespace-nowrap" style={{ paddingLeft: "0.5em" }}>
               HECHO A MANO EN ARGENTINA
             </span>
           </motion.div>

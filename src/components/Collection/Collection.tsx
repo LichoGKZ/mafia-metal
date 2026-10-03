@@ -47,7 +47,6 @@ function ProductImage({
     return (
       <div
         className={`w-full h-full flex items-center justify-center ${className ?? ""}`}
-        style={{ background: "linear-gradient(135deg, #f0ede2, #e6e1d1)" }}
       >
         <p
           className="font-victor text-[10px] tracking-[0.3em] text-center px-4"
@@ -144,29 +143,9 @@ function ProductRow({
       {/* ── Foto del producto ── */}
       <div className="w-full md:w-1/2 relative z-[1]">
         <div className="relative overflow-hidden">
-          <div
-            className="h-64 md:h-80 relative"
-            style={{ background: "linear-gradient(135deg, #f0ede2, #e6e1d1)" }}
-          >
+          <div className="h-64 md:h-80 relative">
             <ProductImage item={item} />
           </div>
-          {/* Badge */}
-          {item.badge && (
-            <div className="absolute top-3 left-3 z-20">
-              <span
-                className="font-victor text-[9px] tracking-[0.3em] px-2 py-1"
-                style={{
-                  background:
-                    item.badge === "LIMITED"
-                      ? "rgba(139,0,0,0.9)"
-                      : "rgb(var(--gold-rgb) / 0.9)",
-                  color: item.badge === "LIMITED" ? "#fff" : "#0a0908",
-                }}
-              >
-                {item.badge}
-              </span>
-            </div>
-          )}
         </div>
       </div>
 
@@ -208,7 +187,7 @@ function ProductRow({
           {item.name}
         </div>
 
-        {/* Solo material | stock | año — sin descripción ni precio, tal
+        {/* Solo subtítulo | stock | año — sin descripción ni precio, tal
             como pidió la clienta (que solo se vea el nombre del producto
             y este dato corto). El detalle completo sigue disponible al
             hacer click, en el modal. */}
@@ -216,7 +195,7 @@ function ProductRow({
           className="font-victor text-[11px] tracking-[0.25em]"
           style={{ color: INK_SOFT }}
         >
-          {item.subtitle?.toLowerCase() || item.material?.toLowerCase()} &nbsp;|&nbsp; en
+          {item.subtitle?.toLowerCase() || item.color?.toLowerCase()} &nbsp;|&nbsp; en
           stock &nbsp;|&nbsp; {new Date().getFullYear()}
         </p>
       </div>
@@ -241,7 +220,6 @@ function ItemModal({
   const [size, setSize] = useState("");
   const [sizeError, setSizeError] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
-  const [material, setMaterial] = useState(item.material);
 
   const needsSize = !!item.sizes && item.sizes.length > 0;
   const sizeMissing = needsSize && !size;
@@ -268,17 +246,13 @@ function ItemModal({
       setSizeError(true); // feedback visual en vez de agregar sin talle
       return;
     }
-    addItem({ ...item, material }, 1, needsSize ? size : undefined);
+    addItem(item, 1, needsSize ? size : undefined);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   };
 
   const priceLabel =
     item.priceARS > 0 ? formatARS(item.priceARS) : item.price;
-
-  // Variantes de material: hoy una por pieza; si más adelante hay
-  // más (ej. "Plata" / "Alpaca") alcanza con sumarlas acá.
-  const materialOptions = [item.material].filter(Boolean);
 
   return (
     <motion.div
@@ -334,7 +308,6 @@ function ItemModal({
             className="relative border-b-2 md:border-b-0 md:border-r-2"
             style={{
               borderColor: LINE,
-              background: "linear-gradient(135deg, #f0ede2, #e6e1d1)",
               minHeight: 360,
             }}
           >
@@ -342,7 +315,7 @@ function ItemModal({
           </div>
 
           {/* Detalles — jerarquía:
-              1) Título  2) Material | Tipo de pieza  3) Talle / Tamaño en cm
+              1) Título  2) Color | Tipo de pieza  3) Talle / Tamaño en cm
               4) Descripción  (5) Imágenes de referencia, abajo) */}
           <div className="flex flex-col">
             {/* Título: marca/nombre en negrita + precio */}
@@ -366,38 +339,18 @@ function ItemModal({
               </p>
             </div>
 
-            {/* Material | Tipo de pieza */}
+            {/* Color | Tipo de pieza */}
             <div
               className="grid grid-cols-[1.4fr_1fr] border-b-2"
               style={{ borderColor: LINE }}
             >
               <div className="p-4 border-r-2" style={{ borderColor: LINE }}>
                 <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
-                  Material
+                  Color
                 </p>
-                <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Material">
-                  {materialOptions.map((m) => {
-                    const on = material === m;
-                    return (
-                      <button
-                        key={m}
-                        type="button"
-                        role="radio"
-                        aria-checked={on}
-                        onClick={() => setMaterial(m)}
-                        className="px-3 py-1.5 text-xs uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white"
-                        style={{
-                          border: `1.5px solid ${LINE}`,
-                          background: on ? INK : "#fff",
-                          color: on ? "#fff" : INK,
-                        }}
-                        data-cursor-hover
-                      >
-                        {m}
-                      </button>
-                    );
-                  })}
-                </div>
+                <p className="text-sm uppercase" style={{ color: INK }}>
+                  {item.color || "—"}
+                </p>
               </div>
 
               <div className="p-4">

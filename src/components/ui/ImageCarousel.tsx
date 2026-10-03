@@ -59,7 +59,7 @@ export default function ImageCarousel({
             src={images[index]}
             alt={`${alt} ${index + 1}`}
             fill
-            className="object-cover pointer-events-none select-none"
+            className="object-contain p-6 drop-shadow-[0_14px_16px_rgba(0,0,0,0.3)] pointer-events-none select-none"
             sizes="(max-width: 768px) 100vw, 50vw"
             draggable={false}
           />

@@ -109,8 +109,8 @@ export default function CartDrawer() {
                           className="font-victor text-[10px] tracking-[0.2em] uppercase mb-3"
                           style={{ color: "#cfcab8" }}
                         >
-                          {line.material}
-                          {line.size ? ` · talle ${line.size}` : ""}
+                          {line.color}
+                          {line.size ? `${line.color ? " · " : ""}talle ${line.size}` : ""}
                         </p>
 
                         {/* Qty stepper */}

@@ -17,11 +17,8 @@ const empty: ProductInput = {
   subtitle: "",
   price: "$—",
   priceARS: 0,
-  material: "",
   description: "",
-  chapter: "",
-  badge: "",
-  color: "silver",
+  color: "",
   image: "",
   images: [],
   lifestyleImages: [],
@@ -166,47 +163,15 @@ export default function ProductForm({ mode, initial }: Props) {
         </Field>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        <Field label="material">
-          <input
-            value={form.material}
-            onChange={(e) => set("material", e.target.value)}
-            className="w-full bg-transparent py-2 font-victor text-sm outline-none"
-            style={inputStyle}
-          />
-        </Field>
-        <Field label="color">
-          <select
-            value={form.color}
-            onChange={(e) => set("color", e.target.value as ProductInput["color"])}
-            className="w-full bg-transparent py-2 font-victor text-sm outline-none"
-            style={inputStyle}
-          >
-            <option value="gold" style={{ color: "#000" }}>gold</option>
-            <option value="silver" style={{ color: "#000" }}>silver</option>
-            <option value="mixed" style={{ color: "#000" }}>mixed</option>
-          </select>
-        </Field>
-      </div>
-
-      <div className="grid grid-cols-2 gap-6">
-        <Field label="capítulo (I, II, III...)">
-          <input
-            value={form.chapter}
-            onChange={(e) => set("chapter", e.target.value)}
-            className="w-full bg-transparent py-2 font-victor text-sm outline-none"
-            style={inputStyle}
-          />
-        </Field>
-        <Field label="badge (NEW, BESTSELLER, vacío = sin badge)">
-          <input
-            value={form.badge ?? ""}
-            onChange={(e) => set("badge", e.target.value)}
-            className="w-full bg-transparent py-2 font-victor text-sm outline-none"
-            style={inputStyle}
-          />
-        </Field>
-      </div>
+      <Field label="color">
+        <input
+          value={form.color}
+          onChange={(e) => set("color", e.target.value)}
+          placeholder="ej: plata, oro, negro mate"
+          className="w-full bg-transparent py-2 font-victor text-sm outline-none"
+          style={inputStyle}
+        />
+      </Field>
 
       <Field label="descripción">
         <textarea
@@ -221,7 +186,7 @@ export default function ProductForm({ mode, initial }: Props) {
       <Field label="foto principal">
         <input type="file" accept="image/*" onChange={handleMainImage} className="font-victor text-xs" />
         {form.image && (
-          <img src={form.image} alt="" className="mt-3 w-32 h-32 object-cover" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
+          <img src={form.image} alt="" className="mt-3 w-32 h-32 object-contain" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
         )}
       </Field>
 
@@ -236,7 +201,7 @@ export default function ProductForm({ mode, initial }: Props) {
         <div className="flex flex-wrap gap-2 mt-3">
           {form.images.map((url) => (
             <div key={url} className="relative">
-              <img src={url} alt="" className="w-20 h-20 object-cover" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
+              <img src={url} alt="" className="w-20 h-20 object-contain" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
               <button
                 type="button"
                 onClick={() => removeFromGallery("images", url)}
@@ -261,7 +226,7 @@ export default function ProductForm({ mode, initial }: Props) {
         <div className="flex flex-wrap gap-2 mt-3">
           {form.lifestyleImages.map((url) => (
             <div key={url} className="relative">
-              <img src={url} alt="" className="w-20 h-20 object-cover" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
+              <img src={url} alt="" className="w-20 h-20 object-contain" style={{ border: "1px solid rgb(var(--gold-rgb) / 0.2)" }} />
               <button
                 type="button"
                 onClick={() => removeFromGallery("lifestyleImages", url)}

@@ -41,7 +41,7 @@ export default async function AdminProductsPage() {
               style={{ border: "1px solid rgba(176,170,152,0.1)" }}
             >
               <div
-                className="w-14 h-14 flex-shrink-0 bg-cover bg-center"
+                className="w-14 h-14 flex-shrink-0 bg-contain bg-center bg-no-repeat"
                 style={{
                   backgroundImage: p.image ? `url(${p.image})` : undefined,
                   background: p.image ? undefined : "rgba(176,170,152,0.08)",
@@ -53,7 +53,7 @@ export default async function AdminProductsPage() {
                   className="font-victor text-[10px] tracking-wider truncate"
                   style={{ color: "rgba(176,170,152,0.4)" }}
                 >
-                  {p.id} · {p.material} · ${p.price_ars}
+                  {p.id}{p.color ? ` · ${p.color}` : ""} · ${p.price_ars}
                 </p>
               </div>
 

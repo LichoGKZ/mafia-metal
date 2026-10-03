@@ -6,15 +6,13 @@ export interface JewelryItem {
   /** Numeric price in ARS, used for cart totals and the Mercado Pago preference.
    *  TODO: reemplazar por los precios reales en pesos argentinos. */
   priceARS: number;
-  material: string;
-  /** Tipo de pieza que se muestra junto al material: "Anillo", "Pulsera", "Colgante"… */
+  /** Tipo de pieza: "Anillo", "Pulsera", "Colgante"… */
   pieceType?: string;
   /** Tamaño en cm (solo el número o medidas, sin la unidad: "4 x 2,5"). La ficha agrega " cm". */
   sizeCm?: string;
   description: string;
-  chapter: string;
-  badge?: string;
-  color: "gold" | "silver" | "mixed";
+  /** Color / acabado, texto libre (ej: "Plata", "Oro"). */
+  color: string;
   /** Talles disponibles. Si existe, el cliente DEBE elegir uno para comprar. */
   sizes?: string[];
   /** Ruta de la foto real del producto dentro de /public. Usar PNG recortado (sin fondo). Vacío = falta subir la foto. */
@@ -35,14 +33,11 @@ export const collectionItems: JewelryItem[] = [
     subtitle: "Ultimo lanzamiento.",
     price: "$—",
     priceARS: 0, // TODO: cargar precio real
-    material: "Plata",
     pieceType: "Anillo", // TODO: confirmar (se asume anillo porque lleva talle)
     // sizeCm: "", // TODO: cargar medida real en cm
     description:
       "El concepto One Love es una expresión que trasciende géneros. Sus raíces están profundamente ligadas a la cultura reggae como un llamado a la unidad. Fue el hip hop de los 90 —y fundamentalmente el clásico One Love de Nas— lo que la consolidó como un símbolo de lealtad y hermandad en el entorno urbano.",
-    chapter: "I",
-    badge: "BESTSELLER",
-    color: "silver",
+    color: "Plata",
     image: "/images/products/one-love-01.png",
     images: [
       "/images/products/one-love-01.png",
@@ -63,13 +58,11 @@ export const collectionItems: JewelryItem[] = [
     subtitle: "Only trust your mafia",
     price: "$—",
     priceARS: 0, // TODO: cargar precio real
-    material: "Plata maciza",
     pieceType: "Pulsera",
     // sizeCm: "", // TODO: largo de la pulsera en cm
     description:
       "Pulsera de eslabones diseñada y modelada desde cero, pieza maciza y pesada, donde la estética industrial se logra a través de un trabajo preciso de textura y acabado en cada eslabón. Cada eslabón lleva el sello de Mafia Metal en la cara posterior. El cierre presenta la frase 'Only trust your mafia'.",
-    chapter: "II",
-    color: "silver",
+    color: "Plata",
     image: "/images/products/only-trust-01.png",
     images: [
       "/images/products/only-trust-01.png",
@@ -82,14 +75,11 @@ export const collectionItems: JewelryItem[] = [
     subtitle: "El graffiti llevado al metal",
     price: "$—",
     priceARS: 0, // TODO: cargar precio real
-    material: "Plata",
     pieceType: "Colgante",
     // sizeCm: "", // TODO: alto del colgante en cm
     description:
       "El Tag de Mafia Metal traslada la estética del graffiti al metal. Diseñado y modelado desde cero, este colgante captura el trazo original en una pieza maciza, pensada para mantener la identidad del diseño intacta tras el proceso de fundición.",
-    chapter: "III",
-    badge: "NEW",
-    color: "silver",
+    color: "Plata",
     image: "/images/products/tag-mafia-01.png",
     images: [
       "/images/products/tag-mafia-01.png",

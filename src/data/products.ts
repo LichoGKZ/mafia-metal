@@ -7,14 +7,11 @@ interface ProductRow {
   subtitle: string | null;
   price: string | null;
   price_ars: number;
-  material: string | null;
   /** Columnas opcionales `piece_type text` y `size_cm text`. */
   piece_type?: string | null;
   size_cm?: string | null;
   description: string | null;
-  chapter: string | null;
-  badge: string | null;
-  color: "gold" | "silver" | "mixed";
+  color: string | null;
   image: string | null;
   images: string[] | null;
   lifestyle_images: string[] | null;
@@ -50,13 +47,10 @@ function rowToItem(row: ProductRow): JewelryItem {
     subtitle: row.subtitle ?? "",
     price: row.price ?? "$—",
     priceARS: row.price_ars ?? 0,
-    material: row.material ?? "",
     pieceType: resolvePieceType(row, sizes),
     sizeCm: row.size_cm ?? undefined,
     description: row.description ?? "",
-    chapter: row.chapter ?? "",
-    badge: row.badge ?? undefined,
-    color: row.color,
+    color: row.color ?? "",
     sizes,
     image: row.image ?? "",
     images: row.images && row.images.length > 0 ? row.images : undefined,

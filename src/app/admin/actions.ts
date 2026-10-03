@@ -10,11 +10,9 @@ export interface ProductInput {
   subtitle: string;
   price: string;
   priceARS: number;
-  material: string;
   description: string;
-  chapter: string;
-  badge: string | null;
-  color: "gold" | "silver" | "mixed";
+  /** Texto libre (ej: "Plata", "Oro", "Negro mate"). */
+  color: string;
   image: string;
   images: string[];
   lifestyleImages: string[];
@@ -58,10 +56,7 @@ export async function createProduct(input: Omit<ProductInput, "id"> & { id?: str
     subtitle: input.subtitle,
     price: input.price,
     price_ars: input.priceARS,
-    material: input.material,
     description: input.description,
-    chapter: input.chapter,
-    badge: input.badge || null,
     color: input.color,
     image: input.image,
     images: input.images,
@@ -87,10 +82,7 @@ export async function updateProduct(input: ProductInput) {
       subtitle: input.subtitle,
       price: input.price,
       price_ars: input.priceARS,
-      material: input.material,
       description: input.description,
-      chapter: input.chapter,
-      badge: input.badge || null,
       color: input.color,
       image: input.image,
       images: input.images,

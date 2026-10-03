@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCart, formatARS } from "@/context/CartContext";
+import BagIcon from "@/components/ui/BagIcon";
 
 export default function CartDrawer() {
   const { lines, isOpen, closeCart, updateQty, removeItem, subtotalARS } =
@@ -50,16 +51,17 @@ export default function CartDrawer() {
               style={{ borderBottom: "1px solid rgba(176,170,152,0.08)" }}
             >
               <span
-                className="font-victor text-xs tracking-[0.35em] uppercase"
+                className="flex items-center gap-3 font-victor text-xs tracking-[0.35em] uppercase"
                 style={{ color: "var(--gold)" }}
               >
+                <BagIcon className="w-5 h-5" />
                 tu pedido ({lines.length})
               </span>
               <button
                 onClick={closeCart}
                 className="font-victor text-xs"
-                style={{ color: "rgba(176,170,152,0.5)" }}
-                aria-label="Close cart"
+                style={{ color: "#cfcab8" }}
+                aria-label="Cerrar carrito"
               >
                 ✕ cerrar
               </button>
@@ -69,9 +71,10 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-6" data-lenis-prevent>
               {lines.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center gap-4">
+                  <BagIcon className="w-10 h-10" />
                   <p
                     className="font-victor text-xs tracking-[0.2em]"
-                    style={{ color: "rgba(176,170,152,0.35)" }}
+                    style={{ color: "#cfcab8" }}
                   >
                     tu pedido está vacío.
                   </p>
@@ -104,7 +107,7 @@ export default function CartDrawer() {
                         </p>
                         <p
                           className="font-victor text-[10px] tracking-[0.2em] uppercase mb-3"
-                          style={{ color: "rgba(176,170,152,0.35)" }}
+                          style={{ color: "#cfcab8" }}
                         >
                           {line.material}
                           {line.size ? ` · talle ${line.size}` : ""}
@@ -134,7 +137,7 @@ export default function CartDrawer() {
                           <button
                             onClick={() => removeItem(line.key)}
                             className="font-victor text-[10px] tracking-[0.2em] ml-2"
-                            style={{ color: "rgba(139,0,0,0.7)" }}
+                            style={{ color: "#ff7b72" }}
                           >
                             quitar
                           </button>
@@ -162,7 +165,7 @@ export default function CartDrawer() {
                 <div className="flex items-center justify-between">
                   <span
                     className="font-victor text-[10px] tracking-[0.3em] uppercase"
-                    style={{ color: "rgba(176,170,152,0.4)" }}
+                    style={{ color: "#cfcab8" }}
                   >
                     subtotal
                   </span>
@@ -185,7 +188,7 @@ export default function CartDrawer() {
                 <button
                   onClick={handleContinueShopping}
                   className="w-full py-3 font-victor text-xs tracking-[0.35em]"
-                  style={{ border: "1px solid rgba(176,170,152,0.15)", color: "rgba(176,170,152,0.6)" }}
+                  style={{ border: "1px solid rgba(176,170,152,0.15)", color: "#cfcab8" }}
                   data-cursor-hover
                 >
                   seguir comprando

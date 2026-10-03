@@ -135,7 +135,7 @@ export default function SizeGuideModal({
           </tbody>
         </table>
         {onPick && (
-          <p className="px-6 py-4 text-[11px] text-black/60 border-t-2 border-black">
+          <p className="px-6 py-4 text-[11px] text-black/75 border-t-2 border-black">
             Tocá una fila para elegir ese talle.
           </p>
         )}

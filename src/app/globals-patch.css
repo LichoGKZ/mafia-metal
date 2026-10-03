@@ -1,0 +1,39 @@
+/* ============================================================
+   PEGAR EN src/app/globals.css  (el archivo no venía en el zip)
+   ============================================================ */
+
+/* 1) Amarillo de marca: #ffec00.
+   Ya lo define tailwind.config.ts (plugin addBase, :root:root), así que
+   NO hace falta repetirlo acá. Si globals.css todavía tiene valores viejos
+   de --gold / --gold-rgb / --gold-dark-rgb / --gold-light-rgb, podés
+   borrarlos: el de tailwind.config.ts los pisa igual. */
+
+/* 2) Scroll suave con la rueda del mouse.
+   El sitio usa Lenis (src/hooks/useLenis). Lenis necesita que el
+   scroll-behavior nativo esté en "auto" cuando está activo. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Respaldo: si Lenis no está activo (JS deshabilitado / aún no inició),
+   el navegador hace el scroll suave nativo en los anclas. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

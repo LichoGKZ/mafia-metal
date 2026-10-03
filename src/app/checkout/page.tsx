@@ -112,7 +112,7 @@ export default function CheckoutPage() {
           <Link
             href="/#collection"
             className="font-victor text-[10px] tracking-[0.3em] uppercase"
-            style={{ color: "rgba(176,170,152,0.5)" }}
+            style={{ color: "#cfcab8" }}
           >
             ← seguir comprando
           </Link>
@@ -121,7 +121,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
           {/* Order summary */}
           <div className="md:col-span-2 order-2 md:order-1">
-            <p className="font-victor text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: "rgba(176,170,152,0.4)" }}>
+            <p className="font-victor text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: "#cfcab8" }}>
               resumen del pedido
             </p>
             <ul className="space-y-5 mb-8">
@@ -156,7 +156,7 @@ export default function CheckoutPage() {
                     <button
                       onClick={() => removeItem(line.key)}
                       className="font-victor text-[10px] tracking-[0.2em] ml-2"
-                      style={{ color: "rgba(139,0,0,0.7)" }}
+                      style={{ color: "#ff7b72" }}
                     >
                       quitar
                     </button>
@@ -165,7 +165,7 @@ export default function CheckoutPage() {
               ))}
             </ul>
             <div className="flex justify-between pt-4" style={{ borderTop: "1px solid rgb(var(--gold-rgb) / 0.15)" }}>
-              <span className="font-victor text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(176,170,152,0.5)" }}>
+              <span className="font-victor text-xs tracking-[0.3em] uppercase" style={{ color: "#cfcab8" }}>
                 total
               </span>
               <span className="font-victor text-lg tracking-widest" style={{ color: "var(--gold)" }}>
@@ -176,7 +176,7 @@ export default function CheckoutPage() {
 
           {/* Shipping form */}
           <div className="md:col-span-3 order-1 md:order-2">
-            <p className="font-victor text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: "rgba(176,170,152,0.4)" }}>
+            <p className="font-victor text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: "#cfcab8" }}>
               datos de envío
             </p>
 
@@ -189,7 +189,7 @@ export default function CheckoutPage() {
             </div>
             <Field label="dirección *" name="address" value={shipping.address} onChange={handleChange} />
             <div className="mt-6">
-              <label className="font-victor text-[9px] tracking-[0.3em] uppercase block mb-2" style={{ color: "rgba(176,170,152,0.3)" }}>
+              <label className="font-victor text-[10px] tracking-[0.3em] uppercase block mb-2" style={{ color: "#cfcab8" }}>
                 notas (opcional)
               </label>
               <textarea
@@ -198,12 +198,12 @@ export default function CheckoutPage() {
                 onChange={handleChange}
                 rows={3}
                 className="w-full bg-transparent py-2 font-victor text-xs outline-none resize-none"
-                style={{ borderBottom: "1px solid rgba(176,170,152,0.1)", color: "#b0aa98" }}
+                style={{ borderBottom: "1px solid rgba(176,170,152,0.45)", color: "#b0aa98" }}
               />
             </div>
 
             {error && (
-              <p className="font-victor text-xs mt-6" style={{ color: "#c0392b" }}>
+              <p className="font-victor text-xs mt-6" style={{ color: "#ff6b5e" }}>
                 {error}
               </p>
             )}
@@ -238,7 +238,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="font-victor text-[9px] tracking-[0.3em] uppercase block mb-2" style={{ color: "rgba(176,170,152,0.3)" }}>
+      <label className="font-victor text-[10px] tracking-[0.3em] uppercase block mb-2" style={{ color: "#cfcab8" }}>
         {label}
       </label>
       <input
@@ -247,7 +247,7 @@ function Field({
         value={value}
         onChange={onChange}
         className="w-full bg-transparent py-2 font-victor text-xs outline-none"
-        style={{ borderBottom: "1px solid rgba(176,170,152,0.1)", color: "#b0aa98" }}
+        style={{ borderBottom: "1px solid rgba(176,170,152,0.45)", color: "#b0aa98" }}
       />
     </div>
   );

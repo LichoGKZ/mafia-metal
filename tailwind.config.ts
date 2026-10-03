@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
@@ -80,7 +81,23 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Fuente única del amarillo de marca: #ffec00 (255 236 0).
+    // `:root:root` sube la especificidad para pisar cualquier valor viejo de
+    // --gold* que siga definido en globals.css (se puede borrar de ahí).
+    plugin(({ addBase }) => {
+      addBase({
+        ":root:root": {
+          "--gold": "#ffec00",
+          "--gold-rgb": "255 236 0",
+          "--gold-dark": "#ccbd00",
+          "--gold-dark-rgb": "204 189 0",
+          "--gold-light": "#fff34d",
+          "--gold-light-rgb": "255 243 77",
+        },
+      });
+    }),
+  ],
 };
 
 export default config;

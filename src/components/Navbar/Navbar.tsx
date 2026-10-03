@@ -3,21 +3,26 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
 import { useCart } from "@/context/CartContext";
+import { getLenis } from "@/hooks/useLenis";
+import { useScrollLock } from "@/hooks/useScrollLock";
+import BagIcon from "@/components/ui/BagIcon";
 
 // Debe coincidir con la clave usada en Loader.tsx / Hero.tsx.
 const SESSION_KEY = "mm_loader_seen";
 const FIRST_VISIT_DELAY = 1.9;
 const RETURN_VISIT_DELAY = 0.1;
 
+// Orden exacto del menú. Cada href debe coincidir con el id de su <section>.
+// "About": si todavía no existe <section id="about">, cae a #contact.
 const navItems = [
-  { number: "01", label: "INICIO", href: "#home" },
-  { number: "02", label: "PRODUCTOS", href: "#collection" },
-  { number: "03", label: "PIEZA PERSONALIZADA", href: "#customs" },
-  { number: "04", label: "EL TALLER", href: "#forge" },
-  { number: "05", label: "GALERÍA", href: "#gallery" },
-  { number: "06", label: "CONTACTO", href: "#contact" },
+  { number: "01", label: "Inicio", href: "#home" },
+  { number: "02", label: "Productos", href: "#collection" },
+  { number: "03", label: "Personalizada", href: "#customs" },
+  { number: "04", label: "El Taller", href: "#forge" },
+  { number: "05", label: "Galería", href: "#gallery" },
+  { number: "06", label: "About", href: "#about", fallback: "#contact" },
+  { number: "07", label: "Contacto", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -43,22 +48,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  // Frena body + Lenis mientras el menú está abierto.
+  useScrollLock(open);
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, fallback?: string) => {
     setOpen(false);
+    // Esperamos a que el overlay se cierre y Lenis se reactive.
     setTimeout(() => {
-      const el = document.querySelector(href);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      const el = (document.querySelector(href) ??
+        (fallback ? document.querySelector(fallback) : null)) as HTMLElement | null;
+      if (!el) return;
+      const lenis = getLenis();
+      if (lenis) lenis.scrollTo(el, { duration: 1.4 });
+      else el.scrollIntoView({ behavior: "smooth" });
     }, 400);
   };
 
@@ -77,31 +79,20 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: navDelay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Links — traducidos al español para mantener consistencia con
-            el resto del copy del sitio (antes decían Products/Pictures/About). */}
-        <div className="flex items-center gap-6 md:gap-10">
-          <button
-            onClick={() => handleNavClick("#collection")}
-            className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
-            data-cursor-hover
-          >
-            Products
-          </button>
-          <button
-            onClick={() => handleNavClick("#gallery")}
-            className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
-            data-cursor-hover
-          >
-            Pictures
-          </button>
-          <button
-            onClick={() => handleNavClick("#contact")}
-            className="font-victor text-xs md:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
-            data-cursor-hover
-          >
-            About
-          </button>
+        {/* Links directos (desktop). En mobile se usa el menú del logo. */}
+        <div className="hidden lg:flex items-center gap-8 xl:gap-10">
+          {navItems.map((item) => (
+            <button
+              key={item.href}
+              onClick={() => handleNavClick(item.href, item.fallback)}
+              className="font-victor text-xs xl:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
+              data-cursor-hover
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
+        <span className="lg:hidden" aria-hidden="true" />
 
         <div className="flex items-center gap-5">
           {/* Cart button — no está en la referencia, se mantiene chico para no perder la función */}
@@ -111,19 +102,7 @@ export default function Navbar() {
             aria-label={`Abrir carrito (${itemCount} ${itemCount === 1 ? "producto" : "productos"})`}
             data-cursor-hover
           >
-            <svg
-              viewBox="0 0 24 24"
-              className="w-[22px] h-[22px]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 8h14l-1 12H6L5 8Z" />
-              <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-            </svg>
+            <BagIcon className="w-[24px] h-[24px]" />
             {itemCount > 0 && (
               <span
                 key={itemCount}
@@ -191,11 +170,11 @@ export default function Navbar() {
                   height={20}
                   className="opacity-90 w-[20px] h-[20px]"
                 />
-                MAFIA<span className="text-silver mx-1">·</span>METAL
+                MAFIA<span className="text-[#e8e6e0] mx-1">·</span>METAL
               </span>
               <button
                 onClick={() => setOpen(false)}
-                className="font-victor text-sm tracking-[0.3em] text-silver hover:text-gold transition-colors flex items-center gap-3"
+                className="font-victor text-sm tracking-[0.3em] text-[#e8e6e0] hover:text-gold transition-colors flex items-center gap-3"
               >
                 CERRAR
                 <span className="text-crimson">✕</span>
@@ -213,7 +192,7 @@ export default function Navbar() {
                     <span className="classified-stamp text-xs">MAFIA METAL</span>
                     <div className="h-px flex-1 bg-gold/20" />
                   </div>
-                  <p className="font-victor text-xs tracking-[0.4em] text-silver/40 mt-4">
+                  <p className="font-victor text-xs tracking-[0.4em] text-[#cfcab8] mt-4">
                     JOYERÍA HECHA A MANO — MAR DEL PLATA
                   </p>
                 </div>
@@ -230,16 +209,16 @@ export default function Navbar() {
                     >
                       <button
                         onClick={() => handleNavClick(item.href)}
-                        className="group flex items-center gap-6 w-full py-4 border-b border-white/5 hover:border-gold/30 transition-colors"
+                        className="group flex items-center gap-6 w-full py-4 border-b border-white/10 hover:border-gold/60 transition-colors"
                         data-cursor-hover
                       >
-                        <span className="font-victor text-sm text-gold/50 group-hover:text-gold transition-colors w-8">
+                        <span className="font-victor text-sm text-gold group-hover:text-white transition-colors w-8">
                           {item.number}
                         </span>
-                        <span className="font-victor text-3xl md:text-5xl font-bold text-silver/80 group-hover:text-gold transition-colors tracking-wider">
+                        <span className="font-victor text-3xl md:text-5xl font-bold uppercase text-[#f2efe6] group-hover:text-gold transition-colors tracking-wider">
                           {item.label}
                         </span>
-                        <span className="ml-auto text-gold/30 group-hover:text-gold transition-colors transform group-hover:translate-x-2 duration-300">
+                        <span className="ml-auto text-gold/70 group-hover:text-gold transition-colors transform group-hover:translate-x-2 duration-300">
                           →
                         </span>
                       </button>

@@ -10,6 +10,12 @@ import { useCart, formatARS } from "@/context/CartContext";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import ImageCarousel from "@/components/ui/ImageCarousel";
+import BagIcon from "@/components/ui/BagIcon";
+
+/* Tokens de texto (contraste mínimo 4.5:1 sobre fondo claro). */
+const INK = "#0b0b0b";
+const INK_SOFT = "rgba(11,11,11,0.72)";
+const LINE = "#0b0b0b";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -45,7 +51,7 @@ function ProductImage({
       >
         <p
           className="font-victor text-[10px] tracking-[0.3em] text-center px-4"
-          style={{ color: "rgba(23,21,15,0.3)" }}
+          style={{ color: "rgba(23,21,15,0.65)" }}
         >
           FOTO PRÓXIMAMENTE
         </p>
@@ -64,16 +70,14 @@ function ProductImage({
     );
   }
 
-  // NOTA: hasta que tengamos el PNG sin fondo de cada pieza, usamos
-  // object-contain (no recorta ni "revienta" la imagen) sobre un fondo
-  // neutro. En cuanto lleguen los archivos sin fondo, esto va a quedar
-  // igual que el mockup (la pieza flotando sola).
+  // Las fotos van como PNG recortado (sin fondo): object-contain + sombra
+  // proyectada siguiendo la silueta de la pieza (drop-shadow, no box-shadow).
   return (
     <Image
       src={item.image}
       alt={item.name}
       fill
-      className={`object-contain p-6 ${className ?? ""}`}
+      className={`object-contain p-6 drop-shadow-[0_14px_16px_rgba(0,0,0,0.3)] ${className ?? ""}`}
       sizes="(max-width: 768px) 100vw, 50vw"
     />
   );
@@ -209,8 +213,8 @@ function ProductRow({
             y este dato corto). El detalle completo sigue disponible al
             hacer click, en el modal. */}
         <p
-          className="font-victor text-[10px] tracking-[0.25em]"
-          style={{ color: "rgba(23,21,15,0.35)" }}
+          className="font-victor text-[11px] tracking-[0.25em]"
+          style={{ color: INK_SOFT }}
         >
           {item.subtitle?.toLowerCase() || item.material?.toLowerCase()} &nbsp;|&nbsp; en
           stock &nbsp;|&nbsp; {new Date().getFullYear()}
@@ -220,34 +224,11 @@ function ProductRow({
   );
 }
 
-/* ── Iconos ── */
-function BagIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M5 8h14l-1 12H6L5 8Z" />
-      <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-    </svg>
-  );
-}
-
 /* ── Item Modal ──
    Contraste: antes los textos usaban rgba(23,21,15,x) (tinta oscura) sobre
    un fondo #1a1916 (también oscuro) → ilegible. Ahora la ficha es papel
    claro con tinta oscura (como el mockup) y todos los textos usan los
    tokens de abajo (mínimo 4.5:1 de contraste). */
-const INK = "#0b0b0b";
-const INK_SOFT = "rgba(11,11,11,0.72)"; // texto secundario (≈ 7:1 sobre blanco)
-const LINE = "#0b0b0b";
-
 function ItemModal({
   item,
   onClose,
@@ -264,6 +245,7 @@ function ItemModal({
 
   const needsSize = !!item.sizes && item.sizes.length > 0;
   const sizeMissing = needsSize && !size;
+  const hasSizeCm = !!item.sizeCm;
 
   useScrollLock(true);
 
@@ -359,27 +341,32 @@ function ItemModal({
             <ProductImage item={item} carousel />
           </div>
 
-          {/* Detalles */}
+          {/* Detalles — jerarquía:
+              1) Título  2) Material | Tipo de pieza  3) Talle / Tamaño en cm
+              4) Descripción  (5) Imágenes de referencia, abajo) */}
           <div className="flex flex-col">
-            <h2
-              className="font-victor text-xl md:text-2xl px-6 pt-6 pb-4 pr-14 border-b-2"
-              style={{ color: INK, borderColor: LINE }}
-            >
-              {item.subtitle || item.name}
-            </h2>
-
-            {/* Precio | tipo */}
+            {/* Título: marca/nombre en negrita + precio */}
             <div
-              className="grid grid-cols-2 border-b-2 text-center text-sm"
+              className="px-6 pt-6 pb-4 pr-14 border-b-2"
               style={{ borderColor: LINE }}
             >
-              <div className="py-3 border-r-2" style={{ borderColor: LINE }}>
+              <h2
+                className="font-victor font-bold text-2xl md:text-3xl tracking-[0.04em] uppercase"
+                style={{ color: INK }}
+              >
+                {item.name}
+              </h2>
+              {item.subtitle && (
+                <p className="mt-1 text-sm" style={{ color: INK_SOFT }}>
+                  {item.subtitle}
+                </p>
+              )}
+              <p className="mt-3 text-base" style={{ color: INK }}>
                 {priceLabel}
-              </div>
-              <div className="py-3 uppercase">{item.name}</div>
+              </p>
             </div>
 
-            {/* Material | Talle — mismo nivel visual que precio */}
+            {/* Material | Tipo de pieza */}
             <div
               className="grid grid-cols-[1.4fr_1fr] border-b-2"
               style={{ borderColor: LINE }}
@@ -414,6 +401,24 @@ function ItemModal({
               </div>
 
               <div className="p-4">
+                <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
+                  Tipo de pieza
+                </p>
+                <p className="text-sm uppercase" style={{ color: INK }}>
+                  {item.pieceType ?? "—"}
+                </p>
+              </div>
+            </div>
+
+            {/* Talle (con ayuda) / Tamaño en cm */}
+            <div
+              className={`grid border-b-2 ${hasSizeCm ? "grid-cols-[1.4fr_1fr]" : "grid-cols-1"}`}
+              style={{ borderColor: LINE }}
+            >
+              <div
+                className={`p-4 ${hasSizeCm ? "border-r-2" : ""}`}
+                style={{ borderColor: LINE }}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <label
                     htmlFor="talle-select"
@@ -427,8 +432,9 @@ function ItemModal({
                       type="button"
                       onClick={() => setGuideOpen(true)}
                       aria-label="Abrir guía de talles"
+                      aria-haspopup="dialog"
                       title="Guía de talles"
-                      className="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold hover:bg-black hover:text-white transition-colors"
+                      className="w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold hover:bg-black hover:text-white transition-colors"
                       style={{ border: `1.5px solid ${LINE}`, color: INK }}
                       data-cursor-hover
                     >
@@ -452,10 +458,10 @@ function ItemModal({
                       style={{
                         // Estado inicial gris neutro → negro al elegir
                         background: size ? "#fff" : "#e4e4e1",
-                        color: size ? INK : "#5a5a56",
+                        color: size ? INK : "#4a4a46",
                         border: size
                           ? `1.5px solid ${LINE}`
-                          : `1.5px dashed ${sizeError ? "#b00020" : "#8a8a85"}`,
+                          : `1.5px dashed ${sizeError ? "#b00020" : "#6b6b66"}`,
                       }}
                     >
                       <option value="">Elegir talle</option>
@@ -467,28 +473,35 @@ function ItemModal({
                     </select>
                   </motion.div>
                 ) : (
-                  <p className="text-xs" style={{ color: INK_SOFT }}>
+                  <p className="text-sm" style={{ color: INK }}>
                     Talle único
                   </p>
                 )}
               </div>
+
+              {hasSizeCm && (
+                <div className="p-4">
+                  <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
+                    Tamaño
+                  </p>
+                  <p className="text-sm" style={{ color: INK }}>
+                    {item.sizeCm} cm
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Descripción */}
             <div className="p-6 flex-1">
-              <p
-                className="text-xs leading-relaxed mb-6"
-                style={{ color: INK_SOFT }}
-              >
+              <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
+                Descripción
+              </p>
+              <p className="text-sm leading-relaxed mb-6" style={{ color: INK_SOFT }}>
                 {item.description}
               </p>
 
               {sizeError && (
-                <p
-                  role="alert"
-                  className="text-xs mb-3"
-                  style={{ color: "#b00020" }}
-                >
+                <p role="alert" className="text-xs mb-3" style={{ color: "#b00020" }}>
                   Elegí un talle para agregar al carrito.{" "}
                   <button
                     type="button"
@@ -499,6 +512,15 @@ function ItemModal({
                   </button>
                 </p>
               )}
+
+              {/* Aviso de plazo de entrega */}
+              <p
+                role="note"
+                className="mb-4 px-4 py-3 text-sm font-bold bg-gold"
+                style={{ color: INK, border: `2px solid ${LINE}` }}
+              >
+                *Tu pedido estará disponible dentro de 14 días hábiles
+              </p>
 
               {/* Botón: bolsa. Sin talle queda en gris y avisa al tocarlo. */}
               <button
@@ -525,7 +547,7 @@ function ItemModal({
           <div className="border-t-2 px-6 py-6" style={{ borderColor: LINE }}>
             <div className="flex items-center gap-4 mb-4">
               <span className="text-[11px] tracking-[0.3em] uppercase" style={{ color: INK_SOFT }}>
-                en la calle
+                Imágenes de referencia
               </span>
               <div className="h-px flex-1" style={{ background: "rgba(11,11,11,0.25)" }} />
             </div>
@@ -538,7 +560,7 @@ function ItemModal({
                 >
                   <Image
                     src={src}
-                    alt={`${item.name} en la calle ${i + 1}`}
+                    alt={`${item.name} — imagen de referencia ${i + 1}`}
                     fill
                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
                     sizes="150px"

@@ -8,6 +8,9 @@ interface ProductRow {
   price: string | null;
   price_ars: number;
   material: string | null;
+  /** Columnas opcionales `piece_type text` y `size_cm text`. */
+  piece_type?: string | null;
+  size_cm?: string | null;
   description: string | null;
   chapter: string | null;
   badge: string | null;
@@ -28,7 +31,19 @@ function resolveSizes(row: ProductRow): string[] | undefined {
   return /anillo|ring|only trust|one love/.test(text) ? RING_SIZES : undefined;
 }
 
+/** Tipo de pieza: manda `piece_type`; si no existe se infiere del texto. */
+function resolvePieceType(row: ProductRow, sizes?: string[]): string | undefined {
+  if (row.piece_type) return row.piece_type;
+  const text = `${row.name} ${row.subtitle ?? ""} ${row.description ?? ""}`.toLowerCase();
+  if (/pulsera/.test(text)) return "Pulsera";
+  if (/colgante|dije/.test(text)) return "Colgante";
+  if (/cadena/.test(text)) return "Cadena";
+  if (/anillo|ring/.test(text) || sizes === RING_SIZES) return "Anillo";
+  return undefined;
+}
+
 function rowToItem(row: ProductRow): JewelryItem {
+  const sizes = resolveSizes(row);
   return {
     id: row.id,
     name: row.name,
@@ -36,11 +51,13 @@ function rowToItem(row: ProductRow): JewelryItem {
     price: row.price ?? "$—",
     priceARS: row.price_ars ?? 0,
     material: row.material ?? "",
+    pieceType: resolvePieceType(row, sizes),
+    sizeCm: row.size_cm ?? undefined,
     description: row.description ?? "",
     chapter: row.chapter ?? "",
     badge: row.badge ?? undefined,
     color: row.color,
-    sizes: resolveSizes(row),
+    sizes,
     image: row.image ?? "",
     images: row.images && row.images.length > 0 ? row.images : undefined,
     lifestyleImages:

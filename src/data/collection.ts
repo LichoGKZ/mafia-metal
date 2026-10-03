@@ -3,7 +3,7 @@ export interface JewelryItem {
   name: string;
   subtitle: string;
   price: string;
-  /** Numeric price in ARS, used for cart totals and the Mercado Pago preference.
+  /** Numeric price in ARS, used for the order total in the cart / WhatsApp message.
    *  TODO: reemplazar por los precios reales en pesos argentinos. */
   priceARS: number;
   /** Tipo de pieza: "Anillo", "Pulsera", "Colgante"… */

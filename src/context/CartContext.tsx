@@ -19,7 +19,7 @@ export interface CartLine {
   size?: string;
   name: string;
   price: string; // display price, e.g. "$2,400"
-  priceARS: number; // numeric price used for totals / Mercado Pago
+  priceARS: number; // numeric price used for the order total
   color: string;
   qty: number;
 }

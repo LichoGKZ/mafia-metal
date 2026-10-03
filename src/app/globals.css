@@ -50,7 +50,7 @@ body {
 
 /* El cursor real sólo se oculta cuando CustomCursor.tsx está montado y
    dibujando el punto/anillo de reemplazo (hoy sólo en la home). Así el
-   admin, el login y el checkout conservan el mouse normal del sistema. */
+   admin, y el login conservan el mouse normal del sistema. */
 body.custom-cursor-active {
   cursor: none;
 }

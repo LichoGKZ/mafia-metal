@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { customPhotos } from "@/data/collection";
 import { createClient } from "@/lib/supabase/client";
 import { submitContactMessage } from "@/app/admin/mensajes/actions";
+import { WHATSAPP_NUMBER as DEFAULT_WHATSAPP_NUMBER } from "@/lib/whatsapp";
 import {
   Field,
   SelectField,
@@ -17,7 +18,7 @@ import {
 /** Número de WhatsApp en formato internacional sin "+" (ej. 5492235551234).
  *  Se define en .env.local → NEXT_PUBLIC_WHATSAPP_NUMBER. Si falta, el botón
  *  de WhatsApp simplemente no se muestra. */
-const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(
+const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || DEFAULT_WHATSAPP_NUMBER).replace(
   /\D/g,
   ""
 );

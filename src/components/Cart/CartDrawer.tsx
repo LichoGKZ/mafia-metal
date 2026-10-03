@@ -1,22 +1,16 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useCart, formatARS } from "@/context/CartContext";
 import BagIcon from "@/components/ui/BagIcon";
+import { whatsappOrderUrl } from "@/lib/whatsapp";
 
 export default function CartDrawer() {
   const { lines, isOpen, closeCart, updateQty, removeItem, subtotalARS } =
     useCart();
-  const router = useRouter();
 
   const handleContinueShopping = () => {
     closeCart();
-  };
-
-  const handleCheckout = () => {
-    closeCart();
-    router.push("/checkout");
   };
 
   return (
@@ -148,7 +142,9 @@ export default function CartDrawer() {
                         className="font-victor text-sm tracking-widest whitespace-nowrap"
                         style={{ color: "var(--gold)" }}
                       >
-                        {formatARS(line.priceARS * line.qty)}
+                        {line.priceARS > 0
+                          ? formatARS(line.priceARS * line.qty)
+                          : "a confirmar"}
                       </span>
                     </li>
                   ))}
@@ -167,24 +163,26 @@ export default function CartDrawer() {
                     className="font-victor text-[10px] tracking-[0.3em] uppercase"
                     style={{ color: "#cfcab8" }}
                   >
-                    subtotal
+                    total
                   </span>
                   <span
                     className="font-victor text-base tracking-widest"
                     style={{ color: "var(--gold)" }}
                   >
-                    {formatARS(subtotalARS)}
+                    {subtotalARS > 0 ? formatARS(subtotalARS) : "a confirmar"}
                   </span>
                 </div>
 
-                <button
-                  onClick={handleCheckout}
-                  className="w-full py-3 font-victor text-xs tracking-[0.35em] metal-shine"
+                <a
+                  href={whatsappOrderUrl(lines)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-3 text-center font-victor text-xs tracking-[0.35em] metal-shine"
                   style={{ background: "var(--gold)", color: "#0a0908" }}
                   data-cursor-hover
                 >
-                  ir a pagar
-                </button>
+                  enviar pedido por whatsapp
+                </a>
                 <button
                   onClick={handleContinueShopping}
                   className="w-full py-3 font-victor text-xs tracking-[0.35em]"

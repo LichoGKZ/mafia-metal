@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import type React from "react";
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import GalleryModal from "@/components/ui/GalleryModal";
 
 /**
  * Galería "pared de forense" — fotos prendidas con un poco de desorden
@@ -41,34 +42,6 @@ export default function FramedGallery({
   className?: string;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const close = useCallback(() => setOpenIndex(null), []);
-  const next = useCallback(
-    () => setOpenIndex((i) => (i === null ? null : (i + 1) % images.length)),
-    [images.length]
-  );
-  const prev = useCallback(
-    () =>
-      setOpenIndex((i) =>
-        i === null ? null : (i - 1 + images.length) % images.length
-      ),
-    [images.length]
-  );
-
-  useEffect(() => {
-    if (openIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
-    };
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [openIndex, close, next, prev]);
 
   // layout por foto: rotación, desplazamiento vertical y tamaño,
   // todo calculado una sola vez y estable entre renders.
@@ -180,74 +153,15 @@ export default function FramedGallery({
         }
       `}</style>
 
-      {/* Lightbox */}
+      {/* Al tocar una foto se despliega en el visor emergente */}
       <AnimatePresence>
         {openIndex !== null && (
-          <motion.div
-            className="fixed inset-0 z-[9800] flex items-center justify-center p-4 md:p-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={close}
-          >
-            <div
-              className="absolute inset-0"
-              style={{ background: "rgba(10,9,8,0.95)", backdropFilter: "blur(8px)" }}
-            />
-
-            <button
-              onClick={close}
-              className="absolute top-5 right-5 md:top-8 md:right-8 z-10 w-9 h-9 flex items-center justify-center font-victor text-sm text-silver/60 hover:text-gold transition-colors"
-              style={{ border: "1px solid rgba(23,21,15,0.15)" }}
-              aria-label="Cerrar"
-            >
-              ×
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prev();
-              }}
-              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center text-silver/60 hover:text-gold transition-colors text-2xl"
-              aria-label="Anterior"
-            >
-              ‹
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                next();
-              }}
-              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center text-silver/60 hover:text-gold transition-colors text-2xl"
-              aria-label="Siguiente"
-            >
-              ›
-            </button>
-
-            <motion.div
-              key={openIndex}
-              className="relative z-[1] max-w-4xl max-h-[85vh] w-full"
-              initial={{ scale: 0.94, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.96, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative w-full h-[70vh] md:h-[80vh]">
-                <Image
-                  src={images[openIndex]}
-                  alt={`${alt} ${openIndex + 1}`}
-                  fill
-                  className="object-contain"
-                  sizes="100vw"
-                />
-              </div>
-              <p className="text-center mt-3 font-victor text-[10px] tracking-[0.3em] text-silver/40">
-                {openIndex + 1} / {images.length}
-              </p>
-            </motion.div>
-          </motion.div>
+          <GalleryModal
+            photos={images}
+            alt={alt}
+            startIndex={openIndex}
+            onClose={() => setOpenIndex(null)}
+          />
         )}
       </AnimatePresence>
     </>

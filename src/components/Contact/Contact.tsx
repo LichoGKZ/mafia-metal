@@ -282,7 +282,7 @@ export default function Contact() {
 
         {/* ── 1) Información de contacto y canales (lo primero) ── */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-10"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
@@ -323,19 +323,9 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        <div className="gold-divider mb-16" />
+        <div className="gold-divider mb-12" />
 
-        {/* ── 2) Trabajos a medida ── */}
-        <div className="mb-24">
-          <AutoFilmstrip
-            images={customPhotos}
-            alt="Comisión custom Mafia Metal"
-            grayscale={false}
-            speed={70}
-          />
-        </div>
-
-        {/* ── 3) Formulario: cierre de la página ── */}
+        {/* ── 2) Formulario (pegado a la info de contacto) ── */}
         <motion.div
           className="max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 24 }}
@@ -486,6 +476,16 @@ export default function Contact() {
             </form>
           )}
         </motion.div>
+
+        {/* ── 3) Trabajos a medida (debajo del formulario) ── */}
+        <div className="mt-24">
+          <AutoFilmstrip
+            images={customPhotos}
+            alt="Comisión custom Mafia Metal"
+            grayscale={false}
+            speed={70}
+          />
+        </div>
       </div>
 
       {/* ── Footer ── */}

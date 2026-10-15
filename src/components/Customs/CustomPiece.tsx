@@ -221,7 +221,7 @@ export default function CustomPiece() {
           transition={{ duration: 0.9, ease: "easeOut" }}
         >
           <h2 className="font-victor font-bold text-[clamp(2.2rem,6vw,5rem)] text-gold-gradient leading-none">
-            Diseñá tu propia pieza
+            Diseñá tu pieza
           </h2>
           <p
             className="font-victor text-xs md:text-sm mt-5 max-w-xl mx-auto leading-relaxed"
@@ -475,7 +475,7 @@ export default function CustomPiece() {
                       className="flex-1 py-4 font-victor font-bold tracking-[0.3em] text-sm text-obsidian bg-gold hover:bg-gold-light transition-colors metal-shine disabled:opacity-50"
                       data-cursor-hover
                     >
-                      {sending ? "Enviando…" : "SOLICITAR PIEZA ESPECIAL"}
+                      {sending ? "Enviando…" : "SOLICITAR PIEZA"}
                     </button>
                     {whatsappHref && (
                       <a

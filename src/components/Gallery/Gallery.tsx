@@ -1,20 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { galleryPhotos } from "@/data/collection";
-import GalleryModal from "@/components/ui/GalleryModal";
+import FramedGallery from "@/components/ui/FramedGallery";
 import PhotoTeaser from "@/components/ui/PhotoTeaser";
+import { getLenis } from "@/hooks/useLenis";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+function scrollToWall() {
+  const el = document.getElementById("gallery-wall");
+  if (!el) return;
+  const lenis = getLenis();
+  if (lenis) lenis.scrollTo(el, { duration: 1.4 });
+  else el.scrollIntoView({ behavior: "smooth" });
+}
+
 export default function Gallery() {
   const headingRef = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!headingRef.current) return;
@@ -57,19 +64,13 @@ export default function Gallery() {
           <div className="gold-divider max-w-sm mx-auto mt-6" />
         </div>
 
-        {/* Foto principal: al tocarla se abre la galería en un popup */}
-        <PhotoTeaser image={galleryPhotos[0]} onOpen={() => setOpen(true)} />
-      </div>
+        <PhotoTeaser image={galleryPhotos[0]} onOpen={scrollToWall} />
 
-      <AnimatePresence>
-        {open && (
-          <GalleryModal
-            photos={galleryPhotos}
-            alt="Mafia Metal en la calle"
-            onClose={() => setOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+        {/* Pared de fotos tipo post-it: cada foto se despliega al tocarla */}
+        <div id="gallery-wall">
+          <FramedGallery images={galleryPhotos} alt="Mafia Metal en la calle" />
+        </div>
+      </div>
     </section>
   );
 }

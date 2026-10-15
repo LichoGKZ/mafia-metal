@@ -41,7 +41,7 @@ const CATEGORIES = [
 const MYSTERY_IMAGE = "/images/custom/custom-mystery.jpg";
 
 const MATERIALS = [
-  { value: "Plata 925", label: "Plata 925" },
+  { value: "Plata", label: "Plata" },
   { value: "Alpaca", label: "Alpaca" },
   { value: "Oro", label: "Oro" },
   { value: "Bronce", label: "Bronce" },

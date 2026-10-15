@@ -11,12 +11,14 @@ import {
 import { JewelryItem } from "@/data/collection";
 
 export interface CartLine {
-  /** Clave única de la línea: id del producto + talle (mismo producto con
-   *  distinto talle = líneas distintas). */
+  /** Clave única de la línea: id + talle + material (mismo producto con
+   *  distinto talle o material = líneas distintas). */
   key: string;
   id: string;
   /** Talle elegido (solo productos que lo requieren, ej. anillos). */
   size?: string;
+  /** Material elegido (Plata, Alpaca, Bronce…). */
+  material?: string;
   name: string;
   price: string; // display price, e.g. "$2,400"
   priceARS: number; // numeric price used for the order total
@@ -29,7 +31,12 @@ interface CartContextValue {
   isOpen: boolean;
   itemCount: number;
   subtotalARS: number;
-  addItem: (item: JewelryItem, qty?: number, size?: string) => void;
+  addItem: (
+    item: JewelryItem,
+    qty?: number,
+    size?: string,
+    material?: string
+  ) => void;
   removeItem: (key: string) => void;
   updateQty: (key: string, qty: number) => void;
   clearCart: () => void;
@@ -72,8 +79,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [lines, hydrated]);
 
-  const addItem = (item: JewelryItem, qty = 1, size?: string) => {
-    const key = size ? `${item.id}::${size}` : item.id;
+  const addItem = (
+    item: JewelryItem,
+    qty = 1,
+    size?: string,
+    material?: string
+  ) => {
+    const key = [item.id, size, material].filter(Boolean).join("::");
     setLines((prev) => {
       const existing = prev.find((l) => l.key === key);
       if (existing) {
@@ -87,6 +99,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           key,
           id: item.id,
           size,
+          material,
           name: item.name,
           price: item.price,
           priceARS: item.priceARS,

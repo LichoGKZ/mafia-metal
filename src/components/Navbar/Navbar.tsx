@@ -80,12 +80,12 @@ export default function Navbar() {
         transition={{ delay: navDelay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Links directos (desktop). En mobile se usa el menú del logo. */}
-        <div className="hidden lg:flex items-center gap-8 xl:gap-10">
+        <div className="hidden lg:flex items-center gap-5 xl:gap-8">
           {navItems.map((item) => (
             <button
               key={item.href}
               onClick={() => handleNavClick(item.href, item.fallback)}
-              className="font-victor text-xs xl:text-sm tracking-[0.15em] uppercase text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
+              className="font-victor text-[11px] xl:text-[13px] tracking-[0.12em] uppercase whitespace-nowrap text-[#e8e6e0] hover:text-[#8a8a85] transition-colors"
               data-cursor-hover
             >
               {item.label}

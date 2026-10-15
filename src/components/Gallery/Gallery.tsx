@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { galleryPhotos } from "@/data/collection";
-import FramedGallery from "@/components/ui/FramedGallery";
+import GalleryModal from "@/components/ui/GalleryModal";
 import PhotoTeaser from "@/components/ui/PhotoTeaser";
 
 if (typeof window !== "undefined") {
@@ -13,6 +14,7 @@ if (typeof window !== "undefined") {
 
 export default function Gallery() {
   const headingRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!headingRef.current) return;
@@ -55,12 +57,19 @@ export default function Gallery() {
           <div className="gold-divider max-w-sm mx-auto mt-6" />
         </div>
 
-        <PhotoTeaser image={galleryPhotos[0]} targetId="gallery-wall" />
-
-        <div id="gallery-wall">
-          <FramedGallery images={galleryPhotos} alt="Mafia Metal en la calle" />
-        </div>
+        {/* Foto principal: al tocarla se abre la galería en un popup */}
+        <PhotoTeaser image={galleryPhotos[0]} onOpen={() => setOpen(true)} />
       </div>
+
+      <AnimatePresence>
+        {open && (
+          <GalleryModal
+            photos={galleryPhotos}
+            alt="Mafia Metal en la calle"
+            onClose={() => setOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

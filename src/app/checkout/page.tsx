@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                   style={{ borderBottom: "1px solid rgba(176,170,152,0.08)" }}
                 >
                   <div className="flex justify-between">
-                    <span className="font-victor text-sm">{line.name}{line.size ? ` · talle ${line.size}` : ""}</span>
+                    <span className="font-victor text-sm">{line.name}{line.material ? ` · ${line.material}` : ""}{line.size ? ` · talle ${line.size}` : ""}</span>
                     <span className="font-victor text-sm" style={{ color: "var(--gold)" }}>
                       {formatARS(line.priceARS * line.qty)}
                     </span>

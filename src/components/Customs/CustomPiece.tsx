@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { customPhotos } from "@/data/collection";
 import { createClient } from "@/lib/supabase/client";
 import { submitContactMessage } from "@/app/admin/mensajes/actions";
 import { WHATSAPP_NUMBER as DEFAULT_WHATSAPP_NUMBER } from "@/lib/whatsapp";
@@ -37,9 +36,13 @@ const CATEGORIES = [
   { value: "otro", label: "Otro", sizeLabel: "Medida aproximada" },
 ] as const;
 
+/** Imagen única de la sección (pieza "incógnita": collar difuminado + "?").
+ *  Para cambiarla, reemplazá este archivo o apuntá a otro en /public. */
+const MYSTERY_IMAGE = "/images/custom/custom-mystery.jpg";
+
 const MATERIALS = [
   { value: "Plata 925", label: "Plata 925" },
-  { value: "Plata maciza", label: "Plata maciza" },
+  { value: "Alpaca", label: "Alpaca" },
   { value: "Oro", label: "Oro" },
   { value: "Bronce", label: "Bronce" },
   { value: "Otro / a definir", label: "Otro / a definir" },
@@ -218,7 +221,7 @@ export default function CustomPiece() {
           transition={{ duration: 0.9, ease: "easeOut" }}
         >
           <h2 className="font-victor font-bold text-[clamp(2.2rem,6vw,5rem)] text-gold-gradient leading-none">
-            Diseña tu propia pieza
+            Diseñá tu propia pieza
           </h2>
           <p
             className="font-victor text-xs md:text-sm mt-5 max-w-xl mx-auto leading-relaxed"
@@ -230,30 +233,24 @@ export default function CustomPiece() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
-          {/* Muestras de trabajos a medida */}
+          {/* Una sola imagen: la pieza "incógnita" que espera ser diseñada */}
           <motion.div
-            className="lg:col-span-2 grid grid-cols-2 gap-3"
+            className="lg:col-span-2 w-full max-w-sm mx-auto lg:max-w-none"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            {customPhotos.slice(0, 4).map((src, i) => (
-              <div
-                key={src}
-                className={`relative overflow-hidden border border-gold/20 ${
-                  i % 3 === 0 ? "aspect-[4/5]" : "aspect-square"
-                } ${i === 1 ? "mt-8" : ""}`}
-              >
-                <Image
-                  src={src}
-                  alt={`Pieza personalizada Mafia Metal ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 45vw, 20vw"
-                />
-              </div>
-            ))}
+            <div className="relative aspect-[4/5] overflow-hidden border border-gold/20">
+              <Image
+                src={MYSTERY_IMAGE}
+                alt="Pieza incógnita: tu diseño personalizado Mafia Metal"
+                fill
+                priority={false}
+                className="object-cover"
+                sizes="(max-width: 1024px) 80vw, 40vw"
+              />
+            </div>
           </motion.div>
 
           {/* Formulario */}

@@ -6,22 +6,20 @@ import { motion } from "framer-motion";
 /**
  * Marco rectangular (horizontal) con "photo" a la izquierda, "galery" a la derecha y
  * "( click )" debajo — tal cual el mockup que mandó la clienta (imagen +
- * video de Illustrator). Al hacer click baja hasta la sección #gallery.
+ * video de Illustrator). Al hacer click abre la galería en una ventana
+ * emergente (ver GalleryModal).
  *
  * Reusa el mismo grabado ornamentado (marco-ornamentado.png) que ya usa
  * FramedGallery, con la foto adentro, sin recorte circular ni proporción cuadrada.
  */
 export default function PhotoTeaser({
   image,
-  targetId = "gallery",
+  onOpen,
 }: {
   image: string;
-  targetId?: string;
+  /** Se llama al hacer click (abre el modal de la galería). */
+  onOpen: () => void;
 }) {
-  const handleClick = () => {
-    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="relative flex items-center justify-center gap-6 md:gap-16 py-10">
       <span
@@ -33,12 +31,13 @@ export default function PhotoTeaser({
 
       <motion.button
         type="button"
-        onClick={handleClick}
+        onClick={onOpen}
         data-cursor-hover
         whileHover={{ scale: 1.03 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="relative flex flex-col items-center gap-4 group"
-        aria-label="Ver galería"
+        aria-label="Abrir galería de fotos"
+        aria-haspopup="dialog"
       >
         {/* Marco rectangular horizontal: respeta la proporción real del
             grabado (605×386) y de la foto, sin forzar un cuadrado. */}

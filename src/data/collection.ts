@@ -15,6 +15,9 @@ export interface JewelryItem {
   color: string;
   /** Talles disponibles. Si existe, el cliente DEBE elegir uno para comprar. */
   sizes?: string[];
+  /** Materiales entre los que el cliente puede elegir. Si no se define,
+   *  se usan los de `MATERIAL_OPTIONS` (Plata / Alpaca / Bronce). */
+  materials?: string[];
   /** Ruta de la foto real del producto dentro de /public. Usar PNG recortado (sin fondo). Vacío = falta subir la foto. */
   image: string;
   /** Set de fotos de estudio del producto (para el carrusel). Si está vacío, se usa `image`. */
@@ -22,6 +25,9 @@ export interface JewelryItem {
   /** Fotos "as worn by" — el producto en la calle / en artistas / en vivo. */
   lifestyleImages?: string[];
 }
+
+/** Materiales disponibles por defecto en la ficha de producto. */
+export const MATERIAL_OPTIONS = ["Plata", "Alpaca", "Bronce"];
 
 /** Talles de anillo (Argentina) — coinciden con la guía de talles. */
 export const RING_SIZES = Array.from({ length: 23 }, (_, i) => String(13 + i));

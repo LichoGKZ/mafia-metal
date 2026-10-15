@@ -280,10 +280,53 @@ export default function Contact() {
           />
         </div>
 
-        {/* ── Custom commissions showcase ── */}
-        <div className="mb-20">
-          <div className="flex items-center gap-4 mb-6">
+        {/* ── 1) Información de contacto y canales (lo primero) ── */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-16"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          <div>
+            <p className="chapter-label text-[9px] mb-1.5">teléfono</p>
+            <p
+              className="font-victor text-sm mb-1"
+              style={{ color: "#17150f" }}
+            >
+              +54 9 223 000-0000
+            </p>
           </div>
+
+          <div>
+            <p className="chapter-label text-[9px] mb-4">Canales</p>
+            <div className="flex flex-col gap-2">
+              {[{ label: "instagram", handle: "@mafiametal" }].map(
+                ({ label, handle }) => (
+                  <div
+                    key={label}
+                    className="flex items-center justify-between px-4 py-3 cursor-pointer group transition-all"
+                    style={{ border: "1px solid rgba(23,21,15,0.06)" }}
+                    data-cursor-hover
+                  >
+                    <span className="chapter-label text-[9px]">{label}</span>
+                    <span
+                      className="font-victor text-[10px] tracking-widest group-hover:text-gold transition-colors"
+                      style={{ color: "rgb(var(--gold-rgb) / 0.5)" }}
+                    >
+                      {handle}
+                    </span>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="gold-divider mb-16" />
+
+        {/* ── 2) Trabajos a medida ── */}
+        <div className="mb-24">
           <AutoFilmstrip
             images={customPhotos}
             alt="Comisión custom Mafia Metal"
@@ -292,225 +335,157 @@ export default function Contact() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
-          {/* ── Left: info ── */}
-          <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-          >
-            <div className="space-y-9">
-              {[
-                {
-                  label: "teléfono",
-                  value: "+54 9 223 000-0000",
-                },
+        {/* ── 3) Formulario: cierre de la página ── */}
+        <motion.div
+          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          <p className="chapter-label tracking-[0.5em] mb-3">escribinos</p>
+          <div
+            className="h-px mb-10"
+            style={{ background: "rgba(23,21,15,0.08)" }}
+          />
 
-              ].map(
-                ({
-                  label,
-                  value,
-                  detail,
-                }: {
-                  label: string;
-                  value: string;
-                  detail?: string;
-                }) => (
-                <div key={label}>
-                  <p className="chapter-label text-[9px] mb-1.5">{label}</p>
-                  <p
-                    className="font-victor text-xs mb-1"
-                    style={{ color: "#17150f" }}
-                  >
-                    {value}
-                  </p>
-                  <p
-                    className="font-victor text-[10px]"
-                    style={{ color: "rgba(23,21,15,0.3)" }}
-                  >
-                    {detail}
-                  </p>
-                </div>
-              ))}
-
-              <div className="gold-divider" />
-
-              <div>
-                <p className="chapter-label text-[9px] mb-4">Canales</p>
-                <div className="flex flex-col gap-2">
-                  {[
-                    { label: "instagram", handle: "@mafiametal" },
-                  ].map(({ label, handle }) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between px-4 py-3 cursor-pointer group transition-all"
-                      style={{
-                        border: "1px solid rgba(23,21,15,0.06)",
-                      }}
-                      data-cursor-hover
-                    >
-                      <span className="chapter-label text-[9px]">{label}</span>
-                      <span
-                        className="font-victor text-[10px] tracking-widest group-hover:text-gold transition-colors"
-                        style={{ color: "rgb(var(--gold-rgb) / 0.5)" }}
-                      >
-                        {handle}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* ── Right: form ── */}
-          <motion.div
-            className="lg:col-span-3"
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            viewport={{ once: true }}
-          >
-            {submitted ? (
-              <motion.div
-                className="flex flex-col items-center justify-center text-center py-20 px-8"
-                style={{ border: "1px solid rgb(var(--gold-rgb) / 0.12)" }}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
+          {submitted ? (
+            <motion.div
+              className="flex flex-col items-center justify-center text-center py-20 px-8"
+              style={{ border: "1px solid rgb(var(--gold-rgb) / 0.12)" }}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center mb-7"
+                style={{ border: "1px solid rgb(var(--gold-rgb) / 0.4)" }}
               >
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center mb-7"
-                  style={{ border: "1px solid rgb(var(--gold-rgb) / 0.4)" }}
+                <span style={{ color: "var(--gold)" }}>✓</span>
+              </div>
+              <h3
+                className="font-victor font-bold text-lg mb-4 tracking-wide"
+                style={{ color: "var(--gold)" }}
+              >
+                mensaje recibido
+              </h3>
+              <p
+                className="font-victor text-xs leading-relaxed max-w-xs"
+                style={{ color: "rgba(23,21,15,0.4)" }}
+              >
+                tu consulta fue registrada.
+                te contactamos dentro de las próximas 24 horas.
+              </p>
+              <div className="mt-8 classified-stamp text-[10px]">
+                consulta enviada
+              </div>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-7">
+              <div
+                className="flex items-center justify-between pb-4"
+                style={{ borderBottom: "1px solid rgb(var(--gold-rgb) / 0.07)" }}
+              >
+                <span
+                  className="font-victor text-[10px] tracking-[0.3em]"
+                  style={{ color: "rgba(23,21,15,0.3)" }}
                 >
-                  <span style={{ color: "var(--gold)" }}>✓</span>
-                </div>
-                <h3
-                  className="font-victor font-bold text-lg mb-4 tracking-wide"
-                  style={{ color: "var(--gold)" }}
-                >
-                  mensaje recibido
-                </h3>
-                <p
-                  className="font-victor text-xs leading-relaxed max-w-xs"
-                  style={{ color: "rgba(23,21,15,0.4)" }}
-                >
-                  tu consulta fue registrada.
-                  te contactamos dentro de las próximas 24 horas.
-                </p>
-                <div className="mt-8 classified-stamp text-[10px]">
-                  consulta enviada
-                </div>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-7">
-                <div
-                  className="flex items-center justify-between pb-4"
-                  style={{ borderBottom: "1px solid rgb(var(--gold-rgb) / 0.07)" }}
-                >
-                  <span
-                    className="font-victor text-[10px] tracking-[0.3em]"
-                    style={{ color: "rgba(23,21,15,0.3)" }}
-                  >
-                    Nueva consulta
-                  </span>
-                </div>
+                  Nueva consulta
+                </span>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-                  <InputField
-                    label="nombre completo"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="tu nombre"
-                    required
-                  />
-                  <InputField
-                    label="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="tu@email.com"
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-                  <InputField
-                    label="teléfono"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+54 9 000 000 0000"
-                  />
-                  <SelectField
-                    label="interés"
-                    name="interest"
-                    value={formData.interest}
-                    onChange={handleChange}
-                    options={interestOptions}
-                    required
-                  />
-                </div>
-
-                <TextAreaField
-                  label="mensaje"
-                  name="message"
-                  value={formData.message}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                <InputField
+                  label="nombre completo"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                  placeholder="contanos qué estás buscando."
+                  placeholder="tu nombre"
+                  required
                 />
+                <InputField
+                  label="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="tu@email.com"
+                  required
+                />
+              </div>
 
-                {error && (
-                  <p
-                    className="font-victor text-[11px]"
-                    style={{ color: "#8b0000" }}
-                  >
-                    {error}
-                  </p>
-                )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                <InputField
+                  label="teléfono"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="+54 9 000 000 0000"
+                />
+                <SelectField
+                  label="interés"
+                  name="interest"
+                  value={formData.interest}
+                  onChange={handleChange}
+                  options={interestOptions}
+                  required
+                />
+              </div>
 
-                <div
-                  className="flex items-center justify-between pt-4"
-                  style={{ borderTop: "1px solid rgba(23,21,15,0.06)" }}
+              <TextAreaField
+                label="mensaje"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="contanos qué estás buscando."
+              />
+
+              {error && (
+                <p
+                  className="font-victor text-[11px]"
+                  style={{ color: "#8b0000" }}
                 >
-                  <p
-                    className="font-victor text-[9px]"
-                    style={{ color: "rgba(23,21,15,0.2)" }}
-                  >
-                    * obligatorio
-                  </p>
-                  <button
-                    type="submit"
-                    disabled={sending}
-                    className="px-10 py-3 font-victor text-xs tracking-[0.35em] transition-colors metal-shine disabled:opacity-50"
-                    style={{ background: "var(--gold)", color: "#0a0908" }}
-                    data-cursor-hover
-                  >
-                    {sending ? (
-                      <span className="flex items-center gap-2.5">
-                        <span
-                          className="w-2.5 h-2.5 rounded-full border animate-spin"
-                          style={{
-                            borderColor: "rgba(10,9,8,0.3)",
-                            borderTopColor: "#0a0908",
-                          }}
-                        />
-                        enviando...
-                      </span>
-                    ) : (
-                      "enviar"
-                    )}
-                  </button>
-                </div>
-              </form>
-            )}
-          </motion.div>
-        </div>
+                  {error}
+                </p>
+              )}
+
+              <div
+                className="flex items-center justify-between pt-4"
+                style={{ borderTop: "1px solid rgba(23,21,15,0.06)" }}
+              >
+                <p
+                  className="font-victor text-[9px]"
+                  style={{ color: "rgba(23,21,15,0.2)" }}
+                >
+                  * obligatorio
+                </p>
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="px-10 py-3 font-victor text-xs tracking-[0.35em] transition-colors metal-shine disabled:opacity-50"
+                  style={{ background: "var(--gold)", color: "#0a0908" }}
+                  data-cursor-hover
+                >
+                  {sending ? (
+                    <span className="flex items-center gap-2.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full border animate-spin"
+                        style={{
+                          borderColor: "rgba(10,9,8,0.3)",
+                          borderTopColor: "#0a0908",
+                        }}
+                      />
+                      enviando...
+                    </span>
+                  ) : (
+                    "enviar"
+                  )}
+                </button>
+              </div>
+            </form>
+          )}
+        </motion.div>
       </div>
 
       {/* ── Footer ── */}

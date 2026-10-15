@@ -17,6 +17,9 @@ interface ProductRow {
   lifestyle_images: string[] | null;
   /** Columna opcional `sizes text[]`. Si no existe, se infiere por nombre. */
   sizes?: string[] | null;
+  /** Columna opcional `materials text[]`. Si no existe, la ficha usa
+   *  los materiales por defecto (Plata / Alpaca / Bronce). */
+  materials?: string[] | null;
   sort_order: number;
 }
 
@@ -52,6 +55,8 @@ function rowToItem(row: ProductRow): JewelryItem {
     description: row.description ?? "",
     color: row.color ?? "",
     sizes,
+    materials:
+      row.materials && row.materials.length > 0 ? row.materials : undefined,
     image: row.image ?? "",
     images: row.images && row.images.length > 0 ? row.images : undefined,
     lifestyleImages:

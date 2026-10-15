@@ -17,7 +17,11 @@ export function buildOrderMessage(lines: CartLine[]): string {
 
   const items = lines.map((l, i) => {
     const details = [
-      l.color ? `Color: ${l.color}` : null,
+      l.material
+        ? `Material: ${l.material}`
+        : l.color
+          ? `Color: ${l.color}`
+          : null,
       l.size ? `Talle: ${l.size}` : null,
     ]
       .filter(Boolean)

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { JewelryItem } from "@/data/collection";
+import { JewelryItem, MATERIAL_OPTIONS } from "@/data/collection";
 import { useCart, formatARS } from "@/context/CartContext";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
@@ -221,6 +221,20 @@ function ItemModal({
   const [sizeError, setSizeError] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
 
+  // Material: la clienta quiere poder elegir entre Plata / Alpaca / Bronce.
+  // Arranca en el material "de catálogo" de la pieza (item.color) si coincide
+  // con una de las opciones; si no, en la primera.
+  const materials =
+    item.materials && item.materials.length > 0
+      ? item.materials
+      : MATERIAL_OPTIONS;
+  const [material, setMaterial] = useState(
+    () =>
+      materials.find(
+        (m) => m.toLowerCase() === (item.color ?? "").trim().toLowerCase()
+      ) ?? materials[0]
+  );
+
   const needsSize = !!item.sizes && item.sizes.length > 0;
   const sizeMissing = needsSize && !size;
   const hasSizeCm = !!item.sizeCm;
@@ -246,7 +260,7 @@ function ItemModal({
       setSizeError(true); // feedback visual en vez de agregar sin talle
       return;
     }
-    addItem(item, 1, needsSize ? size : undefined);
+    addItem(item, 1, needsSize ? size : undefined, material);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   };
@@ -315,7 +329,7 @@ function ItemModal({
           </div>
 
           {/* Detalles — jerarquía:
-              1) Título  2) Color | Tipo de pieza  3) Talle / Tamaño en cm
+              1) Título  2) Material | Tipo de pieza  3) Talle / Tamaño en cm
               4) Descripción  (5) Imágenes de referencia, abajo) */}
           <div className="flex flex-col">
             {/* Título: marca/nombre en negrita + precio */}
@@ -339,22 +353,50 @@ function ItemModal({
               </p>
             </div>
 
-            {/* Color | Tipo de pieza */}
+            {/* Material (elegible) | Tipo de pieza */}
             <div
-              className="grid grid-cols-[1.4fr_1fr] border-b-2"
+              className="grid grid-cols-[1.6fr_1fr] border-b-2"
               style={{ borderColor: LINE }}
             >
-              <div className="p-4 border-r-2" style={{ borderColor: LINE }}>
-                <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
-                  Color
+              <div className="px-5 py-4 border-r-2" style={{ borderColor: LINE }}>
+                <p
+                  id="material-label"
+                  className="text-[11px] tracking-[0.2em] uppercase mb-3"
+                  style={{ color: INK_SOFT }}
+                >
+                  Material
                 </p>
-                <p className="text-sm uppercase" style={{ color: INK }}>
-                  {item.color || "—"}
-                </p>
+                <div
+                  role="radiogroup"
+                  aria-labelledby="material-label"
+                  className="flex flex-wrap gap-2"
+                >
+                  {materials.map((m) => {
+                    const active = m === material;
+                    return (
+                      <button
+                        key={m}
+                        type="button"
+                        role="radio"
+                        aria-checked={active}
+                        onClick={() => setMaterial(m)}
+                        className="px-3 py-1.5 text-xs transition-colors"
+                        style={{
+                          background: active ? INK : "#fff",
+                          color: active ? "#fff" : INK,
+                          border: `1.5px solid ${LINE}`,
+                        }}
+                        data-cursor-hover
+                      >
+                        {m}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="p-4">
-                <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
+              <div className="px-5 py-4">
+                <p className="text-[11px] tracking-[0.2em] uppercase mb-3" style={{ color: INK_SOFT }}>
                   Tipo de pieza
                 </p>
                 <p className="text-sm uppercase" style={{ color: INK }}>
@@ -369,10 +411,10 @@ function ItemModal({
               style={{ borderColor: LINE }}
             >
               <div
-                className={`p-4 ${hasSizeCm ? "border-r-2" : ""}`}
+                className={`px-5 py-4 ${hasSizeCm ? "border-r-2" : ""}`}
                 style={{ borderColor: LINE }}
               >
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center justify-between gap-4 mb-3">
                   <label
                     htmlFor="talle-select"
                     className="text-[11px] tracking-[0.2em] uppercase"
@@ -407,7 +449,7 @@ function ItemModal({
                       value={size}
                       onChange={(e) => pickSize(e.target.value)}
                       aria-invalid={sizeError}
-                      className="w-full px-2 py-1.5 text-xs outline-none cursor-pointer"
+                      className="w-full px-3 py-2 text-xs outline-none cursor-pointer"
                       style={{
                         // Estado inicial gris neutro → negro al elegir
                         background: size ? "#fff" : "#e4e4e1",
@@ -433,8 +475,8 @@ function ItemModal({
               </div>
 
               {hasSizeCm && (
-                <div className="p-4">
-                  <p className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: INK_SOFT }}>
+                <div className="px-5 py-4">
+                  <p className="text-[11px] tracking-[0.2em] uppercase mb-3" style={{ color: INK_SOFT }}>
                     Tamaño
                   </p>
                   <p className="text-sm" style={{ color: INK }}>
@@ -529,6 +571,8 @@ function ItemModal({
         {guideOpen && (
           <SizeGuideModal
             onClose={() => setGuideOpen(false)}
+            sizes={item.sizes}
+            pieceType={item.pieceType}
             selected={size}
             onPick={(v) => {
               pickSize(v);

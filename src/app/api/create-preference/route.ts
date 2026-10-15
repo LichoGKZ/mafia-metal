@@ -5,6 +5,7 @@ interface IncomingLine {
   id: string;
   name: string;
   size?: string;
+  material?: string;
   priceARS: number;
   qty: number;
 }
@@ -91,7 +92,13 @@ export async function POST(req: NextRequest) {
       body: {
         items: lines.map((line) => ({
           id: line.id,
-          title: line.size ? `${line.name} - Talle ${line.size}` : line.name,
+          title: [
+            line.name,
+            line.material,
+            line.size ? `Talle ${line.size}` : null,
+          ]
+            .filter(Boolean)
+            .join(" - "),
           quantity: line.qty,
           unit_price: line.priceARS,
           currency_id: "ARS",

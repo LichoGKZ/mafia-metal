@@ -5,7 +5,8 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { useScrollLock } from "@/hooks/useScrollLock";
 
-const ROWS = [
+/** [talle, diámetro interno (mm), longitud de circunferencia (mm)] */
+const ROWS: [string, string, string][] = [
   ["13", "16,8", "53"], ["14", "17,2", "54"], ["15", "17,5", "55"],
   ["16", "17,8", "56"], ["17", "18,1", "57"], ["18", "18,4", "58"],
   ["19", "18,8", "59"], ["20", "19,1", "60"], ["21", "19,4", "61"],
@@ -19,15 +20,26 @@ const ROWS = [
 /**
  * Guía de talles: modal centrado, fondo oscurecido + blur, scroll propio.
  * Se monta en un portal sobre <body> para no heredar transforms de la ficha.
+ *
+ * - Sin `sizes`: tabla completa de anillos (comportamiento original).
+ * - Con `sizes` que coinciden con talles de anillo (13–35): solo esas filas.
+ * - Con `sizes` que NO son de anillo (ej. pulsera "Only Trust": Tipo 1/2/3):
+ *   lista simple de esos talles, tocables para elegirlos.
  */
 export default function SizeGuideModal({
   onClose,
   selected,
   onPick,
+  sizes,
+  pieceType,
 }: {
   onClose: () => void;
   selected?: string;
   onPick?: (size: string) => void;
+  /** Talles reales de la pieza (los que ofrece la ficha). */
+  sizes?: string[];
+  /** "Anillo", "Pulsera"… solo para el título cuando no es guía de anillo. */
+  pieceType?: string;
 }) {
   useScrollLock(true);
 
@@ -44,6 +56,20 @@ export default function SizeGuideModal({
 
   if (typeof document === "undefined") return null;
 
+  const ringRows = sizes ? ROWS.filter(([t]) => sizes.includes(t)) : ROWS;
+  const isRingGuide = ringRows.length > 0;
+
+  const title = isRingGuide
+    ? "Talle de anillo"
+    : pieceType
+      ? `Talle de ${pieceType.toLowerCase()}`
+      : "Talles disponibles";
+
+  // Celdas: padding horizontal propio (antes "Talle" quedaba pegado al borde
+  // de la columna) y mismas líneas verticales en encabezado y filas.
+  const cell = "px-2 sm:px-4 py-2.5";
+  const head = "px-2 sm:px-4 py-3.5 font-normal text-xs sm:text-sm";
+
   return createPortal(
     <motion.div
       className="fixed inset-0 z-[9600] flex items-center justify-center p-4"
@@ -52,7 +78,7 @@ export default function SizeGuideModal({
       exit={{ opacity: 0 }}
       role="dialog"
       aria-modal="true"
-      aria-label="Guía de talles"
+      aria-label={title}
     >
       <div
         className="absolute inset-0"
@@ -83,57 +109,98 @@ export default function SizeGuideModal({
           ✕
         </button>
 
-        <h2 className="px-6 pt-6 pb-4 text-2xl border-b-2 border-black">
-          Talle de anillo
+        <h2 className="px-6 pt-6 pb-4 pr-16 text-2xl border-b-2 border-black">
+          {title}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 border-b-2 border-black text-[12px] leading-relaxed">
-          <div className="p-5 sm:border-r-2 border-black">
-            <p className="mb-2 font-bold">Opción 1º</p>
-            <p>
-              Apoyá un anillo que te quede bien en una regla y medí el diámetro
-              interior en mm (de borde interno a borde interno).
-            </p>
+        {isRingGuide && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 border-b-2 border-black text-[12px] leading-relaxed">
+            <div className="p-5 sm:border-r-2 border-black">
+              <p className="mb-2 font-bold">Opción 1º</p>
+              <p>
+                Apoyá un anillo que te quede bien en una regla y medí el
+                diámetro interior en mm (de borde interno a borde interno).
+              </p>
+            </div>
+            <div className="p-5 border-t-2 sm:border-t-0 border-black">
+              <p className="mb-2 font-bold">Opción 2º</p>
+              <p>
+                Envolvé tu dedo con una tira de papel, marcá la unión y medí
+                la longitud de circunferencia en mm.
+              </p>
+            </div>
           </div>
-          <div className="p-5 border-t-2 sm:border-t-0 border-black">
-            <p className="mb-2 font-bold">Opción 2º</p>
-            <p>
-              Envolvé tu dedo con una tira de papel, marcá la unión y medí la
-              longitud de circunferencia en mm.
-            </p>
-          </div>
-        </div>
+        )}
 
-        <table className="w-full text-center text-sm">
-          <thead>
-            <tr className="border-b-2 border-black">
-              <th className="py-3 font-normal">Talle</th>
-              <th className="py-3 font-normal border-x-2 border-black">
-                Diámetro interno
-              </th>
-              <th className="py-3 font-normal">Long. circunferencia</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ROWS.map(([talle, diam, circ]) => {
-              const active = selected === talle;
-              return (
-                <tr
-                  key={talle}
-                  onClick={onPick ? () => onPick(talle) : undefined}
-                  className={`${onPick ? "cursor-pointer" : ""} ${
-                    active ? "bg-black text-white" : "hover:bg-black/5"
-                  }`}
-                  data-cursor-hover={onPick ? true : undefined}
-                >
-                  <td className="py-2">{talle}</td>
-                  <td className="py-2">{diam} mm</td>
-                  <td className="py-2">{circ} mm</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {isRingGuide ? (
+          <table className="w-full table-fixed border-collapse text-center text-sm">
+            <colgroup>
+              <col className="w-[20%]" />
+              <col className="w-[40%]" />
+              <col className="w-[40%]" />
+            </colgroup>
+            <thead>
+              <tr className="border-b-2 border-black">
+                <th className={head}>Talle</th>
+                <th className={`${head} border-x-2 border-black`}>
+                  Diámetro interno
+                </th>
+                <th className={head}>Long. circunferencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ringRows.map(([talle, diam, circ]) => {
+                const active = selected === talle;
+                return (
+                  <tr
+                    key={talle}
+                    onClick={onPick ? () => onPick(talle) : undefined}
+                    className={`border-b border-black/15 last:border-b-0 ${
+                      onPick ? "cursor-pointer" : ""
+                    } ${active ? "bg-black text-white" : "hover:bg-black/5"}`}
+                    data-cursor-hover={onPick ? true : undefined}
+                  >
+                    <td className={cell}>{talle}</td>
+                    <td
+                      className={`${cell} border-x-2 ${
+                        active ? "border-white/40" : "border-black"
+                      }`}
+                    >
+                      {diam} mm
+                    </td>
+                    <td className={cell}>{circ} mm</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <table className="w-full table-fixed border-collapse text-center text-sm">
+            <thead>
+              <tr className="border-b-2 border-black">
+                <th className={`${head} px-6`}>Talle</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(sizes ?? []).map((talle) => {
+                const active = selected === talle;
+                return (
+                  <tr
+                    key={talle}
+                    onClick={onPick ? () => onPick(talle) : undefined}
+                    className={`border-b border-black/15 last:border-b-0 ${
+                      onPick ? "cursor-pointer" : ""
+                    } ${active ? "bg-black text-white" : "hover:bg-black/5"}`}
+                    data-cursor-hover={onPick ? true : undefined}
+                  >
+                    <td className="px-6 py-3.5">{talle}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+
         {onPick && (
           <p className="px-6 py-4 text-[11px] text-black/75 border-t-2 border-black">
             Tocá una fila para elegir ese talle.
